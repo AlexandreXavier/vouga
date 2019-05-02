@@ -14,7 +14,6 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css?family=Material+Icons"
     />
-
   </head>
   <body>
     <noscript>
@@ -24,6 +23,30 @@
       >
     </noscript>
     <div id="app"></div>
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId: "2213735182274223",
+          cookie: true,
+          xfbml: true,
+          version: "v3.2"
+        });
+
+        FB.AppEvents.logPageView();
+      };
+
+      (function(d, s, id) {
+        var js,
+          fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {
+          return;
+        }
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      })(document, "script", "facebook-jssdk");
+    </script>
     <!-- built files will be auto injected -->
   </body>
 </html>

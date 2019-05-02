@@ -7,7 +7,7 @@
           :width="30"
           :size="300"
           v-if="loading"
-          color="success"
+          color="primary"
           >
           {{ value }}
           </v-progress-circular>
@@ -31,11 +31,11 @@
       </v-flex>
     </v-layout>
 
-    <v-layout row wrap  class="mt-2">
+    <!-- <v-layout row wrap  class="mt-2">
       <v-flex xs12 class="text-xs-center">
-       <p>"Mais um Belo Dia de Vela!"</p>
+       <p>"Regatas e Mais Regatas e mais Regatas"</p>
       </v-flex>
-    </v-layout>
+    </v-layout> -->
 
   </v-container>
 </template>

@@ -9,8 +9,7 @@ export default {
     },
     {
       id: 1,
-      url:
-        "http://www.52superseries.com/wp-content/gallery/2018-rolex-tp52-world-championship-cascais-2018/52SS_180716_NM_0665-Editar.jpg",
+      url: "https://s3-eu-west-1.amazonaws.com/xanivouga/princepe_2018.jpg",
       comment: "Treino Baiona",
       info: "Spain"
     }

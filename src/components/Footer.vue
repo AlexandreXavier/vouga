@@ -1,18 +1,17 @@
 <template>
 <div id="app">
   <v-app id="inspire">
-    <v-footer fixed dark
+    <v-footer fixed dark height="20px"
     >
-    <v-card
+    <v-card dense
         class="flex"
         flat
         tile
         light
-
       >
-      <v-card-title>
+      <v-card-title dense >
 
-          <!-- <strong class="subheading" >XANI
+          <strong class="subheading" >XANI
             <v-tooltip right>
                 <template v-slot:activator="{ on }">
                     <v-btn href="https://xani.hashbase.io" icon small target="https://xani.hashbase.io" v-on="on">
@@ -21,7 +20,7 @@
                 </template>
                 <span>{developer site}</span>
             </v-tooltip>&copy;{{ new Date().getFullYear() }}
-          </strong> -->
+          </strong>
 
           <!-- <v-spacer></v-spacer> -->
           <v-btn

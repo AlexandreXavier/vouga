@@ -1,14 +1,24 @@
 <template>
   <v-app>
-
 <!-- tab -->
-    <v-toolbar dark dense class="teal">
+    <v-toolbar dark dense class="primary">
         <v-toolbar-side-icon
             @click.stop="sideNav = !sideNav"
             class="hidden-md-and-up ">
         </v-toolbar-side-icon>
+
+<!-- user avatar -->
         <v-toolbar-title>
-            <router-link to="/" tag="span" style="cursor: pointer">PortocaroDos</router-link>
+            <v-btn fab dark large color="white" v-if="userIsAuthenticated">
+             <v-img
+            :src="fotoUser" width="24" >
+            </v-img>
+        </v-btn>
+
+           <!--  <pre>{{"UTI: "+user.displayName}}</pre> -->
+            <router-link to="/" tag="span" style="cursor: pointer">
+                    PortocaroDos &copy;
+            </router-link>
         </v-toolbar-title>
 
         <v-spacer></v-spacer>
@@ -31,6 +41,7 @@
             <v-icon left dark>exit_to_app</v-icon>
             Sair
             </v-btn>
+
         </v-toolbar-items>
     </v-toolbar>
 
@@ -92,7 +103,8 @@ export default {
           },
           { icon: "room", title: "Org. Evento", link: "/meetup/new" },
           { icon: "calendar_today", title: "Calendario", link: "/calendar" },
-          { icon: "calendar_today", title: "Treino", link: "/treino" }
+          { icon: "fa-dumbbell", title: "Treino", link: "/treino" },
+          { icon: "person", title: "Utilizador", link: "/profile" }
         ];
       }
       return menuItems;
@@ -102,19 +114,31 @@ export default {
         this.$store.getters.user !== null &&
         this.$store.getters.user !== undefined
       );
+    },
+    user() {
+      return this.$store.state.user;
+    },
+    utilizador() {
+      return this.$store.getters.utilizador !== null;
+    },
+    fotoUser() {
+      return (
+        this.$store.getters.getProfilePicUrl !== null &&
+        this.$store.getters.getProfilePicUrl !== undefined
+      );
     }
   },
   methods: {
     onLogout() {
       this.$store.dispatch("logout");
+      this.$router.push("/");
     }
   }
 };
 </script>
 
-
-
 <style>
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 @import url("https://code.getmdl.io/1.2.1/material.blue-red.min.css");
 </style>
+

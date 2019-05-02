@@ -1,0 +1,738 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es" lang="es" dir="ltr">
+<head profile="http://gmpg.org/xfn/11">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="chrome=1" />
+<meta name="title" content=" -  - RFEV" />
+<meta name="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Language" content="es" />
+<meta name="rating" content="General" />
+<meta name="ROBOTS" content="INDEX,FOLLOW" />
+<title>Página de error - RFEV</title>
+<link rel="stylesheet" href="/styles/jquery/themes/smoothness/jquery-ui-1.8.1.custom.css" type="text/css" media="screen" />
+
+<script type="text/javascript" src="/scripts/jquery/jquery-1.6.1.min.js"></script>
+<script type="text/javascript" src="/scripts/jquery/jquery-ui-1.8.14.custom.min.js"></script>
+<script type="text/javascript" src="/scripts/common.js"></script>
+
+<script type="text/javascript">
+//<![CDATA[
+Common.setLanguage('es');
+//]]>
+
+</script>
+<link href="/favicon.ico" rel="Shortcut Icon" type="type=image/x-icon" />
+<link href="/styles/default/bootstrap.css" media="screen, projection" rel="stylesheet" type="text/css" />
+<link href="/styles/default/foundation.css" media="screen, projection" rel="stylesheet" type="text/css" />
+<link href="/styles/default/styles.css" media="screen, projection" rel="stylesheet" type="text/css" />
+<link href="/styles/pictogram-button.css" media="screen, projection" rel="stylesheet" type="text/css" />
+<link href="/styles/default/sailclasses.css" media="screen, projection" rel="stylesheet" type="text/css" />
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" media="screen, projection" rel="stylesheet" type="text/css" />
+<link href="http://fonts.googleapis.com/css?family=Oswald:400,300" media="screen, projection" rel="stylesheet" type="text/css" />
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" media="screen, projection" rel="stylesheet" type="text/css" />
+<link href="/styles/default/custom.css" media="screen, projection" rel="stylesheet" type="text/css" /><link rel="Shortcut Icon" type="image/x-icon" href="/favicon-default.ico?2011" />
+
+  <!--[if lt IE 7]> <link rel="stylesheet" type="text/css" href="" /> <![endif]--> 
+  
+  
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+   <script src="/scripts/default/bootstrap.min.js"></script>
+    </head>
+
+<body>
+
+<div id="container">
+		
+	
+	<header>
+	<div class="inner-header">
+		<div class="row">
+			<div class="four mobile-three columns logo-container">				
+				<div class="logo"><a href="/"><img src="/images/default/rfev/logo.png" height="55" alt="" /></a></div>
+			</div>
+			<div class="twelve mobile-five columns links-container">
+				<div class="row">
+    					<div class="twelve columns links">	
+                <a href="http://www.csd.mec.es/"><img src="/images/default/rfev/csd-logo.jpg" /></a>
+    						<div class="head-menu right">
+                
+                
+    						    						<!-- Split button -->
+                                <div class="btn-group" id="loggin">
+                                    <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+                                        LOG-IN <span class="caret"></span>
+                                      </button>
+                                      <ul class="dropdown-menu loggin" role="menu" style="width:400px;">
+                                        <li>
+                                            <ul class="nav nav-tabs" style="width:400px; padding-left:20px;">
+                                              <li class="active"><a href="#home" data-toggle="tab">REGATISTA / JUEZ / ENTRENADOR</a></li>                                              <li class=""><a href="#profile" data-toggle="tab">CLUB / FEDERACIÓN</a></li>
+                                                <li class=""><a href="#worker" data-toggle="tab">TRABAJADOR</a></li>
+                                            </ul>
+                                            
+                                            <!-- Tab panes -->
+                                            <div class="tab-content" style="width:400px">
+                                                                                            <div class="tab-pane active" id="home">
+                                               <div class="inscription">
+	<form style="padding: 0; margin:0;" method="POST" id="columnNewsletter" action="/default/cuentaregatista/sailor-login">
+	
+	<div class="grid_5 boat-documents">  
+         <div>                                
+         	<div class="p-30">
+         		<div class="clear"></div>
+         		<div>
+         			<div class="" >
+         				<div class="input-container">
+							<label>  <i class="icon-user"></i>Usuario</label>
+						</div>
+						<div class="clear"></div>
+						<div class="input-container">
+							
+							<div class="input-container2"><input type="text" name="login" id="login" value="" size="15" /></div>
+													</div>
+					</div>	
+					
+         			<div class="" >	
+						<div class="input-container">
+								<label>  <i class="icon-lock"></i>Contraseña</label>
+							</div>
+						<div class="clear"></div>
+						<div class="input-container">	
+							<div class="input-container2"><input type="password" name="password" id="password" value="" size="15" /></div>
+													</div>
+					</div>
+		
+						
+						
+				
+								
+					<div class="clear"></div>
+					<div>
+         			    <p><a href="/default/cuentaregatista/privaterecovery">¿No recuerda su usuario o contraseña?</a></p>         			
+         		    </div>
+         		    <div class="clear"></div><br/>
+					<div class="">
+						<div>
+							<input type="submit" class="button theme big" value="INICIAR SESIÓN" />
+						</div>			 
+					</div>
+					<div class="clear"></div><br/>
+						
+			
+         		</div>
+         		
+         		<div class="clear"></div>
+         		<div>         			
+         			<p>¿No es usuario? <a href="/default/cuentaregatista/sailor-login">crear cuenta</a></p>
+         		</div>
+         		
+         	</div>
+         	<div class="clear"></div>
+         </div>
+                      
+        </div>
+	
+		
+		
+		<div class="clear"></div>
+	</form>
+</div>
+<script type="text/javascript">
+var emailDefaultText = '';
+var nameDefaultText = 'your password ...';
+
+$('#columnNewsletter').submit(function () {
+	if ($('#login').val() == nameDefaultText) $('#login').val('');
+	return true;
+});
+if ($('#login').val() == '') $('#login').val(emailDefaultText);
+
+$('#login').focus(function () {
+
+	if ($(this).val() == emailDefaultText) $(this).val('');
+}).blur(function () {
+	if ($(this).val() == '') $(this).val(emailDefaultText);
+});
+$('#password').focus(function () {
+
+	if ($(this).val() == nameDefaultText) $(this).val('');
+}).blur(function () {
+	if ($(this).val() == '') $(this).val(nameDefaultText);
+});
+</script>				
+				
+                                    			    
+                                    			                                              </div>
+                                                                                            <div class="tab-pane " id="profile">
+                                                                                        					<div>
+                                        						<div class="inscription">
+	<form style="padding: 0; margin:0;" method="POST" id="columnClubFed" action="/default/federaciones/clubfederacion-login">
+	<div class="grid_5 boat-documents">  
+         <div class="">                                
+         	<div class="p-30">
+         		<div class="clear"></div>
+         		<div>       		
+					<div class="" >
+         				<div class="input-container">
+							<label>  <i class="icon-user"></i>Usuario</label>
+						</div>
+						<div class="clear"></div>
+						<div class="input-container">
+							
+							<div class="input-container2"><input type="text" name="login" id="login" value="" size="15" /></div>
+													</div>
+					</div>	
+					
+         			<div class="" >	
+						<div class="input-container">
+								<label>  <i class="icon-lock"></i>Contraseña</label>
+							</div>
+						<div class="clear"></div>
+						<div class="input-container">	
+							<div class="input-container2"><input type="password" name="password" id="password" value="" size="15" /></div>
+													</div>
+					</div>
+		
+						
+						
+				
+												<div class="clear"></div>
+							
+						<div style="display: none;" id="formaccounterrortxt">	
+							<div class="form-element desc" style="color:red;">
+															</div>
+							
+						</div>
+									
+					<div class="clear"></div>
+					<div>
+             			<p><a href="/default/federaciones/privaterecovery">¿No recuerda su usuario o contraseña?</a></p>             			
+             		</div>
+             		 <div class="clear"></div><br/>
+					<div class="">
+						<div>
+							<input id="ok" type="submit" class="button theme big" value="INICIAR SESIÓN" />
+						</div>			 
+					</div>
+					<div class="clear"></div><br/>
+					
+					
+						
+			
+         		</div>
+         		
+         		
+         		<div class="clear"></div>
+         		<div>         			
+         			<p>Si no dispone de una cuenta de usuario para acceder a su cuenta de federación, póngase en contacto con nosotros por email en <a href="mailto:info@rfev.es;">info@rfev.es</a> o por teléfono llamando al +34 91 519 50 08.</p>
+         		</div>
+         		
+         	</div>
+         	<div class="clear"></div>
+         </div>
+                      
+        </div>
+	
+		
+		
+		<div class="clear"></div>
+	</form>
+</div>
+<script type="text/javascript">
+var emailDefaultText = '';
+var nameDefaultText = 'your password ...';
+
+$('#columnNewsletter').submit(function () {
+	if ($('#login').val() == nameDefaultText) $('#login').val('');
+	return true;
+});
+if ($('#login').val() == '') $('#login').val(emailDefaultText);
+
+$('#login').focus(function () {
+
+	if ($(this).val() == emailDefaultText) $(this).val('');
+}).blur(function () {
+	if ($(this).val() == '') $(this).val(emailDefaultText);
+});
+$('#password').focus(function () {
+
+	if ($(this).val() == nameDefaultText) $(this).val('');
+}).blur(function () {
+	if ($(this).val() == '') $(this).val(nameDefaultText);
+});
+</script>				
+				
+                                        					</div>
+                                        					                                                </div>
+                                                <div class="tab-pane " id="worker">
+                                                                                                                <div>
+                                                                <div class="inscription">
+	<form style="padding: 0; margin:0;" method="POST" id="columnNewsletter" action="/default/cuentatrabajador/sailor-login">
+	
+	<div class="grid_5 boat-documents">  
+         <div>                                
+         	<div class="p-30">
+         		<div class="clear"></div>
+         		<div>
+         			<div class="" >
+         				<div class="input-container">
+							<label>  <i class="icon-user"></i>Usuario</label>
+						</div>
+						<div class="clear"></div>
+						<div class="input-container">
+							
+							<div class="input-container2"><input type="text" name="login" id="login" value="" size="15" /></div>
+													</div>
+					</div>	
+					
+         			<div class="" >	
+						<div class="input-container">
+								<label>  <i class="icon-lock"></i>Contraseña</label>
+							</div>
+						<div class="clear"></div>
+						<div class="input-container">	
+							<div class="input-container2"><input type="password" name="password" id="password" value="" size="15" /></div>
+													</div>
+					</div>
+		
+						
+						
+				
+								
+					<div class="clear"></div>
+					<div>
+         			    <p><a href="/default/cuentatrabajador/privaterecovery">¿No recuerda su usuario o contraseña?</a></p>
+         		    </div>
+         		    <div class="clear"></div><br/>
+					<div class="">
+						<div>
+							<input type="submit" class="button theme big" value="INICIAR SESIÓN" />
+						</div>			 
+					</div>
+					<div class="clear"></div><br/>
+						
+			
+         		</div>
+         		
+         		<div class="clear"></div>
+
+         		
+         	</div>
+         	<div class="clear"></div>
+         </div>
+                      
+        </div>
+	
+		
+		
+		<div class="clear"></div>
+	</form>
+</div>
+<script type="text/javascript">
+var emailDefaultText = '';
+var nameDefaultText = 'your password ...';
+
+$('#columnNewsletter').submit(function () {
+	if ($('#login').val() == nameDefaultText) $('#login').val('');
+	return true;
+});
+if ($('#login').val() == '') $('#login').val(emailDefaultText);
+
+$('#login').focus(function () {
+
+	if ($(this).val() == emailDefaultText) $(this).val('');
+}).blur(function () {
+	if ($(this).val() == '') $(this).val(emailDefaultText);
+});
+$('#password').focus(function () {
+
+	if ($(this).val() == nameDefaultText) $(this).val('');
+}).blur(function () {
+	if ($(this).val() == '') $(this).val(nameDefaultText);
+});
+</script>				
+				
+                                                            </div>
+                                                                                                            </div>
+                                             
+                                            </div>
+                                            
+                                        </li>
+                                       
+                                      </ul>
+                                </div>
+    						    							<ul>
+    							    								    							</ul>    							
+    						</div>			
+    					</div>
+                            <div class="four columns p-0" style="padding-top: 17px !important; text-align: right;">
+                <div class="buscador-top">
+                  <input id="searchtext" name="searchtext" type="text" value="Buscar" helper="formText"  onblur="if (this.value=='') this.value='Buscar';" onfocus="if (this.value=='Buscar') this.value='';" /><input rel="/default/index/busqueda/ini/1" id="theSumitNewSearch" type="submit" value="BUSCAR" name="enviar">
+                </div>
+              </div>
+					
+				</div>
+		
+
+			</div>
+		</div>
+	</div>
+			
+	<div class="menu-content">
+			<div>
+			<div class="row">
+				<div class="nav-bar sixteen mobile-eigth columns">
+					<div class="submenu-container">	
+						<ul class="nav-bar ">
+												
+						
+                                <li class=" bg1 ">
+                                    <a href="/" class="index ">Inicio  </a>
+                                                        	 
+                                </li>
+                                
+                                
+                                
+
+                                <li class="dropdown bg2 ">
+                                    <a href="/default/federacion" class="federacion dropdown-toggle" data-toggle="dropdown">RFEV  </a>
+                                                        	 
+                                </li>
+                                
+                                
+                                
+
+                                <li class=" bg3 ">
+                                    <a href="/default/actualidad" class="actualidad ">Actualidad  </a>
+                                                        	 
+                                </li>
+                                
+                                
+                                
+
+                                <li class=" bg4 ">
+                                    <a href="/default/regatas" class="regatas ">Regatas  </a>
+                                                        	 
+                                </li>
+                                
+                                
+                                
+
+                                <li class=" bg5 ">
+                                    <a href="/default/regatistas/index/ini/1" class="regatistas ">Regatistas  </a>
+                                                        	 
+                                </li>
+                                
+                                
+                                
+
+                                <li class=" bg6 ">
+                                    <a href="/default/ranking/index/ambito/Vela+ol%C3%ADmpica" class="ranking ">Rankings  </a>
+                                                        	 
+                                </li>
+                                
+                                
+                                
+
+                                <li class=" bg7 ">
+                                    <a href="/default/selecciones/index/ini/1" class="selecciones ">Selecciones  </a>
+                                                        	 
+                                </li>
+                                
+                                
+                                
+
+                                <li class=" bg8 ">
+                                    <a href="/default/clases" class="clases ">Clases  </a>
+                                                        	 
+                                </li>
+                                
+                                
+                                
+
+                                <li class=" bg9 ">
+                                    <a href="/default/clubes" class="clubes ">Clubes  </a>
+                                                        	 
+                                </li>
+                                
+                                
+                                
+
+                                <li class=" bg10 ">
+                                    <a href="/default/federaciones" class="federaciones ">Autonómicas  </a>
+                                                        	 
+                                </li>
+                                
+                                
+                                
+
+                                <li class="dropdown bg11 ">
+                                    <a href="/default/cear" class="cear dropdown-toggle" data-toggle="dropdown">CEAR  </a>
+                                                        	 
+                                </li>
+                                
+                                
+                                
+
+                                <li class=" bg12 ">
+                                    <a href="/default/multimedia/videos" class="multimedia ">Multimedia  </a>
+                                                        	 
+                                </li>
+                                
+                                
+                                
+
+                                <li class=" bg13 ">
+                                    <a href="/default/documentos/index/categoria/4" class="documentos ">Documentos  </a>
+                                                        	 
+                                </li>
+                                
+                                
+                                
+
+                                <li class="dropdown bg14 ">
+                                    <a href="/default/formacion/index/id/formacion" class="formacion dropdown-toggle" data-toggle="dropdown">Formación  </a>
+                                                        	 
+                                </li>
+                                
+                                
+                                
+
+                                <li class="dropdown bg15 ">
+                                    <a href="/default/jueces/index/id/oficiales-rfev" class="jueces dropdown-toggle" data-toggle="dropdown">Jueces  </a>
+                                                        	 
+                                </li>
+                                
+                                
+                                
+
+                                <li class="dropdown bg16 ">
+                                    <a href="/default/mujerydeporte/index/id/igualdad-participacion" class="jueces dropdown-toggle" data-toggle="dropdown">Mujer y Deporte  </a>
+                                                        	 
+                                </li>
+                                
+                                
+                                
+    
+                                           
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+		
+	</div>
+	
+	
+	
+		    
+	
+
+	
+	
+		
+	
+	
+	
+	
+	
+		
+	
+</header>
+<script>
+    $(document).ready(function () {
+        $("#theSumitNewSearch").click(function () {
+            var Base64={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",encode:function(e){var t="";var n,r,i,s,o,u,a;var f=0;e=Base64._utf8_encode(e);while(f<e.length){n=e.charCodeAt(f++);r=e.charCodeAt(f++);i=e.charCodeAt(f++);s=n>>2;o=(n&3)<<4|r>>4;u=(r&15)<<2|i>>6;a=i&63;if(isNaN(r)){u=a=64}else if(isNaN(i)){a=64}t=t+this._keyStr.charAt(s)+this._keyStr.charAt(o)+this._keyStr.charAt(u)+this._keyStr.charAt(a)}return t},decode:function(e){var t="";var n,r,i;var s,o,u,a;var f=0;e=e.replace(/[^A-Za-z0-9+/=]/g,"");while(f<e.length){s=this._keyStr.indexOf(e.charAt(f++));o=this._keyStr.indexOf(e.charAt(f++));u=this._keyStr.indexOf(e.charAt(f++));a=this._keyStr.indexOf(e.charAt(f++));n=s<<2|o>>4;r=(o&15)<<4|u>>2;i=(u&3)<<6|a;t=t+String.fromCharCode(n);if(u!=64){t=t+String.fromCharCode(r)}if(a!=64){t=t+String.fromCharCode(i)}}t=Base64._utf8_decode(t);return t},_utf8_encode:function(e){e=e.replace(/rn/g,"n");var t="";for(var n=0;n<e.length;n++){var r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r)}else if(r>127&&r<2048){t+=String.fromCharCode(r>>6|192);t+=String.fromCharCode(r&63|128)}else{t+=String.fromCharCode(r>>12|224);t+=String.fromCharCode(r>>6&63|128);t+=String.fromCharCode(r&63|128)}}return t},_utf8_decode:function(e){var t="";var n=0;var r=c1=c2=0;while(n<e.length){r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r);n++}else if(r>191&&r<224){c2=e.charCodeAt(n+1);t+=String.fromCharCode((r&31)<<6|c2&63);n+=2}else{c2=e.charCodeAt(n+1);c3=e.charCodeAt(n+2);t+=String.fromCharCode((r&15)<<12|(c2&63)<<6|c3&63);n+=3}}return t}}
+            var encodedString = Base64.encode( $('#searchtext').val());
+            window.location.href = $(this).attr('rel') + '/searchtext/' + $('#searchtext').val();
+        });
+
+        $('.buscador-top').keypress(function (e) {
+            var key = e.which;
+            if(key == 13)  // the enter key code
+            {
+                $("#theSumitNewSearch").click();
+                return false;
+            }
+        });
+
+
+    });
+</script>
+		
+	<div class="row">
+		
+
+<div>
+	<div class="grid_8">
+		<div class="boxnoti">
+			<div class="left">
+				<img src="/images/default/ico_error.gif" alt="Error" />		                          		                           
+	                         </div>
+	                         <div style="width: 530px;" class="right">	
+	                         	<div class="titnoti">
+	                                Se ha producido un error	                         </div>	
+	                         				<p>Error 404:</p>
+								<p>La página a la que está intentando acceder no ha sido encontrada.</p>
+					 					
+				<a class="mas" href="">Ir al inicio</a>
+			</div>
+			<div class="clear"></div>                   
+		</div>
+	</div>
+</div>	</div>
+	
+</div>
+
+	
+		    
+
+
+<div id="footer">    <div id="cenfooter">        <div class="row">            <div class="sixteen columns footer-logos">                <div style="color: #717F90; font-size: 11px; text-transform: uppercase; padding: 25px 0 4px; margin-bottom: 8px;" class="partners-title">PATROCINADORES</div>                <div>                                        <a href="http://www.csd.mec.es/"><img title="CSD" alt="CSD" src="/images/default/rfev/logo_csd.gif"></a>                    <a href="http://www.coe.es/"><img title="COE" alt="COE" src="/images/default/rfev/logo_coe.gif" /></a>                                        <a href="http://deporteespana.es/"><img height="74" title="ADESP" alt="ADESP" src="/images/default/rfev/adesp.png"></a>                                        <a href="http://www.sailing.org/"><img title="ISAF" alt="ISAF" src="/images/default/rfev/logo_isaf.gif"></a>                    <a href="http://www.eurosaf.org/"><img title="EUROSAF" alt="EUROSAF" src="/images/default/rfev/logo_eurosaf.gif"></a>                    <a href="http://www.orc.org/"><img title="ORC" alt="ORC" src="/images/default/rfev/logo_orc.gif"></a>                    <a href="http://www.ado.es/"><img title="ADO" alt="ADO" src="/images/default/rfev/logo_ado.gif"></a>                    <a href="http://www.fivela.net/"><img title="FIVELA" alt="FIVELA" src="/images/default/rfev/logo_fivela.gif"></a>                                        <a href="http://www.tve.es/"><img title="tve" alt="tve" src="/images/default/rfev/logo_tve.gif"></a>                    <a href="http://www.marinepool.de"><img title="tve" alt="tve" src="/images/default/rfev/marinepool.jpg"></a>                    <a href="http://www.puertosantander.es/cas/home.aspx"><img title="PUERTO SANTANDER" alt="PUERTO SANTANDER" src="/images/default/rfev/logo_puertosantander.gif"></a>                    <a href="http://www.neckmarine.com/"><img title="NECKMARINE" alt="NECKMARINE" src="/images/default/rfev/logo_neckmarine.gif"></a>                                        <a href="http://www.iberia.es/"><img title="Iberia" alt="Iberia" src="/images/default/rfev/logo_iberia.gif"></a>                                        <a href="http://www.halconviajes.com"><img title="Halcón Viajes" alt="Halcón Viajes" src="/images/default/rfev/logo_halcon.gif"></a>                    <a href="http://www.murimar.com"><img title="Murimar" alt="Murimar" src="/images/default/rfev/logo_murimar_2.png"></a>                </div>            </div>        </div>        <div class="row">            <div class="sixteen columns sitemap">                <div style="color: #717F90; font-size: 11px; text-transform: uppercase; padding: 25px 0 4px; margin-bottom: 8px;" class="partners-title">MAPA DE LA WEB</div>                <div id="navFooter">                    <ul class="row">                        <li class="one columns p-r-0 m-r-20"><a href="/default/actualidad"><b>Actualidad</b></a>                            <ul>                                <li><a target="" href="/default/actualidad/avisos">Avisos</a></li>                                <li><a target="" href="/default/actualidad">Noticias</a></li>                                <li><a target="" href="/default/actualidad/entrevistas">Entrevistas</a></li>                            </ul>                        </li>                        <li class="one columns  m-r-20"><a href="/default/regatas"><b>Regatas</b></a>                            <ul>                                <li><a target="" href="/default/regatas">Regatas destacadas</a></li>                                <li><a target="" href="/default/regatas/proximas">Próximas regatas</a></li>                                <li><a target="" href="/default/regatas/resultados">Resultados</a></li>                                <li><a target="" href="/default/regatas/calendario">Calendario de regatas</a></li>                            </ul>                        </li>                        <li class="one columns  m-r-20"><a href="/default/ranking"><b>Rankings</b></a>                            <ul>                                <li><a target="" href="/default/ranking/index/ambito/Vela+ol%C3%ADmpica">Vela olímpica</a></li>                                <li><a target="" href="/default/ranking/index/ambito/Vela+ligera">Vela ligera</a></li>                                <li><a target="" href="/default/ranking/index/ambito/Vela+adaptada">Vela adaptada</a></li>                                <li><a target="" href="/default/ranking/index/ambito/Crucero">Crucero</a></li>                            </ul>                        </li>                        <li class="one columns "><a href="/default/clases"><b>Clases</b></a>                            <ul>                                <li><a target="" href="/default/clases">Vela olímpica</a></li>                                <li><a target="" href="/default/clases/ligera">Vela ligera</a></li>                                <li><a target="" href="/default/clases/adaptada">Vela adaptada</a></li>                                <li><a target="" href="/default/clases/crucero">Crucero</a></li>                            </ul>                        </li>                        <li class="one columns  m-r-20"><a href="/default/clubes"><b>Clubes</b></a>                            <ul>                                <li><a target="" href="/default/clubes">Todos los clubes</a></li>                                <li><a target="" href="/default/clubes/fed">Por CCAA</a></li>                            </ul>                        </li>                        <li class="one columns p-0 m-r-20"><a href="/default/federaciones"><b>Autonómicas</b></a></li>                        <li class="one columns"><a href="/default/cear"><b>CEAR</b></a></li>                                                <li class="one columns p-0 m-r-20"><a href="/default/multimedia/videos"><b>Multimedia</b></a>                            <ul>                                <li><a target="" href="/default/multimedia/videos">Videos</a></li>                                <li><a target="" href="/default/multimedia">Fotos</a></li>                            </ul>                        </li>                        <li class="two columns p-0"><a href="/default/documentos/index/categoria/4"><b>Documentos</b></a>                            <ul><li><a target="" href="/default/documentos/index/categoria/4">Vela Olímpica</a></li><li><a target="" href="/default/documentos/index/categoria/5">Vela adaptada</a></li><li><a target="" href="/default/documentos/index/categoria/6">Vela ligera</a></li><li><a target="" href="/default/documentos/index/categoria/7">Cruceros</a></li><li><a target="" href="/default/documentos/index/categoria/10">Guías</a></li><li><a target="" href="/default/documentos/index/categoria/11">Reglamentos</a></li><li><a target="" href="/default/documentos/index/categoria/12">Impresos y formularios</a></li><li><a target="" href="/default/documentos/index/categoria/13">Antidopaje</a></li><li><a target="" href="/default/documentos/index/categoria/14">Modelos AR/IR</a></li><li><a target="" href="/default/documentos/index/categoria/15">P.N.T.D.</a></li><li><a target="" href="/default/documentos/index/categoria/18">FORMACION</a></li><li><a target="" href="/default/documentos/index/categoria/19">EQUIPOS NACIONALES</a></li><li><a target="" href="/default/documentos/index/categoria/20">Calendario Regatas 2019</a></li></ul>                        </li>                        <li class="one columns p-0"><a href="/default/formacion/index/id/formacion"><b>Formación</b></a>                        <li class="two columns"><a href="/default/federacion"><b>RFEV</b></a>                            <ul>                                <li><a target="" href="/content/junta-directiva">Junta Directiva</a></li>                                <li><a target="" href="/content/asamblea-general">Asamblea General</a></li>                                <li><a target="" href="/content/comision-delegada-rfev">Comisión delegada RFEV</a></li>                                <li><a target="" href="/content/comites-rfev">Comités RFEV</a></li>                                <li><a target="" href="/content/estatutos">Estatutos</a></li>                                <li><a target="" href="/content/contacto">Contacto</a></li>                                <li><a target="" href="/content/estructura-organizativa">Ley de transparencia</a></li>                            </ul>                        </li>                        <li class="one columns p-0"><a href="/default/jueces"><b>Jueces</b></a>                            <ul><li><a target="" href="/default/jueces/index/id/oficiales-rfev">Oficiales RFEV</a></li><li><a target="" href="/default/jueces/index/id/jueces-rfev">Jueces RFEV</a></li><li><a target="" href="/default/jueces/index/id/medidores-vela-ligera">Medidores Vela Ligera </a></li><li><a target="" href="/default/jueces/index/id/modelos-ar-ir">Modelos AR/IR</a></li><li><a target="" href="/default/jueces/index/id/reglamentos">Reglamentos</a></li><li><a target="" href="/default/jueces/index/id/documentos">Documentos</a></li><li><a target="" href="/default/jueces/index/id/apelaciones">Apelaciones</a></li><li><a target="" href="/default/jueces/index/id/medidores-cruceros">Medidores Cruceros</a></li></ul>                        </li>                    </ul>                </div>            </div>        </div>                <div class="row" style="padding-top: 40px;">            <div class="three columns">                <div>                    <a href="/">                        <img alt="logo" src="/images/default/rfev/logo.png" height="90" />                    </a>                </div>                <div>                    <ul id="social-icons">                                                <li><a href="https://twitter.com/oficial_rfev" class="twitter" target="_blank"></a></li>                        <li><a href="https://www.youtube.com/user/rfevoficial/" class="youtube" target="_blank"></a></li>                    </ul>                </div>            </div>            <div class="ten columns">                <div id="contactFooter" style="text-align:center; line-height:18px;">                    Real Federación Española de Vela: C/ Gamazo s/n, 39004 Cantabria (Santander) Tel:+34 942 22 62 98<br/>Paseo de la Castellana nº 141, 5ª Planta 28046 (Madrid) Tel:+34 91 519 50 08 www.rfev.es - <a href="mailto:info@rfev.es">info@rfev.es</a><br/>                    entidad afiliada a la ISAF, la Eurosaf y la ORC; registrada en el Consejo Superior de Deportes, miembro del COE y participante del ADO | <a href="/default/lopd/aviso-legal">Aviso Legal</a>  | <a href="/default/lopd/politica-privacidad">Política privacidad</a>                </div>            </div>            <div class="three columns">                <div id="sumenuFooter" class="">                    <a href="http://www.sailti.com"><img src="/images/default/rfev/powered-by-sailti.gif" /></a>                </div>            </div>        </div>    </div></div>
+   
+    
+<script type="text/javascript">
+    //<![CDATA[
+    
+    $('header .menu-content ul.nav-bar li').hover(function() {
+        if ($(window).width() > 768) $(this).find('.dropdown-menu.loggin').stop(true, true).delay(10).fadeIn();
+    }, function() {
+        if ($(window).width() > 768) $(this).find('.dropdown-menu.loggin').stop(true, true).delay(10).fadeOut();
+    });
+    $('header .menu-content ul.nav-bar li a').click(function(e) {
+        e.preventDefault();          
+        $(location).attr('href',$(this).attr('href'));           
+    });
+        
+        $('.dropdown-menu.loggin a[data-toggle="tab"]').click(function (e) {
+            e.preventDefault()    
+            e.stopPropagation();
+                
+            //$(this).tab('show');
+            
+            var attr = $(this).attr('href')
+            console.log(attr);
+            $(this).parent().parent().find('.active').removeClass('active');
+            $(this).parent().addClass('active');
+        
+            $('.btn-group .tab-content').find('.active').removeClass('active');
+            $(attr).addClass('active');
+        
+        
+        })
+         $('.dropdown-menu.loggin .tab-content #login').click(function (e) {
+            e.preventDefault()    
+            e.stopPropagation();
+        })
+           $('.dropdown-menu.loggin .tab-content #password').click(function (e) {
+            e.preventDefault()    
+            e.stopPropagation();
+        })
+        
+        /* $('.dropdown-menu.loggin .tab-content a').click(function (e) {
+           
+            $(this).unbind('click').click();
+             var href = $(e).attr('href');
+            if (href) {
+                 window.location = href;
+            }
+        
+        })*/
+        
+        
+        
+        var routeForm = '/default/federaciones/clubfederacion-login';
+        //console.log(routeForm);
+	var order = '';
+	
+	$('#columnClubFed').submit(function(e) {
+		var rel = $(this).attr('rel');
+		
+		if (rel == 'noajax') {
+			$(this).attr('rel','');
+			$(this).attr('action',routeForm);
+			return true;
+		}
+		else {
+			var request = new FormData();    
+		
+			request.append('login', $('#columnClubFed #login').val());
+			request.append('password', $('#columnClubFed #password').val());
+			
+			
+			// Enviamos el formulario usando AJAX
+			$.ajax({
+				type: 'POST',
+				url: routeForm,
+				data: request,
+				processData : false,
+    			contentType : false,
+				success: function(data) {
+					if (data.error == 0) {
+						//$('#columnClubFed').parent().html(data);
+						//window.open(data);
+						//$.fancybox.close();
+                        console.log('');
+						//document.location = '';
+						if(data.location == 'federaciones')        
+						       document.location = '/default/federaciones/start-account';
+                        if(data.location == 'clubes')        
+						       document.location = '/default/clubes/start-club-account';						               
+						        
+					}else{
+                        $('#columnClubFed #formaccounterrortxt').show();
+					    $('#columnClubFed #formaccounterrortxt .form-element.desc').text(data['formAccountERRORTXT']);	        
+						 $('#loggin').addClass('open');        
+                    }
+				}
+			});
+			return false;
+		}
+	}); 
+
+	$('#columnClubFed input[type="submit"]').click(function(e) {
+		order = '&'+e.target.id+'=1';
+	});
+	$('#columnClubFed #ok').click(function(e) {
+		e.preventDefault();
+		$('#columnClubFed').submit();
+	});
+    //]]>
+</script>
+<script src="/scripts/cookiechoices-custom.js?2016"></script>
+<script>
+$(window).load(function($){
+	var title = 'Política de cookies';
+	var message = 'http://www.rfev.es utiliza cookies propias y de terceros para poder ofrecerle una mejor experiencia de navegación gracias a la información estadística que obtenemos tras analizar hábitos de navegación. Si sigue navegando sin cambiar la configuración, entenderemos que acepta el uso de cookies en nuestro sitio. Si desea más información o modificar el uso de las cookies lea nuestra';
+	var linkText = 'política de cookies';
+	var link = '/default/index/politica-cookies';
+	var acceptText = 'Aceptar';
+	cookieChoices.showCookieConsentBarCustom(title, message, linkText, link, acceptText);
+});
+</script>
+
+<script type="text/javascript">
+	window.___gcfg = {lang: 'es'};
+
+	(function() {
+		var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+		po.src = 'https://apis.google.com/js/plusone.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+	})();
+</script>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-32383222-22");
+pageTracker._trackPageview();
+} catch(err) {}
+</script>
+
+</body>
+
+</html>
+

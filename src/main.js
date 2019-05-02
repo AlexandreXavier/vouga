@@ -10,7 +10,8 @@ import store from "./store";
 import "./registerServiceWorker";
 
 import Footer from "./components/Footer";
-import "@fortawesome/fontawesome-free/css/all.css"; // Ensure you are using css-loader
+import AlertCmp from "./components/Alert.vue";
+import "@fortawesome/fontawesome-free/css/all.css";
 
 Vue.use(Vuefire);
 Vue.use(VueResource);
@@ -18,10 +19,11 @@ Vue.use(VueResource);
 Vue.config.productionTip = false;
 
 Vue.component("portocaro-footer", Footer);
+Vue.component("app-alert", AlertCmp);
 
 new Vue({
   firebase: {
-    cat: database.ref("cat").orderByChild("created_at")
+    files: database.ref("files").orderByChild("created_at")
   },
   router,
   store,
@@ -29,11 +31,11 @@ new Vue({
   created() {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        // alert("Utilizador " + user.id);
         this.$store.dispatch("autoSignIn", user);
       }
     });
     //carregar os eventos gravados na db do firebase
     this.$store.dispatch("loadMeetups");
+    this.$store.dispatch("loadUsers");
   }
 }).$mount("#app");

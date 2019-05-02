@@ -1,0 +1,1226 @@
+
+TREINO------------------
+<template>
+  <v-container>
+    <v-layout row wrap v-for="file in files" :key="file.id" class="mb-2">
+
+      <v-flex xs10 offset-xs1>
+        <v-card >
+          <v-container fluid>
+            <v-layout row>
+              <v-flex xs5 sm4 md3>
+                <v-img
+                  :src="file.url"
+                  v-if="fileType(file) === 'img'"
+                  >
+                </v-img>
+                    <v-card-title primary-title>
+
+                    <v-spacer></v-spacer>
+                        <v-btn icon @click="show = !show">
+                            <v-icon>{{ show ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
+                        </v-btn>
+                    </v-card-title>
+
+                    <v-slide-y-transition>
+                        <v-card-text v-show="show">
+                            <v-layout column>
+                            <h4>{{ file.name }}</h4>
+                            <v-btn small fab color="teal" @click="deleteFile(file)">
+                                        <i class="far fa-trash-alt"></i>
+                                    </v-btn>
+                            </v-layout>
+                            </v-card-text>
+                    </v-slide-y-transition>
+                </v-flex>
+
+                </v-layout>
+            </v-container>
+            </v-card>
+            <router-link class="add-picture-button mdl-button mdl-js-button mdl-button--fab mdl-button--colored" to="/post">
+             <i class="material-icons">add</i>
+            </router-link>
+
+            <router-link class="take-picture-button mdl-button mdl-js-button mdl-button--fab mdl-button--colored" to="/camera">
+            <i class="material-icons">camera_alt</i>
+            </router-link>
+      </v-flex>
+    </v-layout>
+  </v-container>
+
+</template>
+
+
+
+CRIAR EVENTO-----------------
+<template>
+  <v-container>
+    <v-layout row>
+        <v-flex xs12 sm6 offset-sm3>
+            <h4>Criar um novo Evento</h4>
+        </v-flex>
+    </v-layout>
+
+    <v-layout row>
+      <v-flex xs12>
+        <form @submit.prevent="onCreateMeetup">
+<!-- data input text -->
+            <v-layout row>
+                <v-flex xs12 sm6 offset-sm3>
+                <v-text-field
+                    name="title"
+                    label="Titulo"
+                    id="title"
+                    v-model="title"
+                    required></v-text-field>
+                </v-flex>
+            </v-layout>
+            <v-layout row>
+                <v-flex xs12 sm6 offset-sm3>
+                <v-text-field
+                    name="location"
+                    label="Local"
+                    id="location"
+                    v-model="location"
+                    required></v-text-field>
+                </v-flex>
+            </v-layout>
+            <v-layout row>
+                <v-flex xs12 sm6 offset-sm3>
+                <v-text-field
+                    name="imageUrl"
+                    label="Image URL"
+                    id="image-url"
+                    v-model="imageUrl"
+                    required></v-text-field>
+                </v-flex>
+            </v-layout>
+            <v-layout row>
+                <v-flex xs12 sm6 offset-sm3>
+                <img :src="imageUrl" height="150">
+                </v-flex>
+            </v-layout>
+            <v-layout row>
+                <v-flex xs12 sm6 offset-sm3>
+                <v-text-field
+                    name="description"
+                    label="Descrição"
+                    id="description"
+                    multi-line
+                    v-model="description"
+                    required></v-text-field>
+                </v-flex>
+            </v-layout>
+
+            <v-layout row>
+                <v-flex xs12 sm6 offset-sm3>
+                <h3>Escolher a Data & Hora</h3>
+                </v-flex>
+            </v-layout>
+<!-- data pick -->
+            <v-layout row class="mb-2">
+                    <v-layout row wrap>
+                        <v-flex xs12 sm6>
+                            <v-date-picker v-model="dates"
+                            multiple
+                            header-color="teal"
+                            color="teal lighten-1"
+                            ></v-date-picker>
+                        </v-flex>
+                        <v-flex xs12 sm6>
+                            <v-menu ref="menu" v-model="menu" :close-on-content-click="false" :nudge-right="40" :return-value.sync="dates" lazy transition="scale-transition" offset-y full-width min-width="290px">
+                                <template v-slot:activator="{ on }">
+                                    <v-combobox
+                                        v-model="dates"
+                                        multiple
+                                        chips
+                                        small-chips
+                                        label="Varios Dias"
+                                        prepend-icon="event"
+                                        readonly
+                                        v-on="on"
+                                    ></v-combobox>
+                                </template>
+                                <v-date-picker v-model="dates" multiple no-title scrollable>
+                                </v-date-picker>
+                            </v-menu>
+
+                           <!--  <v-spacer></v-spacer> -->
+
+                            <v-btn flat color="teal" @click="menu=false">
+                                Cancelar
+                            </v-btn>
+                            <v-btn flat color="teal" @click="$refs.menu.save(dates)">
+                                OK
+                            </v-btn>
+                        </v-flex>
+                    </v-layout>
+            </v-layout>
+<!-- time pick -->
+            <v-layout row>
+                <v-flex xs12 sm6 offset-sm3>
+                    <v-time-picker header-color="teal" v-model="time" format="24hr" color="green lighten-1">
+                    </v-time-picker>
+                </v-flex>
+            </v-layout>
+
+            <v-layout row>
+                <v-flex xs12 sm6 offset-sm3>
+                    <h3>DATA: {{date}}</h3>
+                    <v-btn
+                        class="primary"
+                        :disabled="!formIsValid"
+                        type="submit">Criar Evento
+                    </v-btn>
+                </v-flex>
+            </v-layout>
+<!-- fim -->
+        </form>
+      </v-flex>
+    </v-layout>
+  </v-container>
+</template>
+<script>
+export default {
+  data() {
+    return {
+      title: "",
+      location: "",
+      imageUrl: "",
+      description: "",
+      date: new Date().toISOString().slice(0, 10),
+      dates: ["2019-04-23", "2019-04-25"],
+      time: "14:00",
+      menu: false
+    };
+  },
+  computed: {
+    formIsValid() {
+      return (
+        this.title !== "" &&
+        this.location !== "" &&
+        this.imageUrl !== "" &&
+        this.description !== ""
+      );
+    },
+    submittableDateTime() {
+      const date = new Date(this.date);
+      if (typeof this.time === "string") {
+        let hours = this.time.match(/^(\d+)/)[1];
+        const minutes = this.time.match(/:(\d+)/)[1];
+        date.setHours(hours);
+        date.setMinutes(minutes);
+      } else {
+        date.setHours(this.time.getHours());
+        date.setMinutes(this.time.getMinutes());
+      }
+      alert(date);
+      return date;
+    }
+  },
+  methods: {
+    onCreateMeetup() {
+      if (!this.formIsValid) {
+        return;
+      }
+      const meetupData = {
+        title: this.title,
+        location: this.location,
+        imageUrl: this.imageUrl,
+        description: this.description,
+        date: this.submittableDateTime
+      };
+      this.$store.dispatch("createMeetup", meetupData);
+      this.$router.push("/meetups");
+    }
+  }
+};
+</script>
+
+
+
+EVENTO-----------------
+<template>
+  <v-container>
+    <v-layout row wrap>
+      <v-flex xs12>
+         <v-card>
+          <v-card-title color="teal">
+            <h4 class="teal--text">{{ meetup.title }}</h4>
+          </v-card-title>
+          <v-card-media
+            :src="meetup.imageUrl"
+            height="400px"
+          ></v-card-media>
+          <v-container fill-height fluid>
+              <v-layout fill-height>
+                <v-flex xs12 align-end flexbox>
+                  <span class="headline">Top 10 Australian beaches</span>
+                </v-flex>
+              </v-layout>
+            </v-container>
+          <v-card-text>
+            <div class="info--text">{{ meetup.date | date }} - {{ meetup.location }}</div>
+            <div>{{ meetup.description }}</div>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn outline color="teal">Participar</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-flex>
+    </v-layout>
+  </v-container>
+</template>
+<script>
+export default {
+  props: ["id"],
+  computed: {
+    meetup() {
+      return this.$store.getters.loadedMeetup(this.id);
+    }
+  }
+};
+</script>
+
+
+
+CALENDARIO -----------------------
+<template>
+    <div id="app">
+  <v-app id="inspire">
+    <v-layout>
+      <v-flex>
+        <v-sheet height="500">
+
+          <v-calendar
+            :now="today"
+            :value="today"
+            color="teal"
+            type="month"
+          >
+            <template v-slot:day="{ date }">
+              <template v-for="event in eventsMap[date]">
+                <v-menu
+                  :key="event.title"
+                  v-model="event.open"
+                  full-width
+                  offset-x
+                >
+                  <template v-slot:activator="{ on }">
+                    <div
+                      v-if="!event.time"
+                      v-ripple
+                      class="my-event"
+                      v-on="on"
+                      v-html="event.title"
+                    ></div>
+                  </template>
+                  <v-card
+                    color="grey lighten-4"
+                    min-width="350px"
+                    flat
+                  >
+                    <v-toolbar
+                      color="teal"
+                      dark
+                    >
+                      <v-btn icon>
+                        <v-icon>edit</v-icon>
+                      </v-btn>
+                      <v-toolbar-title v-html="event.title"></v-toolbar-title>
+                      <v-spacer></v-spacer>
+                      <v-btn icon>
+                        <v-icon>favorite</v-icon>
+                      </v-btn>
+                      <v-btn icon>
+                        <v-icon>more_vert</v-icon>
+                      </v-btn>
+                    </v-toolbar>
+                    <v-card-title primary-title>
+                      <span v-html="event.details"></span>
+                    </v-card-title>
+                    <v-card-actions>
+                      <v-btn
+                        flat
+                        color="secondary"
+                      >
+                        Sair
+                      </v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-menu>
+              </template>
+            </template>
+          </v-calendar>
+        </v-sheet>
+      </v-flex>
+    </v-layout>
+  </v-app>
+</div>
+</template>
+<script>
+export default {
+  data: () => ({
+    today: "2019-04-21",
+    events: [
+      {
+        title: "Treino",
+        details: "Clube Avela!",
+        date: "2019-04-27",
+        open: false
+      },
+      {
+        title: "Regata Vela Palma",
+        details: "Regata em ORC em Palma",
+        date: "2019-05-08",
+        open: true
+      },
+      {
+        title: "Regata Principe 2019",
+        details: "ORC 1!",
+        date: "2019-09-05",
+        open: false
+      }
+    ]
+  }),
+  computed: {
+    // convert the list of events into a map of lists keyed by date
+    eventsMap() {
+      const map = {};
+      this.events.forEach(e => (map[e.date] = map[e.date] || []).push(e));
+      return map;
+    }
+  },
+  methods: {
+    open(event) {
+      alert(event.title);
+    }
+  }
+};
+</script>
+<style scoped>
+.my-event {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border-radius: 2px;
+  background-color: #1867c0;
+  color: #ffffff;
+  border: 1px solid #1867c0;
+  width: 100%;
+  font-size: 12px;
+  padding: 3px;
+  cursor: pointer;
+  margin-bottom: 1px;
+}
+</style>
+
+
+UTIL-----------------------
+export users auth from firebase
+
+firebase auth:export users.json --format=json --project projectname
+
+
+
+PROFILE--------------------------------------
+<template>
+    <v-app id="inspire">
+<!-- sandwich -->
+    <v-navigation-drawer
+      v-model="drawer"
+      :clipped="$vuetify.breakpoint.lgAndUp"
+      fixed
+      app
+      temporary
+    >
+      <v-list dense>
+        <template v-for="item in items">
+          <v-layout
+            v-if="item.heading"
+            :key="item.heading"
+            row
+            align-center
+          >
+            <v-flex xs6>
+              <v-subheader v-if="item.heading">
+                {{ item.heading }}
+              </v-subheader>
+            </v-flex>
+            <v-flex xs6 class="text-xs-center">
+              <a href="#!" class="body-2 black--text">EDIT</a>
+            </v-flex>
+          </v-layout>
+          <v-list-group
+            v-else-if="item.children"
+            :key="item.text"
+            v-model="item.model"
+            :prepend-icon="item.model ? item.icon : item['icon-alt']"
+            append-icon=""
+          >
+            <template v-slot:activator>
+              <v-list-tile>
+                <v-list-tile-content>
+                  <v-list-tile-title>
+                    {{ item.text }}
+                  </v-list-tile-title>
+                </v-list-tile-content>
+              </v-list-tile>
+            </template>
+            <v-list-tile
+              v-for="(child, i) in item.children"
+              :key="i"
+              @click="onOne"
+            >
+              <v-list-tile-action v-if="child.icon">
+                <v-icon>{{ child.icon }}</v-icon>
+              </v-list-tile-action>
+              <v-list-tile-content>
+                <v-list-tile-title>
+                  {{ child.text }}
+                </v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
+          </v-list-group>
+          <v-list-tile v-else :key="item.text" @click="onFour">
+            <v-list-tile-action>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>
+                {{ item.text }}
+              </v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </template>
+      </v-list>
+    </v-navigation-drawer>
+
+
+<!-- tab -->
+    <v-toolbar
+      :clipped-left="$vuetify.breakpoint.lgAndUp"
+      color="teal"
+      dark
+      app
+      fixed
+      height="50px"
+    >
+      <v-toolbar-title style="width: 300px " class="ml-0 pl-3">
+        <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+        <span class="hidden-sm-and-down">Utilizadores</span>
+      </v-toolbar-title>
+
+      <v-text-field
+        flat
+        solo-inverted
+        hide-details
+        prepend-inner-icon="search"
+        label="Search"
+        class="hidden-sm-and-down"
+      ></v-text-field>
+      <v-spacer></v-spacer>
+      <v-btn icon>
+        <v-icon>notifications</v-icon>
+      </v-btn>
+      <v-list-tile
+          @click="onSair">
+          <v-list-tile-action>
+            <v-icon>exit_to_app</v-icon>
+          </v-list-tile-action>
+        </v-list-tile>
+      <!-- <v-btn icon large>
+        <v-avatar size="32px" tile>
+          <img :src="users.user.icon" :alt="users.user.name">
+        </v-avatar>
+      </v-btn> -->
+    </v-toolbar>
+
+<!--  btn + -->
+    <v-btn
+      fab
+      bottom
+      right
+      color="pink"
+      dark
+      fixed
+      @click="dialog = !dialog"
+    >
+      <v-icon>add</v-icon>
+    </v-btn>
+<!-- caixa criar utilizador -->
+    <v-dialog v-model="dialog" width="800px">
+      <v-card>
+        <v-card-title
+          class="grey lighten-4 py-4 title"
+        >
+          Criar Utilizador
+        </v-card-title>
+        <v-container grid-list-sm class="pa-4">
+          <v-layout row wrap>
+            <v-flex xs12 align-center justify-space-between>
+              <v-layout align-center>
+                <v-avatar size="40px" class="mr-3">
+                  <img
+                    src="//ssl.gstatic.com/s2/oz/images/sge/grey_silhouette.png"
+                    alt=""
+                  >
+                </v-avatar>
+                <v-text-field
+                  placeholder="Name"
+                  value="FALTA REFERENCIAR"
+                ></v-text-field>
+              </v-layout>
+            </v-flex>
+            <v-flex xs12>
+              <v-text-field
+                prepend-icon="mail"
+                placeholder="Email"
+                value="FALTA REFERENCIAR"
+              ></v-text-field>
+            </v-flex>
+            <v-flex xs12>
+              <v-text-field
+                type="tel"
+                prepend-icon="phone"
+                placeholder="(000) 00 0000000"
+                mask="phone"
+              ></v-text-field>
+            </v-flex>
+            <v-flex xs12>
+              <v-text-field
+                prepend-icon="notes"
+                placeholder="Notes"
+                value="FALTA REFERENCIAR"
+              ></v-text-field>
+            </v-flex>
+          </v-layout>
+        </v-container>
+        <v-card-actions>
+          <v-btn flat color="success" @click="dialog = false">Cancelar</v-btn>
+          <v-btn flat @click="dialog = false">Gravar</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+
+<!-- tabela lista de utilizadores -->
+    <v-layout align-space-around justify-start column fill-height>
+        <v-data-table
+            :headers="headers"
+            :items="users"
+            class="elevation-1"
+        >
+            <template slot="headerCell" slot-scope="props">
+            <v-tooltip bottom>
+                <template v-slot:activator="{ on }">
+                <span v-on="on">
+                    {{ props.header.text }}
+                </span>
+                </template>
+                <span>
+                {{ props.header.text }}
+                </span>
+            </v-tooltip>
+            </template>
+            <template v-slot:items="props">
+            <td>{{ props.item.name }}</td>
+            <td class="text-xs-center">{{ props.item.id}}</td>
+            <td class="text-xs-center">{{ props.item.name }}</td>
+            <td class="text-xs-center">{{ props.item.icon }}</td>
+            <td class="text-xs-center">{{ props.item.position }}</td>
+            <td class="text-xs-center">{{ props.item.ideventos }}</td>
+            <td class="justify-center layout px-0">
+                <v-icon
+                    small
+                    class="mr-2"
+                    @click="editItem(props.item)"
+                >
+                    edit
+                </v-icon>
+                <v-icon
+                    small
+                    @click="deleteItem(props.item)"
+                >
+                    delete
+                </v-icon>
+                </td>
+            </template>
+        </v-data-table>
+    </v-layout>
+
+<!-- fim-->
+    </v-app>
+</template>
+
+<script>
+export default {
+  data: () => ({
+    dialog: false,
+    drawer: null,
+    items: [
+      { icon: "contacts", text: "Contactos" },
+      {
+        icon: "keyboard_arrow_up",
+        "icon-alt": "keyboard_arrow_down",
+        text: "Dados",
+        model: true,
+        children: [{ icon: "add", text: "Criar Dados" }]
+      },
+      {
+        icon: "keyboard_arrow_up",
+        "icon-alt": "keyboard_arrow_down",
+        text: "Mais",
+        model: false,
+        children: [
+          { text: "Importar" },
+          { text: "Exportar" },
+          { text: "Imprimir" }
+        ]
+      },
+      { icon: "chat_bubble", text: "Ligar" }
+    ],
+    headers: [
+      {
+        text: "Utilizadores",
+        align: "left",
+        sortable: false,
+        value: "name"
+      },
+      { text: "Id", value: "id" },
+      { text: "Nome", value: "name" },
+      { text: "Avatar", value: "icon" },
+      { text: "Posicao", value: "position" },
+      { text: "Id Eventos", value: "ideventos" },
+      { text: "Alterar", value: "name", sortable: false }
+    ],
+    users: [
+      {
+        user: "",
+        name: "",
+        icon: "",
+        position: "",
+        ideventos: 3
+      }
+    ],
+    editedIndex: -1,
+    editedItem: {
+      id: "",
+      name: "",
+      icon: "",
+      position: "",
+      ideventos: 0
+    },
+    defaultItem: {
+      id: "",
+      name: "",
+      icon: "",
+      position: "",
+      ideventos: 0
+    }
+  }),
+  created() {
+    //this.initialize();
+  },
+  computed: {
+    users() {
+      return this.$store.getters.loadedUsers;
+    },
+    formTitle() {
+      return this.editedIndex === -1 ? "Novo User" : "Editar User";
+    },
+    user() {
+      return this.$store.getters.user;
+    },
+    error() {
+      return this.$store.getters.error;
+    },
+    loading() {
+      return this.$store.getters.loading;
+    }
+  },
+  watch: {
+    dialog(val) {
+      val || this.close();
+    }
+  },
+  methods: {
+    initialize() {
+      this.users = [
+        {
+          user: "id",
+          name: "xani",
+          icon: "persson",
+          position: "trimmer",
+          ideventos: 4
+        },
+        {
+          user: "id",
+          name: "xico",
+          icon: "persson",
+          position: "taylor",
+          ideventos: 4
+        },
+        {
+          user: "id",
+          name: "morgado",
+          icon: "persson",
+          position: "skipper",
+          ideventos: 4
+        },
+        {
+          user: "id",
+          name: "pedro",
+          icon: "persson",
+          position: "tactician",
+          ideventos: 2
+        },
+        {
+          user: "id",
+          name: "batel",
+          icon: "persson",
+          position: "mainsail trimme",
+          ideventos: 5
+        },
+        {
+          user: "id",
+          name: "andre",
+          icon: "persson",
+          position: "proa",
+          ideventos: 5
+        },
+        {
+          user: "id",
+          name: "jorge",
+          icon: "persson",
+          position: "sailor",
+          ideventos: 3
+        }
+      ];
+    },
+    onSair() {
+      this.$router.push("/");
+    },
+    editItem(item) {
+      this.editedIndex = this.users.indexOf(item);
+      this.editedItem = Object.assign({}, item);
+      this.dialog = true;
+    },
+    deleteItem(item) {
+      const index = this.users.indexOf(item);
+      confirm("Tem a certeza que quer apagar este utilizador?") &&
+        this.users.splice(index, 1);
+    },
+    close() {
+      this.dialog = false;
+      setTimeout(() => {
+        this.editedItem = Object.assign({}, this.defaultItem);
+        this.editedIndex = -1;
+      }, 300);
+    },
+    save() {
+      if (this.editedIndex > -1) {
+        Object.assign(this.users[this.editedIndex], this.editedItem);
+      } else {
+        this.users.push(this.editedItem);
+      }
+      this.close();
+    },
+    onOne() {
+      return "One";
+    },
+    onFour() {
+      return "Four";
+    },
+    onTen() {
+      return "Ten";
+    }
+  },
+  props: {
+    source: String
+  }
+};
+</script>
+
+
+CRIAR EVENTO ___________________________
+
+<template>
+  <v-container>
+    <v-layout row>
+        <v-flex xs12 sm6 offset-sm3>
+            <h4>Criar um novo Evento</h4>
+        </v-flex>
+    </v-layout>
+
+    <v-layout row>
+      <v-flex xs12>
+        <form @submit.prevent="onCreateMeetup">
+<!-- data input text -->
+            <v-layout row>
+                <v-flex xs12 sm6 offset-sm3>
+                <v-text-field
+                    name="title"
+                    label="Titulo"
+                    id="title"
+                    v-model="title"
+                    required></v-text-field>
+                </v-flex>
+            </v-layout>
+            <v-layout row>
+                <v-flex xs12 sm6 offset-sm3>
+                <v-text-field
+                    name="location"
+                    label="Local"
+                    id="location"
+                    v-model="location"
+                    required></v-text-field>
+                </v-flex>
+            </v-layout>
+            <v-layout row>
+                <v-flex xs12 sm6 offset-sm3>
+                <v-text-field
+                    name="imageUrl"
+                    label="Image URL"
+                    id="image-url"
+                    v-model="imageUrl"
+                    required></v-text-field>
+                </v-flex>
+            </v-layout>
+            <v-layout row>
+                <v-flex xs12 sm6 offset-sm3>
+                <img :src="imageUrl" height="150">
+                </v-flex>
+            </v-layout>
+            <v-layout row>
+                <v-flex xs12 sm6 offset-sm3>
+                <v-text-field
+                    name="description"
+                    label="Descrição"
+                    id="description"
+                    v-model="description"
+                    required></v-text-field>
+                </v-flex>
+            </v-layout>
+            <v-layout row>
+                <v-flex xs12 sm6 offset-sm3>
+                <v-text-field
+                    name="classes"
+                    label="Classes"
+                    id="classes"
+                    v-model="classes"
+                    required></v-text-field>
+                </v-flex>
+            </v-layout>
+
+            <v-layout row>
+                <v-flex xs12 sm6 offset-sm3>
+                <h4>Escolher a Data & Hora</h4>
+                </v-flex>
+            </v-layout>
+<!-- data pick -->
+            <v-layout row class="mb-2">
+                    <v-layout row wrap>
+                        <v-flex xs12 sm6>
+                            <v-date-picker v-model="dates"
+                            multiple
+                            header-color="teal"
+                            color="teal lighten-1"
+                            ></v-date-picker>
+                        </v-flex>
+                        <v-spacer></v-spacer>
+                        <v-flex xs12 sm6>
+                            <v-menu ref="menu" v-model="menu" :close-on-content-click="false" :nudge-right="40" :return-value.sync="dates" lazy transition="scale-transition" >
+                                <template v-slot:activator="{ on }">
+                                    <v-combobox hidden
+                                        v-model="dates"
+                                        multiple
+                                        chips
+                                        small-chips
+                                        label="Varios Dias"
+                                        prepend-icon="event"
+                                        readonly
+                                        v-on="on"
+                                    ></v-combobox>
+                                </template>
+                                <v-date-picker
+                                    v-model="dates"
+                                    multiple
+                                    no-title
+                                    scrollable>
+                                </v-date-picker>
+                            </v-menu>
+
+
+
+                            <!-- <v-btn flat color="teal" @click="menu=false">
+                                Cancelar
+                            </v-btn>
+                            <v-btn flat color="teal" @click="$refs.menu.save(dates)">
+                                OK
+                            </v-btn> -->
+                        </v-flex>
+                    </v-layout>
+            </v-layout>
+<!-- time pick -->
+            <v-layout row>
+                <v-flex xs12 sm6 offset-sm3>
+                    <v-time-picker header-color="teal" v-model="time" format="24hr" color="green lighten-1">
+                    </v-time-picker>
+                </v-flex>
+            </v-layout>
+<!-- validar -->
+            <v-layout row>
+                <v-flex xs12 sm6 offset-sm3>
+                    <h4>DATA: {{date}}</h4>
+                    <v-btn outline
+                        class="teal"
+                        :disabled="!formIsValid"
+                        type="submit">Criar Evento
+                    </v-btn>
+                </v-flex>
+            </v-layout>
+<!-- fim -->
+        </form>
+      </v-flex>
+    </v-layout>
+  </v-container>
+</template>
+
+
+<script>
+export default {
+  data() {
+    return {
+      title: "",
+      location: "",
+      imageUrl: "",
+      description: "",
+      classes: "ORC",
+      date: new Date().toISOString().slice(0, 10),
+      dates: ["2019-04-23", "2019-04-25"],
+      time: "14:00",
+      menu: false
+    };
+  },
+  computed: {
+    formIsValid() {
+      return (
+        this.title !== "" &&
+        this.location !== "" &&
+        this.imageUrl !== "" &&
+        this.description !== "" &&
+        this.classes !== ""
+      );
+    },
+    submittableDateTime() {
+      const date = new Date(this.date);
+
+      if (this.dates != null) {
+        let dataInicio = this.dates[0];
+        alert("DATES " + this.dates + " -0- " + dataInicio);
+        return dataInicio;
+      } else {
+        var d = new Date(date),
+          month = "" + (d.getMonth() + 1),
+          day = "" + d.getDate(),
+          year = d.getFullYear();
+
+        if (month.length < 2) month = "0" + month;
+        if (day.length < 2) day = "0" + day;
+        alert("d " + [year, month, day].join("-"));
+        return [year, month, day].join("-");
+      }
+    }
+  },
+  methods: {
+    onCreateMeetup() {
+      if (!this.formIsValid) {
+        return;
+      }
+      const meetupData = {
+        title: this.title,
+        location: this.location,
+        imageUrl: this.imageUrl,
+        description: this.description,
+        classes: this.classes,
+        date: this.submittableDateTime,
+        dates: this.dates,
+        horaInicio: this.time
+      };
+      this.$store.dispatch("createMeetup", meetupData);
+      this.$router.push("/meetups");
+    }
+  }
+};
+</script>
+
+
+
+SINGUP-----------------------
+<template>
+  <v-container>
+<!-- alert -->
+    <v-layout row v-if="error">
+      <v-flex xs12 sm6 offset-sm3>
+        <app-alert @dismissed="onDismissed" :text="error.message"></app-alert>
+      </v-flex>
+    </v-layout>
+
+    <v-layout row>
+      <v-flex xs12 sm6 offset-sm3>
+        <v-card>
+          <v-card-text>
+            <v-container>
+<!-- form -->
+              <form @submit.prevent="onSignup">
+                <v-layout row>
+                  <v-flex xs12>
+                    <v-text-field
+                      name="name"
+                      label="Nome"
+                      id="name"
+                      v-model="name"
+                      required></v-text-field>
+                  </v-flex>
+                </v-layout>
+                <v-layout row>
+                  <v-flex xs12>
+                    <v-text-field
+                      name="email"
+                      label="Email"
+                      id="email"
+                      v-model="email"
+                      type="email"
+                      required></v-text-field>
+                  </v-flex>
+                </v-layout>
+                <v-layout row>
+                  <v-flex xs12>
+                    <v-text-field
+                      name="password"
+                      label="Password"
+                      id="password"
+                      v-model="password"
+                      type="password"
+                      required></v-text-field>
+                  </v-flex>
+                </v-layout>
+                <v-layout row>
+                  <v-flex xs12>
+                    <v-text-field
+                      name="confirmPassword"
+                      label="Confirm Password"
+                      id="confirmPassword"
+                      v-model="confirmPassword"
+                      type="password"
+                      :rules="[comparePasswords]"></v-text-field>
+                  </v-flex>
+                </v-layout>
+
+                <v-layout row>
+                  <v-flex xs12>
+                    <v-btn type="submit" :disabled="loading" :loading="loading">
+                      Assinar
+                       <span slot="loader" class="custom-loader">
+                        <v-icon light>cached</v-icon>
+                       </span>
+                    </v-btn>
+                  </v-flex>
+                </v-layout>
+              </form>
+              <!-- membro -->
+                <v-container fluid>
+                <v-checkbox   :disabled="!formIsValid" v-model="checkbox" @change="onUsers">
+                    <template :disabled="!formIsValid" v-slot:label>
+                    <div>
+                        Eu aceito entrar para a equipa
+                        <v-tooltip bottom>
+                        <template v-slot:activator="{ on }">
+                            <a
+                            target="_blank"
+                            href="http://portocarodos.eu"
+                            @click.stop
+                            v-on="on"
+                            >
+                            PortocaroDos
+                            </a>
+                        </template>
+                        Ler os requesitos
+                        </v-tooltip>
+                    </div>
+                    </template>
+                </v-checkbox>
+                </v-container>
+            </v-container>
+          </v-card-text>
+        </v-card>
+      </v-flex>
+    </v-layout>
+  </v-container>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      checkbox: false,
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: ""
+    };
+  },
+  computed: {
+    comparePasswords() {
+      return this.password !== this.confirmPassword
+        ? "Password não é igual!!!"
+        : "";
+    },
+    user() {
+      return this.$store.getters.user;
+    },
+    error() {
+      return this.$store.getters.error;
+    },
+    loading() {
+      console.log("LOADING");
+      return this.$store.getters.loading;
+    },
+    formIsValid() {
+      return this.name !== "" && this.email !== "" && this.password !== "";
+    }
+  },
+  watch: {
+    user(value) {
+      if (value !== null && value !== undefined) {
+        this.$router.push("/");
+      }
+    }
+  },
+  methods: {
+    onSignup() {
+      this.$store.dispatch("signUserUp", {
+        email: this.email,
+        password: this.password
+      });
+    },
+    onUsers() {
+      if (!this.formIsValid) {
+        return;
+      }
+      this.$store.dispatch("createUsers", {
+        name: this.name,
+        email: this.email,
+        password: this.password
+      });
+    },
+    onDismissed() {
+      this.$store.dispatch("clearError");
+    }
+  }
+};
+</script>
+
+

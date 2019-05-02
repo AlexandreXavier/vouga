@@ -27,6 +27,21 @@ export default new Vuex.Store({
       }
     ],
     user: null,
+    imageUrl: "assets/profile_placeholder.png",
+    utilizador: null,
+    photoUser: null,
+    loadedUsers: [
+      {
+        name: "xani",
+        email: "xani@getnada.com",
+        password: "123456"
+      },
+      {
+        name: "xico",
+        email: "xico@getnada.com",
+        password: "123456"
+      }
+    ],
     loading: false,
     error: null
   },
@@ -37,8 +52,31 @@ export default new Vuex.Store({
     createMeetup(state, payload) {
       state.loadedMeetups.push(payload);
     },
+    setLoadedUsers(state, payload) {
+      state.loadedUsers = payload;
+    },
+    createUsers(state, payload) {
+      state.loadedUsers.push(payload);
+    },
+    setUtilizador(state, payload) {
+      state.utilizador = payload.name;
+    },
     setUser(state, payload) {
+      alert(
+        "Meet -" +
+          payload.registeredMeetups +
+          " USER -" +
+          payload.id +
+          " FOTO GOOGLE - " +
+          payload.photoUrl
+      );
       state.user = payload;
+    },
+    setPhotoUser(state, payload) {
+      alert(
+        "FOTO -" + payload.photoUrl + " EVENTOS - " + payload.registeredMeetups
+      );
+      state.photoUser = payload.photoUrl;
     },
     setLoading(state, payload) {
       state.loading = payload;
@@ -85,7 +123,10 @@ export default new Vuex.Store({
         location: payload.location,
         imageUrl: payload.imageUrl,
         description: payload.description,
-        date: payload.date.toISOString(),
+        date: payload.date,
+        dates: payload.dates,
+        horaInicio: payload.dates,
+        classes: payload.classes,
         creatorId: getters.user.id
       };
       firebase
@@ -104,6 +145,66 @@ export default new Vuex.Store({
         });
       // Reach out to firebase and store it
     },
+    loadUsers({ commit }) {
+      commit("setLoading", true);
+      firebase
+        .database()
+        .ref("users")
+        .once("value")
+        .then(data => {
+          const users = [];
+          const obj = data.val();
+          for (let key in obj) {
+            users.push({
+              id: key,
+              name: obj[key].name,
+              email: obj[key].email,
+              password: obj[key].password
+            });
+          }
+          //Carrega a variavel users com os dados do firebase
+          commit("setLoadedUsers", users);
+          commit("setUtilizador", users);
+          commit("setLoading", false);
+        })
+        .catch(error => {
+          console.log(error);
+          commit("setLoading", false);
+        });
+    },
+    createUsers({ commit }, payload) {
+      const users = {
+        name: payload.name,
+        email: payload.email,
+        password: payload.password,
+        imageUrl: payload.imageUrl
+      };
+      alert(
+        "CREATE NEW USERS  " +
+          users.name +
+          "--" +
+          users.email +
+          " ---- " +
+          users.password +
+          "------" +
+          users.imageUrl
+      );
+      firebase
+        .database()
+        .ref("users")
+        .push(users)
+        .then(data => {
+          const key = data.key;
+          commit("createUsers", {
+            ...users,
+            id: key
+          });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      // Reach out to firebase and store it
+    },
     signUserUp({ commit }, payload) {
       commit("setLoading", true);
       commit("clearError");
@@ -114,7 +215,7 @@ export default new Vuex.Store({
           commit("setLoading", false);
           const newUser = {
             id: user.uid,
-            registeredMeetups: []
+            registeredMeetups: ["Jo", "Pe"]
           };
           commit("setUser", newUser);
         })
@@ -134,7 +235,79 @@ export default new Vuex.Store({
           commit("setLoading", false);
           const newUser = {
             id: user.uid,
-            registeredMeetups: []
+            registeredMeetups: ["SignIn Normal"]
+          };
+          commit("setUser", newUser);
+        })
+        .catch(error => {
+          commit("setLoading", false);
+          commit("setError", error);
+          console.log(error);
+        });
+    },
+    signUserInGoogle({ commit }) {
+      commit("setLoading", true);
+      commit("clearError");
+      firebase
+        .auth()
+        .signInWithPopup(new firebase.auth.GoogleAuthProvider())
+        .then(user => {
+          commit("setLoading", false);
+          const newUser = {
+            id: user.uid,
+            name: user.displayName,
+            email: user.email,
+            photoUrl: user.photoURL,
+            registeredMeetups: ["Google"]
+          };
+          commit("setUser", newUser);
+          //commit("setPhotoUser", newUser);
+        })
+        .catch(error => {
+          commit("setLoading", false);
+          commit("setError", error);
+          console.log(error);
+        });
+    },
+    signUserInFacebook({ commit }) {
+      commit("setLoading", true);
+      commit("clearError");
+      //alert("STORE FACEBOOK");
+      firebase
+        .auth()
+        .signInWithPopup(new firebase.auth.FacebookAuthProvider())
+        .then(user => {
+          commit("setLoading", false);
+          const newUser = {
+            id: user.uid,
+            name: user.displayName,
+            email: user.email,
+            photoUrl: user.photoURL,
+            registeredMeetups: ["Facebook"]
+          };
+          commit("setUser", newUser);
+          //dispach
+          commit("setPhotoUser", newUser.photoUrl);
+        })
+        .catch(error => {
+          commit("setLoading", false);
+          commit("setError", error);
+          console.log(error);
+        });
+    },
+    signUserInTwitter({ commit }) {
+      commit("setLoading", true);
+      commit("clearError");
+      firebase
+        .auth()
+        .signInWithPopup(new firebase.auth.TwitterAuthProvider())
+        .then(user => {
+          commit("setLoading", false);
+          const newUser = {
+            id: user.uid,
+            name: user.displayName,
+            email: user.email,
+            photoUrl: user.photoURL
           };
           commit("setUser", newUser);
         })
@@ -145,9 +318,10 @@ export default new Vuex.Store({
         });
     },
     autoSignIn({ commit }, payload) {
-      //alert("USER-ID: " + payload.uid);
-
-      commit("setUser", { id: payload.uid, registeredMeetups: [] });
+      commit("setUser", {
+        id: payload.uid,
+        registeredMeetups: []
+      });
     },
     logout({ commit }) {
       firebase.auth().signOut();
@@ -158,11 +332,18 @@ export default new Vuex.Store({
     }
   },
   getters: {
+    loadedUsers(state) {
+      return state.loadedUsers.sort((usersA, usersB) => {
+        return usersA.date > usersB.date;
+      });
+    },
     loadedMeetups(state) {
-      //alert("DENTRO GETTER " + state);
       return state.loadedMeetups.sort((meetupA, meetupB) => {
         return meetupA.date > meetupB.date;
       });
+    },
+    featuredUsers(state, getters) {
+      return getters.loadedUsers.slice(0, 5);
     },
     featuredMeetups(state, getters) {
       return getters.loadedMeetups.slice(0, 5);
@@ -175,8 +356,13 @@ export default new Vuex.Store({
       };
     },
     user(state) {
-      //alert("USER " + state.user);
       return state.user;
+    },
+    getProfilePicUrl(state) {
+      return state.photoUser;
+    },
+    utilizador(state) {
+      return state.utilizador;
     },
     loading(state) {
       return state.loading;

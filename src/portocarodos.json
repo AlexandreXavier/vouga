@@ -1,0 +1,25 @@
+{
+  "files": {
+    "-LdDrMk_BpoaFp0-Ko_K": {
+      "deleted": false,
+      "name": "1556101295554.jpg",
+      "url": "https://firebasestorage.googleapis.com/v0/b/portocarodos-93f3e.appspot.com/o/files%2F1556101295554.jpg?alt=media&token=80b2dde0-4916-4c7e-854b-cf8268f91701"
+    }
+  },
+  "meetups": {
+    "-LdKJEhxea3v8bFWb_Gs": {
+      "creatorId": "MzvV3Iz5gXSjmYTPHV8f1xf8mlg1",
+      "date": "2019-04-27",
+      "dates": ["2019-05-10", "2019-05-11", "2019-05-12"],
+      "description": "asdasdasdas",
+      "imageUrl": "http://www.52superseries.com/wp-content/gallery/2018-puerto-portals-52-super-series-sailing-week/52SS_NM_180820_0545.jpg",
+      "location": "Porto",
+      "title": "Regata Mateus Rose"
+    }
+  },
+  "users": {
+    "name": "rui",
+    "email": "rui@getmail.com",
+    "password": "123456"
+  }
+}

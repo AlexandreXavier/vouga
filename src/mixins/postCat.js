@@ -1,13 +1,17 @@
 const postCat = {
   methods: {
-    postCat(catUrl, title) {
-      this.$root.$firebaseRefs.cat
+    postCat(catUrl, name, gravado, gerado, data, tipo, custom) {
+      this.$root.$firebaseRefs.files
         .push({
           url: catUrl,
-          comment: title,
-          info: "Posto por " + this.$store.getters.user,
-          created_at: -1 * new Date().getTime()
+          name: name,
+          bucket: gravado,
+          metageneration: gerado,
+          updated: data,
+          contentType: tipo,
+          customMetadata: custom
         })
+
         .then(this.$router.push("/"));
     }
   }
