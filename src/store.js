@@ -27,7 +27,6 @@ export default new Vuex.Store({
       }
     ],
     user: null,
-    imageUrl: "assets/profile_placeholder.png",
     utilizador: null,
     photoUser: null,
     loadedUsers: [
@@ -176,8 +175,7 @@ export default new Vuex.Store({
       const users = {
         name: payload.name,
         email: payload.email,
-        password: payload.password,
-        imageUrl: payload.imageUrl
+        password: payload.password
       };
       alert(
         "CREATE NEW USERS  " +
@@ -185,9 +183,7 @@ export default new Vuex.Store({
           "--" +
           users.email +
           " ---- " +
-          users.password +
-          "------" +
-          users.imageUrl
+          users.password
       );
       firebase
         .database()
