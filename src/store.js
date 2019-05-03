@@ -31,12 +31,14 @@ export default new Vuex.Store({
       {
         name: "xani",
         email: "xani@getnada.com",
-        password: "123456"
+        password: "123456",
+        Id: ""
       },
       {
         name: "xico",
         email: "xico@getnada.com",
-        password: "123456"
+        password: "123456",
+        Id: ""
       }
     ],
     loading: false,
@@ -56,17 +58,8 @@ export default new Vuex.Store({
       state.loadedUsers.push(payload);
     },
     setUser(state, payload) {
-      /* alert(
-        "Meet -" +
-          payload.registeredMeetups +
-          " USER -" +
-          payload.id +
-          " FOTO GOOGLE - " +
-          payload.photoUrl
-      ); */
       state.user = payload;
     },
-
     setLoading(state, payload) {
       state.loading = payload;
     },
@@ -107,6 +100,7 @@ export default new Vuex.Store({
         });
     },
     createMeetup({ commit, getters }, payload) {
+      alert("MEET -" + getters);
       const meetup = {
         title: payload.title,
         location: payload.location,
@@ -148,7 +142,8 @@ export default new Vuex.Store({
               id: key,
               name: obj[key].name,
               email: obj[key].email,
-              password: obj[key].password
+              password: obj[key].password,
+              creatorId: obj[key].creatorId
             });
           }
           //Carrega a variavel users com os dados do firebase
@@ -160,11 +155,12 @@ export default new Vuex.Store({
           commit("setLoading", false);
         });
     },
-    createUsers({ commit }, payload) {
+    createUsers({ commit, getters }, payload) {
       const users = {
         name: payload.name,
         email: payload.email,
-        password: payload.password
+        password: payload.password,
+        Id: getters.user.id
       };
       alert(
         "CREATE NEW USERS  " +
@@ -172,7 +168,9 @@ export default new Vuex.Store({
           "--" +
           users.email +
           " ---- " +
-          users.password
+          users.password +
+          "-------" +
+          users.creatorId
       );
       firebase
         .database()
@@ -180,6 +178,7 @@ export default new Vuex.Store({
         .push(users)
         .then(data => {
           const key = data.key;
+          //chama a mutation createUsers
           commit("createUsers", {
             ...users,
             id: key
@@ -199,9 +198,9 @@ export default new Vuex.Store({
         .then(user => {
           commit("setLoading", false);
           const newUser = {
-            id: user.uid,
-            registeredMeetups: ["Jo", "Pe"]
+            id: user.uid
           };
+          alert("UP-------- : " + newUser.id);
           commit("setUser", newUser);
         })
         .catch(error => {
@@ -219,8 +218,7 @@ export default new Vuex.Store({
         .then(user => {
           commit("setLoading", false);
           const newUser = {
-            id: user.uid,
-            registeredMeetups: ["SignIn Normal"]
+            id: user.uid
           };
           commit("setUser", newUser);
         })
@@ -301,8 +299,7 @@ export default new Vuex.Store({
     },
     autoSignIn({ commit }, payload) {
       commit("setUser", {
-        id: payload.uid,
-        registeredMeetups: []
+        id: payload.uid
       });
     },
     logout({ commit }) {

@@ -93,7 +93,7 @@ export default {
   computed: {
     menuItems() {
       let menuItems = [
-        { icon: "face", title: "Registar-se", link: "/signup" },
+        { icon: "face", title: "Registar", link: "/signup" },
         { icon: "lock_open", title: "Entrar", link: "/signin" }
       ];
       if (this.userIsAuthenticated) {

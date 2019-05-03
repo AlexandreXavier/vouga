@@ -20,6 +20,7 @@
                       name="name"
                       label="Nome"
                       id="name"
+                      text-lowercase
                       v-model="name"
                       :rules="nameRules"
                       :counter="10"
@@ -67,6 +68,17 @@
                   </v-flex>
                 </v-layout>
 <!-- submit -->
+                <v-layout row>
+                  <v-flex xs12 md4>
+                    <v-text-field
+                      name="code"
+                      id="code"
+                      v-model="user.id"
+                      disabled
+                      >
+                      </v-text-field>
+                  </v-flex>
+                </v-layout>
                 <v-layout align-end>
                     <v-flex xs12 md4>
                         <v-btn outline color="primary" type="submit" :disabled="loading" :loading="loading">
@@ -75,29 +87,10 @@
                                 <v-icon light>cached</v-icon>
                             </span>
                         </v-btn>
+                        <v-btn @click="onUsers" >
+                            Team
+                        </v-btn>
                     </v-flex>
-
-                    <v-checkbox  :disabled="!formIsValid" v-model="checkbox" @change="onUsers">
-                    <template :disabled="!formIsValid" v-slot:label>
-                    <div>
-                        Eu aceito entrar para
-                        <v-tooltip bottom>
-                        <template v-slot:activator="{ on }">
-                            <a
-                            target="_blank"
-                            href="http://portocarodos.eu"
-                            @click.stop
-                            v-on="on"
-                            >
-                            PortocaroDos
-                            </a>
-
-                        </template>
-                        Ler os requesitos
-                        </v-tooltip>
-                    </div>
-                    </template>
-                    </v-checkbox>
                 </v-layout>
 <!-- end  -->
               </form>
@@ -113,7 +106,6 @@
 export default {
   data() {
     return {
-      checkbox: false,
       name: "",
       nameRules: [
         v => !!v || "O nome é necessário",
@@ -139,9 +131,6 @@ export default {
         ? "Password não é igual!!!"
         : "OK";
     },
-    user() {
-      return this.$store.getters.user;
-    },
     error() {
       return this.$store.getters.error;
     },
@@ -150,12 +139,17 @@ export default {
     },
     formIsValid() {
       return this.name !== "" && this.email !== "" && this.password !== "";
+    },
+    user() {
+      return this.$store.state.user;
     }
   },
   watch: {
     user(value) {
-      if (value !== null && value !== undefined) {
-        this.$router.push("/");
+      alert("VALUE --" + value.id);
+      if (value !== null && value !== undefined && value.id !== "") {
+        //this.$router.push("/");
+        this.code = value.id.toString();
       }
     }
   },
@@ -164,8 +158,7 @@ export default {
       this.$store.dispatch("signUserUp", {
         email: this.email,
         password: this.password
-      }),
-        this.onUsers();
+      });
     },
     onDismissed() {
       this.$store.dispatch("clearError");
@@ -177,8 +170,10 @@ export default {
       this.$store.dispatch("createUsers", {
         name: this.name,
         email: this.email,
-        password: this.password
+        password: this.password,
+        creatorId: ""
       });
+      alert("FIM TIME OUT");
     }
   }
 };

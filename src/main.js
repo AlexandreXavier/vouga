@@ -5,6 +5,8 @@ import Vuefire from "vuefire";
 import VueResource from "vue-resource";
 import * as firebase from "firebase";
 import { database } from "@/services/firebase";
+//import { team } from "@/services/firebase";
+//import { currentUser } from "@/services/firebase";
 import router from "./route";
 import store from "./store";
 import "./registerServiceWorker";
@@ -35,6 +37,7 @@ new Vue({
       }
     });
     //carregar os eventos gravados na db do firebase
+
     this.$store.dispatch("loadMeetups");
     this.$store.dispatch("loadUsers");
   }
