@@ -40,8 +40,9 @@
                       required></v-text-field>
                   </v-flex>
                 </v-layout>
+
                 <v-layout row>
-                     <v-flex xs12 md4>
+                <v-flex xs12 md4>
                     <v-text-field
                       name="password"
                       label="Password"
@@ -52,12 +53,13 @@
                       type="password"
                       required>
                     </v-text-field>
- </v-flex>
-
+                </v-flex>
                 </v-layout>
+
                 <v-layout row>
                   <v-flex xs12 md4>
                     <v-text-field
+                      color="primary"
                       name="confirmPassword"
                       label="Confirm Password"
                       id="confirmPassword"
@@ -68,27 +70,37 @@
                   </v-flex>
                 </v-layout>
 <!-- submit -->
-                <v-layout row>
-                  <v-flex xs12 md4>
+            <v-layout row>
+                <v-flex xs12 >
                     <v-text-field
                       name="code"
                       id="code"
-                      v-model="user.id"
+                      v-model="user"
+                      :rules="codeRules"
                       disabled
                       >
                       </v-text-field>
-                  </v-flex>
+                </v-flex>
                 </v-layout>
-                <v-layout align-end>
-                    <v-flex xs12 md4>
-                        <v-btn outline color="primary" type="submit" :disabled="loading" :loading="loading">
-                            Assinar
-                            <span slot="loader" class="custom-loader">
-                                <v-icon light>cached</v-icon>
-                            </span>
+                <v-layout row>
+                    <v-flex xs12>
+                        <v-btn
+                            outline
+                            color="primary"
+                            type="submit"
+                            :disabled="loading"
+                            :loading="loading">
+                            Gerar Codigo para Assinar
+                                <span slot="loader" class="custom-loader">
+                                    <v-icon light>cached</v-icon>
+                                </span>
                         </v-btn>
-                        <v-btn @click="onUsers" >
-                            Team
+                    </v-flex>
+                    <v-flex xs12 m4>
+                        <v-btn  outline
+                                color="primary"
+                                @click="onUsers">
+                                Assinar
                         </v-btn>
                     </v-flex>
                 </v-layout>
@@ -106,7 +118,9 @@
 export default {
   data() {
     return {
+      tudo: false,
       name: "",
+      codeRules: [v => !!v || "FALTA"],
       nameRules: [
         v => !!v || "O nome é necessário",
         v => v.length <= 10 || "O nome tem que ter menos que 10 caracteres",
@@ -146,15 +160,15 @@ export default {
   },
   watch: {
     user(value) {
-      alert("VALUE --" + value.id);
-      if (value !== null && value !== undefined && value.id !== "") {
-        //this.$router.push("/");
-        this.code = value.id.toString();
+      alert("VALUE --" + this.tudo);
+      if (value !== null && value !== undefined && this.tudo == true) {
+        this.$router.push("/");
       }
     }
   },
   methods: {
     onSignup() {
+      alert("DENTRO");
       this.$store.dispatch("signUserUp", {
         email: this.email,
         password: this.password
@@ -171,9 +185,12 @@ export default {
         name: this.name,
         email: this.email,
         password: this.password,
-        creatorId: ""
+        Id: ""
       });
+      this.tudo = true;
+
       alert("FIM TIME OUT");
+      this.$router.push("/");
     }
   }
 };

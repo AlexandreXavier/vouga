@@ -206,7 +206,6 @@
             </template>
             <template v-slot:items="props">
             <td>{{ props.item.name }}</td>
-            <td class="text-xs-left">{{ props.item.name }}</td>
             <td class="text-xs-left">{{ props.item.email }}</td>
             <td class="text-xs-left">{{ props.item.password }}</td>
             <td class="justify-center layout px-0">
@@ -264,7 +263,6 @@ export default {
       { icon: "chat_bubble", text: "Ligar" }
     ],
     headers: [
-      { text: "Id", value: "id" },
       { text: "Nome", value: "name" },
       { text: "Email", value: "email" },
       { text: "password", value: "password" },
