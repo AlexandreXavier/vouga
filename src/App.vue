@@ -10,10 +10,10 @@
 <!-- user avatar -->
         <v-toolbar-title>
             <v-btn fab dark large color="white" v-if="userIsAuthenticated">
-             <v-img
-            :src="fotoUser" width="24" >
-            </v-img>
-        </v-btn>
+                <v-img
+                :src="image" width="24" >
+                </v-img>
+            </v-btn>
 
            <!--  <pre>{{"UTI: "+user.displayName}}</pre> -->
             <router-link to="/" tag="span" style="cursor: pointer">
@@ -82,10 +82,12 @@
 </template>
 
 <script>
+import img from "./assets/profile.png";
 export default {
   data() {
     return {
-      sideNav: false
+      sideNav: false,
+      image: img
     };
   },
   computed: {
@@ -117,16 +119,13 @@ export default {
     },
     user() {
       return this.$store.state.user;
-    },
-    utilizador() {
-      return this.$store.getters.utilizador !== null;
-    },
-    fotoUser() {
-      return (
-        this.$store.getters.getProfilePicUrl !== null &&
-        this.$store.getters.getProfilePicUrl !== undefined
-      );
     }
+    /* imagem() {
+      return (
+        this.$store.state.user.providerData.profile.photoURL !== null &&
+        this.$store.state.user.providerData.profile.photoURL !== undefined
+      );
+    }*/
   },
   methods: {
     onLogout() {

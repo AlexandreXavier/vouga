@@ -27,8 +27,6 @@ export default new Vuex.Store({
       }
     ],
     user: null,
-    utilizador: null,
-    photoUser: null,
     loadedUsers: [
       {
         name: "xani",
@@ -57,26 +55,18 @@ export default new Vuex.Store({
     createUsers(state, payload) {
       state.loadedUsers.push(payload);
     },
-    setUtilizador(state, payload) {
-      state.utilizador = payload.name;
-    },
     setUser(state, payload) {
-      alert(
+      /* alert(
         "Meet -" +
           payload.registeredMeetups +
           " USER -" +
           payload.id +
           " FOTO GOOGLE - " +
           payload.photoUrl
-      );
+      ); */
       state.user = payload;
     },
-    setPhotoUser(state, payload) {
-      alert(
-        "FOTO -" + payload.photoUrl + " EVENTOS - " + payload.registeredMeetups
-      );
-      state.photoUser = payload.photoUrl;
-    },
+
     setLoading(state, payload) {
       state.loading = payload;
     },
@@ -163,7 +153,6 @@ export default new Vuex.Store({
           }
           //Carrega a variavel users com os dados do firebase
           commit("setLoadedUsers", users);
-          commit("setUtilizador", users);
           commit("setLoading", false);
         })
         .catch(error => {
@@ -257,7 +246,6 @@ export default new Vuex.Store({
             registeredMeetups: ["Google"]
           };
           commit("setUser", newUser);
-          //commit("setPhotoUser", newUser);
         })
         .catch(error => {
           commit("setLoading", false);
@@ -282,8 +270,6 @@ export default new Vuex.Store({
             registeredMeetups: ["Facebook"]
           };
           commit("setUser", newUser);
-          //dispach
-          commit("setPhotoUser", newUser.photoUrl);
         })
         .catch(error => {
           commit("setLoading", false);
@@ -353,12 +339,6 @@ export default new Vuex.Store({
     },
     user(state) {
       return state.user;
-    },
-    getProfilePicUrl(state) {
-      return state.photoUser;
-    },
-    utilizador(state) {
-      return state.utilizador;
     },
     loading(state) {
       return state.loading;
