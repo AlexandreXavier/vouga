@@ -22,6 +22,19 @@ const currentUser = user; */
 // firebase collections
 //const usersCollection = db.collection("users");
 
+//add Date
+/* var data = {
+  name: "Los Angeles",
+  state: "CA",
+  country: "USA"
+};
+
+// Add a new document in collection "cities" with ID 'LA'
+var setDoc = db
+  .collection("cities")
+  .doc("LA")
+  .set(data); */
+
 const database = firebase.database();
 const storage = firebase.storage();
 

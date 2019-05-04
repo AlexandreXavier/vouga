@@ -11,7 +11,7 @@
       >
       <v-card-title dense >
 
-          <strong class="subheading" >XANI
+          <strong class="hidden-sm-and-down" >XANI
             <v-tooltip right>
                 <template v-slot:activator="{ on }">
                     <v-btn href="https://xani.hashbase.io" icon small target="https://xani.hashbase.io" v-on="on">
@@ -47,8 +47,10 @@ export default {
         icon: "fab fa-facebook",
         link: "https://www.facebook.com/portocaro.dos"
       },
-      /*       { icon: "fab fa-twitter", link: "https://twitter.com/portocarodos/" },
- */
+      {
+        icon: "fab fa-twitter",
+        link: "https://twitter.com/portocarodos/"
+      },
       {
         icon: "fab fa-instagram",
         link: "https://www.instagram.com/portocarodos/"
