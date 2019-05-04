@@ -88,7 +88,7 @@ export default {
 
       let storageRef = storage.ref();
       let fileRef = storageRef.child(`files/${file.name}`);
-      alert("DENTRO " + file.name);
+      //      alert("DENTRO " + file.name);
 
       fileRef
         .put(file)
@@ -99,9 +99,9 @@ export default {
               let db = database.ref(`files/`);
               db.push({ url, name: file.name });
               this.$emit("fileOk", file);
-              alert("GRAVADO " + file.name + " NA " + url);
+              //            alert("GRAVADO " + file.name + " NA " + url);
               setTimeout(() => {
-                alert("GRAVADO " + file.name + " NA " + url);
+                //            alert("GRAVADO " + file.name + " NA " + url);
               }, 2000);
             })
             .catch(err => {
@@ -138,11 +138,11 @@ export default {
       });
     },
     async deleteFile(file) {
-      alert("APAGAR");
+      //    alert("APAGAR");
       // We will not really delete, but update, inserting a property called 'deleted'
       try {
         if (confirm("Do you really want to delete?")) {
-          alert("APAGAR DENTRO");
+          //         alert("APAGAR DENTRO");
           const dbRef = database.ref(`files/${file.id}`);
           await dbRef.set({
             name: file.name,

@@ -4,7 +4,6 @@
       xs12
       class="mb-3"
     >
-
         <v-sheet height="500">
           <v-calendar
             ref="cal"

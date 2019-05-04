@@ -16,6 +16,7 @@ import Calendar from "@/components/Meetup/Calendar";
 import Treino from "@/components/Treino/Treino";
 import PostView from "@/components/Treino/PostView";
 import CameraView from "@/components/Treino/CameraView";
+import Fotos from "@/components/Media/Fotos";
 
 Vue.use(Router);
 
@@ -80,6 +81,11 @@ export default new Router({
       path: "/camera",
       name: "camera",
       component: CameraView
+    },
+    {
+      path: "/fotos",
+      name: "fotos",
+      component: Fotos
     }
   ],
   mode: "history"

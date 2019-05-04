@@ -106,7 +106,8 @@ export default {
           { icon: "room", title: "Org. Evento", link: "/meetup/new" },
           { icon: "calendar_today", title: "Calendario", link: "/calendar" },
           { icon: "fa-dumbbell", title: "Treino", link: "/treino" },
-          { icon: "person", title: "Utilizador", link: "/profile" }
+          { icon: "person", title: "Utilizador", link: "/profile" },
+          { icon: "image", title: "Fotos", link: "/fotos" }
         ];
       }
       return menuItems;

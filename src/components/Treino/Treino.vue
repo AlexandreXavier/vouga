@@ -12,7 +12,7 @@
                 <v-container fill-height fluid>
                     <v-layout fill-height>
                         <v-flex xs12 align-end flexbox>
-                            <span class="headline">{{file.name}}</span>
+                            <span color="white" class="headline">{{file.name}}</span>
                         </v-flex>
                     </v-layout>
                 </v-container>
@@ -29,10 +29,10 @@
                         <v-card-text v-show="show">
                             <v-layout>
                                 <div>
-                                    <v-btn small outline fab color="teal" @click="deleteFile(file)">
+                                    <v-btn small outline fab color="primary" @click="deleteFile(file)">
                                         <i class="far fa-trash-alt"></i>
                                     </v-btn>
-                                    <h5> ID:{{ file.id }}</h5>
+                                     <h5> ID:{{ file.id }}</h5>
                                     <span class="grey--text">USER: {{user}}</span><br>
                                 </div>
                             </v-layout>
@@ -106,7 +106,6 @@ export default {
       });
     },
     async deleteFile(file) {
-      alert("SIM");
       // We will not really delete, but update, inserting a property called 'deleted'
       try {
         {
@@ -117,11 +116,9 @@ export default {
             // Logic deletion
             deleted: true
           });
-
-          alert("Successfully deleted");
         }
       } catch (err) {
-        alert(err.message);
+        alert(err);
       }
     },
     fileType(file) {

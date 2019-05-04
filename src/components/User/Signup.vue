@@ -42,7 +42,7 @@
                 </v-layout>
 
                 <v-layout row>
-                <v-flex xs12 md4>
+                <v-flex xs12 md6>
                     <v-text-field
                       name="password"
                       label="Password"
@@ -57,7 +57,7 @@
                 </v-layout>
 
                 <v-layout row>
-                  <v-flex xs12 md4>
+                  <v-flex xs12 md6>
                     <v-text-field
                       color="primary"
                       name="confirmPassword"
@@ -65,42 +65,38 @@
                       id="confirmPassword"
                       v-model="confirmPassword"
                       type="password"
-                      :rules="[comparePasswords]">
+                      :rules="[comparePasswords]"
+                      required>
                       </v-text-field>
                   </v-flex>
                 </v-layout>
 <!-- submit -->
-            <v-layout row>
-                <v-flex xs12 >
-                    <v-text-field
-                      name="code"
-                      id="code"
-                      v-model="user"
-                      :rules="codeRules"
-                      disabled
-                      >
-                      </v-text-field>
-                </v-flex>
-                </v-layout>
                 <v-layout row>
                     <v-flex xs12>
-                        <v-btn
+                        <v-btn v-if="this.formIsValid"
                             outline
                             color="primary"
                             type="submit"
-                            :disabled="loading"
-                            :loading="loading">
-                            Gerar Codigo para Assinar
+                            :loading="loading"
+                            v-on:click="seen = !seen">
+                            Gerar Codigo
                                 <span slot="loader" class="custom-loader">
                                     <v-icon light>cached</v-icon>
                                 </span>
                         </v-btn>
                     </v-flex>
                     <v-flex xs12 m4>
-                        <v-btn  outline
+                        <v-btn v-if="seen && this.formIsValid" outline
                                 color="primary"
                                 @click="onUsers">
                                 Assinar
+                        </v-btn>
+                    </v-flex>
+                    <v-flex xs12 m4>
+                        <v-btn  outline
+                                color="primary"
+                                @click="onCancel">
+                                Cancelar
                         </v-btn>
                     </v-flex>
                 </v-layout>
@@ -118,9 +114,8 @@
 export default {
   data() {
     return {
-      tudo: false,
+      seen: false,
       name: "",
-      codeRules: [v => !!v || "FALTA"],
       nameRules: [
         v => !!v || "O nome é necessário",
         v => v.length <= 10 || "O nome tem que ter menos que 10 caracteres",
@@ -152,7 +147,12 @@ export default {
       return this.$store.getters.loading;
     },
     formIsValid() {
-      return this.name !== "" && this.email !== "" && this.password !== "";
+      return (
+        this.name !== "" &&
+        this.email !== "" &&
+        this.password !== "" &&
+        this.confirmPassword !== ""
+      );
     },
     user() {
       return this.$store.state.user;
@@ -160,22 +160,18 @@ export default {
   },
   watch: {
     user(value) {
-      alert("VALUE --" + this.tudo);
-      if (value !== null && value !== undefined && this.tudo == true) {
+      if (value !== null && value !== undefined && this.see == true) {
         this.$router.push("/");
       }
     }
   },
   methods: {
     onSignup() {
-      alert("DENTRO");
       this.$store.dispatch("signUserUp", {
         email: this.email,
         password: this.password
       });
-    },
-    onDismissed() {
-      this.$store.dispatch("clearError");
+      this.formIsValid.false;
     },
     onUsers() {
       if (!this.formIsValid) {
@@ -187,9 +183,10 @@ export default {
         password: this.password,
         Id: ""
       });
-      this.tudo = true;
-
-      alert("FIM TIME OUT");
+      this.see = true;
+      this.$router.push("/");
+    },
+    onCancel() {
       this.$router.push("/");
     }
   }

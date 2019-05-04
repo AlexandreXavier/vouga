@@ -66,7 +66,7 @@ export default {
           .then(snapshot => {
             snapshot.ref.getDownloadURL().then(url => {
               caminhoURL = url;
-              alert("caminhoURL " + caminhoURL);
+              //       alert("caminhoURL " + caminhoURL);
             });
           })
           .then(res => {

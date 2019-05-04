@@ -37,15 +37,26 @@
                 </v-layout>
                 <v-layout row>
                   <v-flex xs12>
-                    <div class="text-xs-right">
-                        <v-btn round type="submit" :disabled="loading" :loading="loading">
-                        Entrar
-                        <v-icon right>lock_open</v-icon>
-                        <span slot="loader" class="custom-loader">
+                        <v-btn outline
+                            color="primary"
+                            type="submit"
+                            :disabled="loading"
+                            :loading="loading">
+                            Entrar
+                            <v-icon right>lock_open</v-icon>
+                                <span slot="loader" class="custom-loader">
                             <v-icon light>cached</v-icon>
                         </span>
                         </v-btn>
-                    </div>
+
+                    </v-flex>
+                    <v-flex xs12 m4>
+                        <v-btn  outline
+                                color="primary"
+                                @click="onSair">
+                                Sair
+                                <v-icon right>exit_to_app</v-icon>
+                        </v-btn>
                   </v-flex>
                 </v-layout>
                 <v-layout align-end >
@@ -172,6 +183,9 @@ export default {
     },
     onDismissed() {
       this.$store.dispatch("clearError");
+    },
+    onSair() {
+      this.$router.push("/");
     }
   }
 };

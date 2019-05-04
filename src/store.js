@@ -100,7 +100,6 @@ export default new Vuex.Store({
         });
     },
     createMeetup({ commit, getters }, payload) {
-      alert("MEET -" + getters);
       const meetup = {
         title: payload.title,
         location: payload.location,
@@ -162,16 +161,6 @@ export default new Vuex.Store({
         password: payload.password,
         Id: getters.user.id
       };
-      alert(
-        "CREATE NEW USERS  " +
-          users.name +
-          "--" +
-          users.email +
-          " ---- " +
-          users.password +
-          "-------" +
-          users.creatorId
-      );
       firebase
         .database()
         .ref("users")
@@ -200,7 +189,6 @@ export default new Vuex.Store({
           const newUser = {
             id: user.uid
           };
-          alert("UP-------- : " + newUser.id);
           commit("setUser", newUser);
         })
         .catch(error => {

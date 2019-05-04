@@ -153,7 +153,7 @@ export default {
       description: "",
       classes: "ORC",
       date: new Date().toISOString().slice(0, 10),
-      dates: ["2019-04-23", "2019-04-25"],
+      dates: ["2019-05-23"],
       time: "14:00",
       menu: false
     };
@@ -173,7 +173,6 @@ export default {
 
       if (this.dates != null) {
         let dataInicio = this.dates[0];
-        alert("DATES " + this.dates + " -0- " + dataInicio);
         return dataInicio;
       } else {
         var d = new Date(date),
@@ -183,7 +182,6 @@ export default {
 
         if (month.length < 2) month = "0" + month;
         if (day.length < 2) day = "0" + day;
-        alert("d " + [year, month, day].join("-"));
         return [year, month, day].join("-");
       }
     }
