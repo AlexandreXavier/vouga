@@ -96,7 +96,7 @@
                         <v-btn  outline
                                 color="primary"
                                 @click="onCancel">
-                                Cancelar
+                                Cancel
                         </v-btn>
                     </v-flex>
                 </v-layout>

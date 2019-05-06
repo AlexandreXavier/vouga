@@ -47,10 +47,10 @@ export default {
         icon: "fab fa-facebook",
         link: "https://www.facebook.com/portocaro.dos"
       },
-      {
+      /* {
         icon: "fab fa-twitter",
         link: "https://twitter.com/portocarodos/"
-      },
+      }, */
       {
         icon: "fab fa-instagram",
         link: "https://www.instagram.com/portocarodos/"
