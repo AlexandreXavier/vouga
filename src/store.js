@@ -1,10 +1,16 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import * as firebase from "firebase";
+import AuthModule from "./AuthModule";
+import ChatModule from "./ChatModule";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
+  modules: {
+    auth: AuthModule,
+    chat: ChatModule
+  },
   state: {
     loadedMeetups: [
       {
@@ -68,9 +74,23 @@ export default new Vuex.Store({
     },
     clearError(state) {
       state.error = null;
+    },
+    setOnlineUsers(state, payload) {
+      state.onlineUsers = payload;
     }
   },
   actions: {
+    loadOnlineUsers({ commit }) {
+      firebase
+        .database()
+        .ref("presence")
+        .on("value", function(snapshot) {
+          let result = [];
+          result[0] = snapshot.numChildren();
+          result[1] = snapshot.val();
+          commit("setOnlineUsers", result);
+        });
+    },
     loadMeetups({ commit }) {
       commit("setLoading", true);
       firebase
@@ -330,6 +350,9 @@ export default new Vuex.Store({
     },
     error(state) {
       return state.error;
+    },
+    onlineUsers(state) {
+      return state.onlineUsers;
     }
   }
 });

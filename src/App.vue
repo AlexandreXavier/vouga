@@ -107,7 +107,8 @@ export default {
           { icon: "calendar_today", title: "Calendario", link: "/calendar" },
           { icon: "fa-dumbbell", title: "Treino", link: "/treino" },
           { icon: "person", title: "Utilizador", link: "/profile" },
-          { icon: "image", title: "Fotos", link: "/fotos" }
+          { icon: "image", title: "Fotos", link: "/fotos" },
+          { icon: "chat", title: "Chat", link: "/create" }
         ];
       }
       return menuItems;

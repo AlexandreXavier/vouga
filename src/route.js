@@ -18,6 +18,9 @@ import PostView from "@/components/Treino/PostView";
 import CameraView from "@/components/Treino/CameraView";
 import Fotos from "@/components/Media/Fotos";
 
+import Chat from "@/components/Chat/Chat";
+import Create from "@/components/Chat/Create";
+
 Vue.use(Router);
 
 export default new Router({
@@ -86,6 +89,19 @@ export default new Router({
       path: "/fotos",
       name: "fotos",
       component: Fotos
+    },
+    {
+      path: "/chat/:id",
+      name: "Chat",
+      component: Chat,
+      props: true,
+      beforeEnter: AuthGuard
+    },
+    {
+      path: "/create",
+      name: "CreateChat",
+      component: Create,
+      beforeEnter: AuthGuard
     }
   ],
   mode: "history"
