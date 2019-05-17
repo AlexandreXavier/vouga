@@ -1,5 +1,4 @@
 <template>
-<v-app id="inspire">
   <v-card flat tile>
 
     <v-container
@@ -16,69 +15,90 @@
         <v-spacer></v-spacer>
         <v-flex
           v-for="card in cards"
-          :key="card"
+          :key="card.id"
           xs12
           sm6
           md4
         >
           <v-card>
             <v-img
-              :src="`https://s3-eu-west-1.amazonaws.com/xanivouga/princepe_2018.jpg`"
+              :src="card.src"
+              @click="onLoadFoto(card.id,card.src,card.thumbnail,card.caption)"
               height="300px"
             >
-              <span
+                <span
                 class="headline white--text pl-3 pt-3"
-                v-text="card.title"
-              ></span>
+                >
+                </span>
             </v-img>
 
             <v-card-actions class="white justify-center">
-              <v-btn
-                v-for="(social, i) in socials"
-                :key="i"
-                :color="social.color"
-                class="white--text"
-                fab
-                icon
-                small
-              >
-                <v-icon>{{ social.icon }}</v-icon>
-              </v-btn>
+                <v-btn class="white--text" fab icon small>
+                    <facebook :url="card.src" scale="3"></facebook>
+                </v-btn>
+                <v-btn class="white--text" fab icon small>
+                    <twitter :url="card.src" title="Check me on Github" scale="3"></twitter>
+                </v-btn>
+                <v-btn class="white--text" fab icon small>
+                    <whats-app :url="card.src" title="Hello" scale="3"></whats-app>
+                </v-btn>
             </v-card-actions>
+
           </v-card>
         </v-flex>
       </v-layout>
     </v-container>
   </v-card>
-   </v-app>
 </template>
 
 <script>
+import { Facebook, Twitter, WhatsApp } from "vue-socialmedia-share";
+
 export default {
   data: () => ({
-    types: ["Baiona", "Palma"],
-    cards: ["Vouga", "Snipe", "ORC1"],
-    socials: [
-      {
-        icon: "fab fa-facebook",
-        color: "primary"
-      },
-      {
-        icon: "fab fa-linkedin",
-        color: "primary"
-      },
-      {
-        icon: "fab fa-instagram",
-        color: "primary"
-      }
-    ]
+    currentImage: null,
+    currentIndex: 0,
+    currentCaption: "",
+    windowWidth: 0,
+    isLoading: true,
+    types: ["Baiona"],
+    card: [{ id: "", src: "", thumbnail: "", caption: "" }]
   }),
+  components: {
+    Facebook,
+    Twitter,
+    WhatsApp
+  },
+  computed: {
+    cards() {
+      return this.$store.getters.featuredImages;
+    },
+    loading() {
+      return this.$store.getters.loading;
+    }
+  },
   methods: {
-    getImage() {
-      const min = 550;
-      const max = 560;
-      return Math.floor(Math.random() * (max - min + 1)) + min;
+    onLoadFoto(idd, srcc, thumbnaill, captionn) {
+      const card = {
+        id: idd,
+        src: srcc,
+        thumbnail: thumbnaill,
+        caption: captionn
+      };
+      //alert("TEST ID : " + id);
+      alert("THIS CARD " + card.id);
+
+      this.$store.dispatch("createImage", card);
+      this.$router.push("/fotos");
+      this.$router.push("/fotos/" + card.id);
     }
   }
 };
 </script>
+
+
+
+
+
+
+

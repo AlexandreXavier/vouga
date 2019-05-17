@@ -16,7 +16,9 @@ import Calendar from "@/components/Meetup/Calendar";
 import Treino from "@/components/Treino/Treino";
 import PostView from "@/components/Treino/PostView";
 import CameraView from "@/components/Treino/CameraView";
+
 import Fotos from "@/components/Media/Fotos";
+import Foto from "@/components/Media/Foto";
 
 Vue.use(Router);
 
@@ -86,6 +88,12 @@ export default new Router({
       path: "/fotos",
       name: "fotos",
       component: Fotos
+    },
+    {
+      path: "/fotos/:id",
+      name: "Foto",
+      props: true,
+      component: Foto
     }
   ],
   mode: "history"

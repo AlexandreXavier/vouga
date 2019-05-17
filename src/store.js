@@ -6,6 +6,20 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    loadedImages: [
+      {
+        id: "000",
+        src: "https://s3-eu-west-1.amazonaws.com/xanivouga/16.jpg",
+        thumbnail: "https://s3-eu-west-1.amazonaws.com/xanivouga/16.jpg",
+        caption: ""
+      },
+      {
+        id: "111",
+        src: "https://s3-eu-west-1.amazonaws.com/xanivouga/9.jpg",
+        thumbnail: "https://s3-eu-west-1.amazonaws.com/xanivouga/9.jpg",
+        caption: ""
+      }
+    ],
     loadedMeetups: [
       {
         imageUrl:
@@ -45,6 +59,14 @@ export default new Vuex.Store({
     error: null
   },
   mutations: {
+    setLoadedImages(state, payload) {
+      alert("MUTATE " + payload.id);
+      state.loadedImages = payload;
+    },
+    createImage(state, payload) {
+      alert("MUTATE " + payload.id + "SRC " + payload.src);
+      state.loadedImages.push(payload);
+    },
     setLoadedMeetups(state, payload) {
       state.loadedMeetups = payload;
     },
@@ -71,6 +93,46 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    loadImages({ commit }) {
+      commit("setLoading", true);
+      const images = [];
+      const base = parseInt(Math.random() * 12, 10) + 10;
+      alert("BASE : " + base);
+      for (let i = 0; i < 10; i++) {
+        images.push({
+          id: i,
+          src:
+            "https://s3-eu-west-1.amazonaws.com/xanivouga/" +
+            (base + i) +
+            ".jpg",
+          thumbnail:
+            "https://s3-eu-west-1.amazonaws.com/xanivouga/" +
+            (base + i) +
+            ".jpg",
+          caption: ""
+        });
+      }
+      //Carrega a variavel images com as imagens da amazon s3
+      commit("setLoadedImages", images);
+      commit("setLoading", false);
+    },
+    createImage({ commit, getters }, payload) {
+      alert("DENTRO ");
+      const image = {
+        id: payload.id,
+        src: payload.src,
+        thumbnail: payload.thumbnail,
+        caption: payload.caption
+        //incorpora o id do user para gravar na db
+      };
+
+      const key = image.id;
+      alert("KEY " + key);
+      commit("createImage", {
+        ...image,
+        id: key
+      });
+    },
     loadMeetups({ commit }) {
       commit("setLoading", true);
       firebase
@@ -109,6 +171,7 @@ export default new Vuex.Store({
         dates: payload.dates,
         horaInicio: payload.dates,
         classes: payload.classes,
+        //incorpora o id do user para gravar na db
         creatorId: getters.user.id
       };
       firebase
@@ -242,7 +305,6 @@ export default new Vuex.Store({
     signUserInFacebook({ commit }) {
       commit("setLoading", true);
       commit("clearError");
-      //alert("STORE FACEBOOK");
       firebase
         .auth()
         .signInWithPopup(new firebase.auth.FacebookAuthProvider())
@@ -299,10 +361,21 @@ export default new Vuex.Store({
     }
   },
   getters: {
-    loadedUsers(state) {
-      return state.loadedUsers.sort((usersA, usersB) => {
-        return usersA.date > usersB.date;
+    loadedImages(state) {
+      return state.loadedImages.sort((imagesA, imagesB) => {
+        return imagesA.date > imagesB.date;
       });
+    },
+    featuredImages(state, getters) {
+      return getters.loadedImages.slice(0, 6);
+    },
+    loadedImage(state) {
+      alert("GETTER IMAGE " + state.id);
+      return imageId => {
+        return state.loadedImages.find(image => {
+          return image.id === imageId;
+        });
+      };
     },
     loadedMeetups(state) {
       return state.loadedMeetups.sort((meetupA, meetupB) => {
@@ -317,8 +390,8 @@ export default new Vuex.Store({
     },
     loadedMeetup(state) {
       return meetupId => {
-        return state.loadedMeetups.find(meetup => {
-          return meetup.id === meetupId;
+        return state.loadedMeetups.find(meetupp => {
+          return meetupp.id === meetupId;
         });
       };
     },

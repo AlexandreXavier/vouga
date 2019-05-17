@@ -7,8 +7,8 @@
             <v-layout row>
               <v-flex xs5 sm4 md3>
                 <v-card-media
-                  :src="meetup.imageUrl"
-                  height="130px"
+                    :src="meetup.imageUrl"
+                    height="130px"
                 ></v-card-media>
               </v-flex>
               <v-flex xs7 sm8 md9>
@@ -18,9 +18,9 @@
                   </div>
                 </v-card-title>
                 <v-card-actions>
-                  <v-btn flat :to="'/meetups/' + meetup.id">
+                  <v-btn color="red" flat :to="'/meetups/' + meetup.id">
                     <v-icon left light>arrow_forward</v-icon>
-                    Ver Regata
+                    Detalhe
                   </v-btn>
                 </v-card-actions>
               </v-flex>

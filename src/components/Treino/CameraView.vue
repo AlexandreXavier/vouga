@@ -79,9 +79,9 @@ export default {
               (res.metadata.contentType = "image/jpeg"),
               (res.metadata.customMetadata = caminhoURL)
             );
-            /* setTimeout(() => {
+            setTimeout(() => {
               alert("TIMER");
-            }, 20000); */
+            }, 20000);
           })
           .catch(err => {
             alert("ERROR " + err.message);

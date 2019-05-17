@@ -1,0 +1,294 @@
+<template>
+  <v-card flat tile>
+
+    <v-container
+      v-for="type in types"
+      :key="type"
+      fluid
+      grid-list-md
+      grey
+      lighten-4
+    >
+      <v-subheader>{{ type }}</v-subheader>
+
+      <v-layout row wrap>
+        <v-spacer></v-spacer>
+        <v-flex
+          v-for="card in cards"
+          :key="card"
+          xs12
+          sm6
+          md4
+        >
+          <v-card>
+              <!-- falta alterar os nomes das fotos do host para numeros para criar um avariavel no none da foto -->
+            <!--   <v-img :src="currentImage" @click="handleLargeImageClick" > -->
+            <v-img
+              :src="`https://s3-eu-west-1.amazonaws.com/xanivouga/3.jpg`"
+              height="300px"
+            >
+              <span
+                class="headline white--text pl-3 pt-3"
+                v-text="card.title"
+              ></span>
+            </v-img>
+
+            <v-card-actions class="white justify-center">
+              <!-- <v-btn
+                v-for="(social, i) in socials"
+                :key="i"
+                :color="social.color"
+                class="white--text"
+                fab
+                icon
+                small
+              >
+                <v-icon>{{ social.icon }}</v-icon> -->
+
+                <v-btn class="white--text" fab icon small>
+                    <facebook :url="url" scale="3"></facebook>
+                </v-btn>
+                <v-btn class="white--text" fab icon small>
+                <twitter :url="url" title="Check me on Github" scale="3"></twitter>
+                 </v-btn>
+                <v-btn class="white--text" fab icon small>
+                <whats-app :url="url" title="Hello" scale="3"></whats-app>
+                 </v-btn>
+              <!-- </v-btn> -->
+
+
+
+            </v-card-actions>
+          </v-card>
+        </v-flex>
+      </v-layout>
+    </v-container>
+  </v-card>
+</template>
+
+<script>
+import { Facebook, Twitter, WhatsApp } from "vue-socialmedia-share";
+
+export default {
+  data: () => ({
+    currentImage: null,
+    currentIndex: 0,
+    currentCaption: "",
+    windowWidth: 0,
+    isLoading: true,
+    types: ["Baiona", "Palma"],
+    cards: ["Vouga", "Snipe", "ORC1", "Dragon"]
+    /* socials: [
+      {
+        icon: "fab fa-facebook",
+        color: "primary"
+      },
+      {
+        icon: "fab fa-linkedin",
+        color: "primary"
+      },
+      {
+        icon: "fab fa-instagram",
+        color: "primary"
+      }
+    ] */
+  }),
+  components: {
+    Facebook,
+    Twitter,
+    WhatsApp
+  },
+  methods: {
+    getImage() {
+      const min = 550;
+      const max = 560;
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    },
+    handleImageClick(index) {
+      this.currentIndex = index;
+      this.pickImage(index);
+    },
+    handleLargeImageClick() {
+      if (!this.disableImageClick) {
+        this.showNextImage();
+      }
+    }
+  }
+};
+</script>
+
+
+
+
+
+
+
+
+
+-----------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<template>
+  <v-card flat tile>
+
+    <v-container
+      v-for="type in types"
+      :key="type"
+      fluid
+      grid-list-md
+      grey
+      lighten-4
+    >
+      <v-subheader>{{ type }}</v-subheader>
+
+      <v-layout row wrap>
+        <v-spacer></v-spacer>
+
+                <v-flex v-for="(item, index) in items"  :key="index">
+                <v-card>
+                    <v-img :src="item.thumbnail" :data-source="item.src"
+                            v-on="currentIndex !== index ? { click: () =>  handleImageClick(index) } : {}"
+                            height="300px"
+                            xs12
+                            sm6
+                            md4 >
+                            <span class="headline white--text pl-3 pt-3"                    v-text="item.caption">
+                            </span>
+                    </v-img>
+
+                    <v-card-actions class="white justify-center">
+                        <v-btn class="white--text" fab icon small>
+                            <facebook :url="item.src" scale="3"></facebook>
+                        </v-btn>
+                        <v-btn class="white--text" fab icon small>
+                            <twitter :url="url" title="Check me on Github" scale="3"></twitter>
+                        </v-btn>
+                        <v-btn class="white--text" fab icon small>
+                            <whats-app :url="url" title="Hello" scale="3"></whats-app>
+                        </v-btn>
+                  </v-card-actions>
+                </v-card>
+                </v-flex>
+      </v-layout>
+    </v-container>
+  </v-card>
+</template>
+
+<script>
+import { Facebook, Twitter, WhatsApp } from "vue-socialmedia-share";
+
+export default {
+  data: () => ({
+    currentImage: null,
+    currentIndex: 0,
+    currentCaption: "",
+    windowWidth: 0,
+    isLoading: true,
+    types: ["Baiona"],
+    items: [...sourceImages].splice(0, 5)
+  }),
+  components: {
+    Facebook,
+    Twitter,
+    WhatsApp
+  },
+  props: {
+    items: {
+      default: [
+        {
+          src: "https://s3-eu-west-1.amazonaws.com/xanivouga/3.jpg",
+          thumbnail: "https://s3-eu-west-1.amazonaws.com/xanivouga/3.jpg",
+          caption: ""
+        }
+      ]
+    },
+    startImage: {
+      type: Number,
+      default: 0
+    },
+    width: {
+      type: Number,
+      default: 600
+    },
+    height: {
+      type: Number,
+      default: 400
+    },
+    baseColor: {
+      type: String,
+      default: "#fff"
+    },
+    accentColor: {
+      type: String,
+      default: "#3498db"
+    },
+    textColor: {
+      type: String,
+      default: "#000"
+    },
+    responsive: {
+      type: Boolean,
+      default: false
+    },
+    showThumbnails: {
+      type: Boolean,
+      default: true
+    },
+    mobileHeight: {
+      type: Number,
+      default: 0
+    },
+    mobileHeightBreakpoint: {
+      type: Number,
+      default: 0
+    },
+    leftControlClass: {
+      type: String,
+      default: ""
+    },
+    rightControlClass: {
+      type: String,
+      default: ""
+    },
+    disableImageClick: {
+      type: Boolean,
+      default: false
+    }
+  },
+  mounted() {
+    this.currentImage = this.items[this.startImage].src;
+    this.currentCaption = this.items[this.startImage].caption;
+    this.currentIndex = this.startImage;
+    this.windowWidth = window.innerWidth;
+  },
+  watch: {
+    items() {
+      this.currentImage = this.items[this.startImage].src;
+    }
+  },
+  methods: {
+    handleImageClick(index) {
+      this.currentIndex = index;
+      this.pickImage(index);
+    },
+    handleLargeImageClick() {
+      if (!this.disableImageClick) {
+        this.showNextImage();
+      }
+    }
+  }
+};
+</script>

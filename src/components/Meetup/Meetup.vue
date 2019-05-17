@@ -33,6 +33,7 @@
           <v-card-actions>
             <v-btn flat color="primary">Share</v-btn>
             <v-btn flat color="primary">Participar</v-btn>
+            <v-btn flat color="primary" @click="onSair">Cancel</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -50,6 +51,11 @@ export default {
   filters: {
     Upper(value) {
       return value.toUpperCase();
+    }
+  },
+  methods: {
+    onSair() {
+      this.$router.push("/");
     }
   }
 };

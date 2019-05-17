@@ -87,7 +87,7 @@
                     </v-flex>
                     <v-flex xs12 m4>
                         <v-btn v-if="seen && this.formIsValid" outline
-                                color="primary"
+                                color="red"
                                 @click="onUsers">
                                 Assinar
                         </v-btn>

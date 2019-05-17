@@ -83,6 +83,7 @@
 
 <script>
 import img from "./assets/profile.png";
+
 export default {
   data() {
     return {
@@ -93,6 +94,7 @@ export default {
   computed: {
     menuItems() {
       let menuItems = [
+        { icon: "image", title: "Fotos", link: "/fotos" },
         { icon: "face", title: "Registar", link: "/signup" },
         { icon: "lock_open", title: "Entrar", link: "/signin" }
       ];
@@ -106,8 +108,7 @@ export default {
           { icon: "room", title: "Org. Evento", link: "/meetup/new" },
           { icon: "calendar_today", title: "Calendario", link: "/calendar" },
           { icon: "fa-dumbbell", title: "Treino", link: "/treino" },
-          { icon: "person", title: "Utilizador", link: "/profile" },
-          { icon: "image", title: "Fotos", link: "/fotos" }
+          { icon: "person", title: "Utilizador", link: "/profile" }
         ];
       }
       return menuItems;
