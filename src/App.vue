@@ -93,6 +93,8 @@ export default {
   computed: {
     menuItems() {
       let menuItems = [
+        { icon: "image", title: "Fotos", link: "/fotos" },
+        { icon: "", title: "", link: "" },
         { icon: "face", title: "Registar", link: "/signup" },
         { icon: "lock_open", title: "Entrar", link: "/signin" }
       ];

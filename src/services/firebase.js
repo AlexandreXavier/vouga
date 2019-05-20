@@ -2,21 +2,21 @@ import firebase from "firebase";
 
 var config = {
   //vouga
-  apiKey: "AIzaSyDd6S1QM74997vXOgcigr5wRdvzdog1d38",
+  /* apiKey: "AIzaSyDd6S1QM74997vXOgcigr5wRdvzdog1d38",
   authDomain: "vouga-720eb.firebaseapp.com",
   databaseURL: "https://vouga-720eb.firebaseio.com",
   projectId: "vouga-720eb",
   storageBucket: "vouga-720eb.appspot.com",
   messagingSenderId: "632238300092",
-  appId: "1:632238300092:web:58f8c4dcc608cf9a"
+  appId: "1:632238300092:web:58f8c4dcc608cf9a" */
 
   //portocaro
-  /* apiKey: "AIzaSyDTA15Tke9ro-bc726Pla4kLBgzOWfmz74",
+  apiKey: "AIzaSyDTA15Tke9ro-bc726Pla4kLBgzOWfmz74",
   authDomain: "portocarodos-93f3e.firebaseapp.com",
   databaseURL: "https://portocarodos-93f3e.firebaseio.com",
   projectId: "portocarodos-93f3e",
   storageBucket: "portocarodos-93f3e.appspot.com",
-  messagingSenderId: "671294892710" */
+  messagingSenderId: "671294892710"
 };
 
 firebase.initializeApp(config);

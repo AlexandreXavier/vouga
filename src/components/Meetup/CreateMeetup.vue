@@ -155,7 +155,8 @@ export default {
       date: new Date().toISOString().slice(0, 10),
       dates: ["2019-05-23"],
       time: "14:00",
-      menu: false
+      menu: false,
+      autor: null
     };
   },
   computed: {

@@ -39,7 +39,6 @@
 
   </v-container>
 </template>
-
 <script>
 export default {
   data() {
@@ -59,7 +58,6 @@ export default {
       this.value += 10;
     }, 1000);
   },
-
   computed: {
     meetups() {
       return this.$store.getters.featuredMeetups;

@@ -7,8 +7,8 @@
         <v-sheet height="500">
           <v-calendar
             ref="cal"
-            :now="today"
-            :value="today"
+            :now="dataHoje"
+            :value="dataHoje"
             color="primary"
             type="month"
             locale='pt-pt'
@@ -105,9 +105,9 @@
 
 <script>
 export default {
+  /* today: "2019-05-04", */
   /* today: this.dataHoje */
   data: () => ({
-    today: "2019-05-04",
     type: "month",
     typeOptions: [
       { text: "Dia", value: "day" },

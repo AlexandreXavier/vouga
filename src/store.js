@@ -60,7 +60,6 @@ export default new Vuex.Store({
   },
   mutations: {
     setLoadedImages(state, payload) {
-      alert("MUTATE " + payload.id);
       state.loadedImages = payload;
     },
     setLoadedMeetups(state, payload) {
@@ -93,7 +92,6 @@ export default new Vuex.Store({
       commit("setLoading", true);
       const images = [];
       const base = parseInt(Math.random() * 12, 10) + 10;
-      alert("BASE : " + base);
       for (let i = 0; i < 10; i++) {
         images.push({
           id: i,
@@ -283,7 +281,6 @@ export default new Vuex.Store({
     signUserInFacebook({ commit }) {
       commit("setLoading", true);
       commit("clearError");
-      //alert("STORE FACEBOOK");
       firebase
         .auth()
         .signInWithPopup(new firebase.auth.FacebookAuthProvider())
@@ -349,7 +346,6 @@ export default new Vuex.Store({
       return getters.loadedImages.slice(0, 6);
     },
     loadedImage(state) {
-      alert("GETTER IMAGE " + state.id);
       return imageId => {
         return state.loadedImages.find(image => {
           return image.id === imageId;

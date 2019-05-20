@@ -120,15 +120,6 @@
 
 
         <v-layout row>
-                <v-btn  outline
-                        color="primary"
-                        @click="onSair">
-                        Cancel
-                        <v-icon right>exit_to_app</v-icon>
-                </v-btn>
-
-                 <v-spacer></v-spacer>
-
                 <v-btn outline
                         color="primary"
                         type="submit"
@@ -141,6 +132,17 @@
                                     <v-icon light>cached</v-icon>
                             </span>
                 </v-btn>
+
+
+                 <v-spacer></v-spacer>
+
+                 <v-btn  outline
+                        color="primary"
+                        @click="onSair">
+                        Cancel
+                        <v-icon right>exit_to_app</v-icon>
+                </v-btn>
+
         </v-layout>
 
             </form>
