@@ -1,31 +1,109 @@
 <template>
   <v-container>
-    <v-layout row wrap v-for="meetup in meetups" :key="meetup.id" class="mb-2">
-      <v-flex xs12 sm10 md8 offset-sm1 offset-md2>
-        <v-card >
-          <v-container fluid>
-            <v-layout row>
-              <v-flex xs5 sm4 md3>
-                <v-card-media
-                  :src="meetup.imageUrl"
-                  height="130px"
-                ></v-card-media>
-              </v-flex>
-              <v-flex xs7 sm8 md9>
-                <v-card-title primary-title>
-                  <div>
-                    <h4>{{ meetup.title }}</h4>
-                  </div>
-                </v-card-title>
-                <v-card-actions>
-                  <v-btn flat :to="'/meetups/' + meetup.id">
-                    <v-icon left light>arrow_forward</v-icon>
-                    Ver Regata
-                  </v-btn>
-                </v-card-actions>
-              </v-flex>
-            </v-layout>
-          </v-container>
+<!-- alert -->
+    <v-layout row v-if="error">
+      <v-flex xs12 sm6 offset-sm3>
+        <app-alert @dismissed="onDismissed" :text="error.message"></app-alert>
+      </v-flex>
+    </v-layout>
+
+    <v-layout row>
+      <v-flex xs12 sm6 offset-sm3>
+        <v-card>
+          <v-card-text>
+            <v-container>
+<!-- form -->
+              <form @submit.prevent="onSignup">
+                <v-layout row>
+                  <v-flex xs12 >
+                    <v-text-field
+                      name="name"
+                      label="Nome"
+                      id="name"
+                      text-lowercase
+                      v-model="name"
+                      :rules="nameRules"
+                      :counter="10"
+                      required></v-text-field>
+                  </v-flex>
+                </v-layout>
+                <v-layout row>
+                  <v-flex xs12>
+                    <v-text-field
+                      name="email"
+                      label="Email"
+                      id="email"
+                      v-model="email"
+                      :rules="emailRules"
+                      :counter="20"
+                      type="email"
+                      required></v-text-field>
+                  </v-flex>
+                </v-layout>
+
+                <v-layout row>
+                <v-flex xs12 md6>
+                    <v-text-field
+                      name="password"
+                      label="Password"
+                      id="password"
+                      v-model="password"
+                      :rules="passRules"
+                      :counter="8"
+                      type="password"
+                      required>
+                    </v-text-field>
+                </v-flex>
+                </v-layout>
+
+                <v-layout row>
+                  <v-flex xs12 md6>
+                    <v-text-field
+                      color="primary"
+                      name="confirmPassword"
+                      label="Confirm Password"
+                      id="confirmPassword"
+                      v-model="confirmPassword"
+                      type="password"
+                      :rules="[comparePasswords]"
+                      required>
+                      </v-text-field>
+                  </v-flex>
+                </v-layout>
+<!-- submit -->
+                <v-layout row>
+                    <v-flex xs12>
+                        <v-btn v-if="this.formIsValid"
+                            outline
+                            color="primary"
+                            type="submit"
+                            :loading="loading"
+                            v-on:click="seen = !seen">
+                            Gerar Codigo
+                                <span slot="loader" class="custom-loader">
+                                    <v-icon light>cached</v-icon>
+                                </span>
+                        </v-btn>
+                    </v-flex>
+                    <v-flex xs12 m4>
+                        <v-btn v-if="seen && this.formIsValid" outline
+                                color="primary"
+                                @click="onUsers">
+                                Assinar
+                        </v-btn>
+                    </v-flex>
+                    <v-flex xs12 m4>
+                        <v-btn  outline
+                                color="primary"
+                                @click="onCancel">
+                                Cancel
+                        </v-btn>
+                    </v-flex>
+                </v-layout>
+<!-- end  -->
+              </form>
+            </v-container>
+          </v-card-text>
         </v-card>
       </v-flex>
     </v-layout>
@@ -34,71 +112,83 @@
 
 <script>
 export default {
+  data() {
+    return {
+      seen: false,
+      name: "",
+      nameRules: [
+        v => !!v || "O nome é necessário",
+        v => v.length <= 10 || "O nome tem que ter menos que 10 caracteres",
+        v => v.length > 2 || "O nome tem que ter mais que 3 caracteres"
+      ],
+      email: "",
+      emailRules: [
+        v => !!v || "E-mail é necessário",
+        v => /.+@.+/.test(v) || "O e-mail tem que ser valido"
+      ],
+      password: "",
+      passRules: [
+        v => v.length <= 10 || "A password tem que ter menos que 8 caracteres",
+        v => v.length > 2 || "A password tem que ter mais que 3 caracteres"
+      ],
+      confirmPassword: ""
+    };
+  },
   computed: {
-    meetups() {
-      return this.$store.getters.loadedMeetups;
+    comparePasswords() {
+      return this.password !== this.confirmPassword
+        ? "Password não é igual!!!"
+        : "OK";
+    },
+    error() {
+      return this.$store.getters.error;
+    },
+    loading() {
+      return this.$store.getters.loading;
+    },
+    formIsValid() {
+      return (
+        this.name !== "" &&
+        this.email !== "" &&
+        this.password !== "" &&
+        this.confirmPassword !== ""
+      );
+    },
+    user() {
+      return this.$store.state.user;
+    }
+  },
+  watch: {
+    user(value) {
+      if (value !== null && value !== undefined && this.see == true) {
+        this.$router.push("/");
+      }
+    }
+  },
+  methods: {
+    onSignup() {
+      this.$store.dispatch("signUserUp", {
+        email: this.email,
+        password: this.password
+      });
+      this.formIsValid.false;
+    },
+    onUsers() {
+      if (!this.formIsValid) {
+        return;
+      }
+      this.$store.dispatch("createUsers", {
+        name: this.name,
+        email: this.email,
+        password: this.password,
+        Id: ""
+      });
+      this.see = true;
+      this.$router.push("/");
+    },
+    onCancel() {
+      this.$router.push("/");
     }
   }
 };
 </script>
-
-
-
-index.html ---------------------------------------------
-
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
-    <title>vouga</title>
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Material+Icons"
-    />
-  </head>
-  <body>
-    <noscript>
-      <strong
-        >We're sorry but vouga doesn't work properly without JavaScript enabled.
-        Please enable it to continue.</strong
-      >
-    </noscript>
-    <div id="app"></div>
-    <script>
-      window.fbAsyncInit = function() {
-        FB.init({
-          appId: "2213735182274223",
-          cookie: true,
-          xfbml: true,
-          version: "v3.2"
-        });
-
-        FB.AppEvents.logPageView();
-      };
-
-      (function(d, s, id) {
-        var js,
-          fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) {
-          return;
-        }
-        js = d.createElement(s);
-        js.id = id;
-        js.src = "https://connect.facebook.net/en_US/sdk.js";
-        fjs.parentNode.insertBefore(js, fjs);
-      })(document, "script", "facebook-jssdk");
-    </script>
-    <!-- built files will be auto injected -->
-  </body>
-</html>
-

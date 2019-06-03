@@ -1,11 +1,11 @@
 <template>
   <v-container>
-    <v-flex xs12 sm6 offset-sm3>
+    <v-flex xs12 sm12 offset-sm3>
         <v-card>
           <v-img
             :src="meetup.imageUrl"
             class="white--text"
-            height="400px"
+            height="500px"
           >
             <v-container fill-height fluid>
               <v-layout fill-height>
@@ -21,13 +21,13 @@
                <span class="grey--text">{{ meetup.dates }} </span><br>
                 <!--  <span>{{ new Date | moment }}</span> -->
                 <span>Hora Inicio: </span>
-                <span class="grey--text">{{ meetup.time }} </span><br>
+                <span class="grey--text">{{ meetup.horaInicio }} </span><br>
                 <span>Local: </span>
                 <span class="grey--text">{{ meetup.location }}</span><br>
                 <span>Descrição: </span>
                 <span class="grey--text">{{ meetup.description }}</span><br>
-                <span>Class: </span>
-                    <v-layout row wrap>
+                <span>Class: </span><br>
+                <v-layout row wrap>
                     <v-flex size="20px"
                         v-for="n in 1"
                         :key="n"
@@ -40,14 +40,13 @@
                         ></v-img>
                         </v-card>
                     </v-flex>
-                    </v-layout>
+                </v-layout>
             </div>
           </v-card-title>
           <v-card-actions>
 
             <v-btn flat color="primary" @click="dialog = !dialog">Share</v-btn>
 
-            <v-btn flat color="primary">Participar</v-btn>
             <v-spacer></v-spacer>
             <v-btn icon @click="show = !show">
               <v-icon>{{ show ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>

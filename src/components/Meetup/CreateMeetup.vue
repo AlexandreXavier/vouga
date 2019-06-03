@@ -2,7 +2,7 @@
   <v-container>
     <v-layout row>
         <v-flex xs12 sm6 offset-sm3>
-            <h4>Criar um novo Evento</h4>
+            <h4>Criar Regata</h4>
         </v-flex>
     </v-layout>
 
@@ -58,6 +58,7 @@
 <!-- combo -->
             <v-layout row>
                 <v-flex xs12 sm6 offset-sm3>
+
                     <v-combobox
                         v-model="model"
                         :filter="filter"
@@ -165,6 +166,7 @@
                             multiple
                             header-color="primary"
                             color="primary"
+                            locale='pt-pt'
                             ></v-date-picker>
                 </v-flex>
             </v-layout>

@@ -41,7 +41,6 @@
             <v-icon left dark>exit_to_app</v-icon>
             Sair
             </v-btn>
-
         </v-toolbar-items>
     </v-toolbar>
 
@@ -93,6 +92,7 @@ export default {
   computed: {
     menuItems() {
       let menuItems = [
+        { icon: "help", title: "Ajuda", link: "/ajuda" },
         { icon: "image", title: "Fotos", link: "/fotos" },
         { icon: "", title: "", link: "" },
         { icon: "face", title: "Registar", link: "/signup" },
@@ -109,7 +109,8 @@ export default {
           { icon: "calendar_today", title: "Calendario", link: "/calendar" },
           { icon: "fa-dumbbell", title: "Treino", link: "/treino" },
           { icon: "person", title: "Utilizador", link: "/profile" },
-          { icon: "image", title: "Fotos", link: "/fotos" }
+          { icon: "image", title: "Fotos", link: "/fotos" },
+          { icon: "help", title: "Ajuda", link: "/ajuda" }
         ];
       }
       return menuItems;

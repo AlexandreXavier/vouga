@@ -18,7 +18,9 @@ import PostView from "@/components/Treino/PostView";
 import CameraView from "@/components/Treino/CameraView";
 
 import Fotos from "@/components/Media/Fotos";
+import Card from "@/components/Media/Card";
 
+import Ajuda from "@/components/Ajuda";
 Vue.use(Router);
 
 export default new Router({
@@ -87,6 +89,17 @@ export default new Router({
       path: "/fotos",
       name: "fotos",
       component: Fotos
+    },
+    {
+      path: "/fotos/:id",
+      name: "Card",
+      props: true,
+      component: Card
+    },
+    {
+      path: "/ajuda",
+      name: "Ajuda",
+      component: Ajuda
     }
   ],
   mode: "history"

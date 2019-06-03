@@ -93,7 +93,7 @@ export default new Vuex.Store({
       commit("setLoading", true);
       const images = [];
       const base = parseInt(Math.random() * 12, 10) + 10;
-      for (let i = 0; i < 10; i++) {
+      for (let i = 0; i < 20; i++) {
         images.push({
           id: i,
           src:
@@ -150,7 +150,7 @@ export default new Vuex.Store({
         description: payload.description,
         date: payload.date,
         dates: payload.dates,
-        horaInicio: payload.dates,
+        horaInicio: payload.horaInicio,
         classes: payload.classes,
         creatorId: getters.user.id,
         creatorName: getters.currentUserName,
@@ -350,7 +350,7 @@ export default new Vuex.Store({
       });
     },
     featuredImages(state, getters) {
-      return getters.loadedImages.slice(0, 10);
+      return getters.loadedImages.slice(0, 26);
     },
     loadedImage(state) {
       return imageId => {

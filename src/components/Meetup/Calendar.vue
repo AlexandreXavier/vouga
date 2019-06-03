@@ -6,10 +6,13 @@
         >
         <v-sheet height="500">
             <v-calendar
+            ref="calendarr"
             :now="dataHoje"
             :value="dataHoje"
+            v-model="start"
+            :end="end"
             color="primary"
-            type="month"
+           :type="type"
             locale='pt-pt'
             >
             <template v-slot:day="{ date }">
@@ -67,63 +70,53 @@
                 </v-menu>
               </template>
             </template>
+
           </v-calendar>
 
         </v-sheet>
      </v-flex>
 
-        <v-btn
-          fab
-          outline
-          small
-          absolute
-          left
-          color="primary"
-        >
-            <v-icon dark>
-                keyboard_arrow_left
-            </v-icon>
-        </v-btn>
 
-       <!--  <v-flex sm4 xs12 class="text-sm-left text-xs-center hidden-sm-and-down">
-            <v-btn outline color="primary" @click="prev">
-                <v-icon dark left>
+
+       <v-flex sm4 xs12 class="text-sm-left text-xs-center">
+            <v-btn  @click="$refs.calendarr.prev()"
+            fab
+            outline
+            small
+            absolute
+            left
+            color="primary"
+            >
+                <v-icon dark>
                     keyboard_arrow_left
                 </v-icon>
-                Prev
             </v-btn>
-        </v-flex> -->
+        </v-flex>
 
-       <!--  <v-flex sm4 xs12 class="text-xs-center hidden-sm-and-down">
+
+       <v-flex sm4 xs12 class="text-xs-center hidden-sm-and-down">
             <v-select  color="primary"
                 v-model="type"
                 :items="typeOptions"
                 label="Tipo"
             ></v-select>
-        </v-flex> -->
+        </v-flex>
 
 
-         <v-btn
-            fab
-            outline
-            small
-            absolute
-            right
-            color="primary"
-            >
-            <v-icon dark>
-                keyboard_arrow_right
-            </v-icon>
-        </v-btn>
-
-        <!-- <v-flex sm4 xs12 class="text-sm-right text-xs-center hidden-sm-and-down">
-            <v-btn outline color="primary" @click="next()">
-                Next
-                <v-icon right dark >
-                keyboard_arrow_right
+        <v-flex sm4 xs12 class="text-sm-right text-xs-center">
+            <v-btn   @click="$refs.calendarr.next()"
+                fab
+                outline
+                small
+                absolute
+                right
+                color="primary"
+                >
+                <v-icon dark>
+                    keyboard_arrow_right
                 </v-icon>
             </v-btn>
-        </v-flex> -->
+        </v-flex>
 
 
     </v-layout>
@@ -136,6 +129,8 @@ export default {
   /* today: this.dataHoje */
   data: () => ({
     type: "month",
+    start: "2019-06-01",
+    end: "2019-12-31",
     typeOptions: [
       { text: "Dia", value: "day" },
       { text: "4 Dias", value: "4day" },

@@ -9,102 +9,131 @@
 
     <v-layout row>
       <v-flex xs12 sm6 offset-sm3>
-        <v-card>
-          <v-card-text>
-            <v-container>
-<!-- form -->
-              <form @submit.prevent="onSignup">
-                <v-layout row>
-                  <v-flex xs12 >
-                    <v-text-field
-                      name="name"
-                      label="Nome"
-                      id="name"
-                      text-lowercase
-                      v-model="name"
-                      :rules="nameRules"
-                      :counter="10"
-                      required></v-text-field>
-                  </v-flex>
-                </v-layout>
-                <v-layout row>
-                  <v-flex xs12>
-                    <v-text-field
-                      name="email"
-                      label="Email"
-                      id="email"
-                      v-model="email"
-                      :rules="emailRules"
-                      :counter="20"
-                      type="email"
-                      required></v-text-field>
-                  </v-flex>
-                </v-layout>
 
-                <v-layout row>
-                <v-flex xs12 md6>
-                    <v-text-field
-                      name="password"
-                      label="Password"
-                      id="password"
-                      v-model="password"
-                      :rules="passRules"
-                      :counter="8"
-                      type="password"
-                      required>
-                    </v-text-field>
-                </v-flex>
-                </v-layout>
+        <v-stepper v-model="e1">
+            <v-stepper-header>
+                <v-stepper-step :complete="e1 > 1" step="1">Dados</v-stepper-step>
+                <v-divider></v-divider>
+                <v-stepper-step :complete="e1 > 2" step="2">Gerar Codigo</v-stepper-step>
+                <v-divider></v-divider>
+                <v-stepper-step step="3">Assinar</v-stepper-step>
+            </v-stepper-header>
 
-                <v-layout row>
-                  <v-flex xs12 md6>
-                    <v-text-field
-                      color="primary"
-                      name="confirmPassword"
-                      label="Confirm Password"
-                      id="confirmPassword"
-                      v-model="confirmPassword"
-                      type="password"
-                      :rules="[comparePasswords]"
-                      required>
-                      </v-text-field>
-                  </v-flex>
-                </v-layout>
-<!-- submit -->
-                <v-layout row>
-                    <v-flex xs12>
+            <v-stepper-items>
+                <v-stepper-content step="1">
+                    <form @submit.prevent="onSignup">
+                            <v-layout row>
+                            <v-flex xs12 >
+                                <v-text-field
+                                name="name"
+                                label="Nome"
+                                id="name"
+                                text-lowercase
+                                v-model="name"
+                                :rules="nameRules"
+                                :counter="10"
+                                required></v-text-field>
+                            </v-flex>
+                            </v-layout>
+
+                            <v-layout row>
+                            <v-flex xs12>
+                                <v-text-field
+                                name="email"
+                                label="Email"
+                                id="email"
+                                v-model="email"
+                                :rules="emailRules"
+                                :counter="20"
+                                type="email"
+                                required></v-text-field>
+                            </v-flex>
+                            </v-layout>
+
+                            <v-layout row>
+                            <v-flex xs12 md6>
+                                <v-text-field
+                                name="password"
+                                label="Password"
+                                id="password"
+                                v-model="password"
+                                :rules="passRules"
+                                :counter="8"
+                                type="password"
+                                required>
+                                </v-text-field>
+                            </v-flex>
+                            </v-layout>
+                    </form>
+                    <v-layout row>
                         <v-btn v-if="this.formIsValid"
-                            outline
+                            color="primary"
+                            @click="e1 = 2"
+                            @change="seen = !seen"
+                        >
+                            Continue
+                        </v-btn>
+                        <v-spacer></v-spacer>
+                        <v-btn color="primary" flat @click="onCancel">
+                            Cancel
+                        </v-btn>
+                    </v-layout>
+                </v-stepper-content>
+
+
+
+                <v-stepper-content step="2">
+                    <v-layout row>
+                        <v-btn
+                            v-if="this.formIsValid && user == null"
                             color="primary"
                             type="submit"
                             :loading="loading"
-                            v-on:click="seen = !seen">
+                            v-on:click="onSignup">
                             Gerar Codigo
-                                <span slot="loader" class="custom-loader">
-                                    <v-icon light>cached</v-icon>
-                                </span>
+                            <span slot="loader" class="custom-loader">
+                                <v-icon light>cached</v-icon>
+                            </span>
                         </v-btn>
-                    </v-flex>
-                    <v-flex xs12 m4>
-                        <v-btn v-if="seen && this.formIsValid" outline
-                                color="primary"
-                                @click="onUsers">
-                                Assinar
+
+                        <span class="grey--text">{{user}}</span>
+                    </v-layout>
+
+                    <v-layout row>
+                        <v-btn v-if="user!== null"
+                            @change="$refs.calendarr.disabled()"
+                            color="primary"
+                            @click="e1 = 3">
+                            Continue
                         </v-btn>
-                    </v-flex>
-                    <v-flex xs12 m4>
-                        <v-btn  outline
-                                color="primary"
-                                @click="onCancel">
+                        <v-spacer></v-spacer>
+                        <v-btn color="primary" flat @click="onCancel">
                                 Cancel
                         </v-btn>
-                    </v-flex>
-                </v-layout>
-<!-- end  -->
-              </form>
-            </v-container>
-          </v-card-text>
-        </v-card>
+                    </v-layout>
+                </v-stepper-content>
+
+
+
+
+                <v-stepper-content step="3">
+                    <v-layout row>
+                        <v-btn
+                            outline
+                            color="primary"
+                            @click="onUsers">
+                            Assinar
+                        </v-btn>
+                        <v-spacer></v-spacer>
+                        <v-btn color="primary" flat @click="onCancel">
+                            Cancel
+                        </v-btn>
+                    </v-layout>
+                </v-stepper-content>
+
+            </v-stepper-items>
+        </v-stepper>
+
       </v-flex>
     </v-layout>
   </v-container>
@@ -114,6 +143,7 @@
 export default {
   data() {
     return {
+      e1: 0,
       seen: false,
       name: "",
       nameRules: [
@@ -147,12 +177,7 @@ export default {
       return this.$store.getters.loading;
     },
     formIsValid() {
-      return (
-        this.name !== "" &&
-        this.email !== "" &&
-        this.password !== "" &&
-        this.confirmPassword !== ""
-      );
+      return this.name !== "" && this.email !== "" && this.password !== "";
     },
     user() {
       return this.$store.state.user;

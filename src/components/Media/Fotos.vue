@@ -34,13 +34,13 @@
 
             <v-card-actions class="white justify-center">
                 <v-btn class="white--text" fab icon small>
-                    <facebook :url="card.src" scale="3"></facebook>
+                    <facebook :url="card.src" scale="2"></facebook>
                 </v-btn>
                 <v-btn class="white--text" fab icon small>
-                    <twitter :url="card.src" title="Check me on Github" scale="3"></twitter>
+                    <twitter :url="card.src" title="Check me on Github" scale="2"></twitter>
                 </v-btn>
                 <v-btn class="white--text" fab icon small>
-                    <whats-app :url="card.src" title="Hello" scale="3"></whats-app>
+                    <whats-app :url="card.src" title="Hello" scale="2"></whats-app>
                 </v-btn>
             </v-card-actions>
 
@@ -79,15 +79,24 @@ export default {
   },
   methods: {
     onLoadFoto(idd, srcc, thumbnaill, captionn) {
-      const card = {
+      /*       const card = {
         id: idd,
         src: srcc,
         thumbnail: thumbnaill,
         caption: captionn
-      };
-
+      }; */
+      alert(
+        "ID " +
+          idd +
+          " URL " +
+          srcc +
+          " THUMB " +
+          thumbnaill +
+          " TITULO " +
+          captionn
+      );
       //this.$store.dispatch("createImage", card);
-      this.$router.push("/fotos/" + card.id);
+      //this.$router.push("/fotos/" + card.id);
     }
   }
 };
