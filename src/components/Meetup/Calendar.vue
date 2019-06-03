@@ -1,18 +1,17 @@
 <template>
    <v-layout wrap>
-    <v-flex
-      xs12
-      class="mb-3"
-    >
+        <v-flex
+            xs12
+            class="mb-3"
+        >
         <v-sheet height="500">
-          <v-calendar
-            ref="cal"
+            <v-calendar
             :now="dataHoje"
             :value="dataHoje"
             color="primary"
             type="month"
             locale='pt-pt'
-          >
+            >
             <template v-slot:day="{ date }">
               <template v-for="event in eventsMap[date]">
                 <v-menu
@@ -69,34 +68,62 @@
               </template>
             </template>
           </v-calendar>
-        </v-sheet>
 
-    </v-flex>
-        <v-flex sm4 xs12 class="text-sm-left text-xs-center hidden-sm-and-down">
-            <v-btn outline color="primary" @click="$refs.cal.prev()">
+        </v-sheet>
+     </v-flex>
+
+        <v-btn
+          fab
+          outline
+          small
+          absolute
+          left
+          color="primary"
+        >
+            <v-icon dark>
+                keyboard_arrow_left
+            </v-icon>
+        </v-btn>
+
+       <!--  <v-flex sm4 xs12 class="text-sm-left text-xs-center hidden-sm-and-down">
+            <v-btn outline color="primary" @click="prev">
                 <v-icon dark left>
                     keyboard_arrow_left
                 </v-icon>
                 Prev
             </v-btn>
-        </v-flex>
+        </v-flex> -->
 
-        <v-flex sm4 xs12 class="text-xs-center hidden-sm-and-down">
+       <!--  <v-flex sm4 xs12 class="text-xs-center hidden-sm-and-down">
             <v-select  color="primary"
                 v-model="type"
                 :items="typeOptions"
                 label="Tipo"
             ></v-select>
-        </v-flex>
+        </v-flex> -->
 
-        <v-flex sm4 xs12 class="text-sm-right text-xs-center hidden-sm-and-down">
-            <v-btn outline color="primary" @click="$refs.cal.next()">
+
+         <v-btn
+            fab
+            outline
+            small
+            absolute
+            right
+            color="primary"
+            >
+            <v-icon dark>
+                keyboard_arrow_right
+            </v-icon>
+        </v-btn>
+
+        <!-- <v-flex sm4 xs12 class="text-sm-right text-xs-center hidden-sm-and-down">
+            <v-btn outline color="primary" @click="next()">
                 Next
                 <v-icon right dark >
                 keyboard_arrow_right
                 </v-icon>
             </v-btn>
-        </v-flex>
+        </v-flex> -->
 
 
     </v-layout>

@@ -41,6 +41,7 @@ export default new Vuex.Store({
       }
     ],
     user: null,
+    currentUser: null,
     loadedUsers: [
       {
         name: "xani",
@@ -126,7 +127,10 @@ export default new Vuex.Store({
               description: obj[key].description,
               imageUrl: obj[key].imageUrl,
               date: obj[key].date,
-              creatorId: obj[key].creatorId
+              creatorId: obj[key].creatorId,
+              creatorName: obj[key].creatorName,
+              creatorAvatar: obj[key].creatorAvatar,
+              creatorDate: obj[key].creatorDate
             });
           }
           //Carrega a variavel meetups com os dados do firebase
@@ -148,7 +152,10 @@ export default new Vuex.Store({
         dates: payload.dates,
         horaInicio: payload.dates,
         classes: payload.classes,
-        creatorId: getters.user.id
+        creatorId: getters.user.id,
+        creatorName: getters.currentUserName,
+        creatorAvatar: getters.profilePicUrl,
+        creatorDate: payload.creatorDate
       };
       firebase
         .database()
@@ -343,7 +350,7 @@ export default new Vuex.Store({
       });
     },
     featuredImages(state, getters) {
-      return getters.loadedImages.slice(0, 6);
+      return getters.loadedImages.slice(0, 10);
     },
     loadedImage(state) {
       return imageId => {
@@ -383,6 +390,12 @@ export default new Vuex.Store({
     },
     error(state) {
       return state.error;
+    },
+    currentUserName() {
+      return firebase.auth().currentUser.displayName;
+    },
+    profilePicUrl() {
+      return firebase.auth().currentUser.photoURL || "/profile.png";
     }
   }
 });

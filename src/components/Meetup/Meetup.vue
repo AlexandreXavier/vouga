@@ -9,7 +9,7 @@
           >
             <v-container fill-height fluid>
               <v-layout fill-height>
-                <v-flex xs12 align-end flexbox>
+                <v-flex xs8 align-end flexbox>
                   <span class="headline">{{ meetup.title }}</span>
                 </v-flex>
               </v-layout>
@@ -19,29 +19,113 @@
             <div>
                <span>Dias de Regata: </span>
                <span class="grey--text">{{ meetup.dates }} </span><br>
-             <!--  <span>{{ new Date | moment }}</span> -->
-             <span>Hora Inicio: </span>
-             <span class="grey--text">{{ meetup.time }} </span><br>
-             <span>Local: </span>
-              <span class="grey--text">{{ meetup.location }}</span><br>
-              <span>Descrição: </span>
-              <span class="grey--text">{{ meetup.description }}</span>
-              <span>Classes: </span>
-              <span class="grey--text">{{ meetup.classes }}</span>
+                <!--  <span>{{ new Date | moment }}</span> -->
+                <span>Hora Inicio: </span>
+                <span class="grey--text">{{ meetup.time }} </span><br>
+                <span>Local: </span>
+                <span class="grey--text">{{ meetup.location }}</span><br>
+                <span>Descrição: </span>
+                <span class="grey--text">{{ meetup.description }}</span><br>
+                <span>Class: </span>
+                    <v-layout row wrap>
+                    <v-flex size="20px"
+                        v-for="n in 1"
+                        :key="n"
+                        xs2>
+
+                        <v-card flat tile>
+                        <!-- <span class="grey--text">{{ meetup.classes[0].text }}</span> -->
+                        <v-img                      :src="`https://xanivouga.s3-eu-west-1.amazonaws.com/class/cinza/ORC_${n}.png`"
+                            height="30px" width="30px"
+                        ></v-img>
+                        </v-card>
+                    </v-flex>
+                    </v-layout>
             </div>
           </v-card-title>
           <v-card-actions>
-            <v-btn flat color="primary">Share</v-btn>
+
+            <v-btn flat color="primary" @click="dialog = !dialog">Share</v-btn>
+
             <v-btn flat color="primary">Participar</v-btn>
+            <v-spacer></v-spacer>
+            <v-btn icon @click="show = !show">
+              <v-icon>{{ show ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
+            </v-btn>
           </v-card-actions>
+<!-- menu detalhe -->
+          <v-slide-y-transition>
+            <v-card-text v-show="show">
+            <div>
+                <span>Autor da Regata: </span>
+                <v-spacer></v-spacer>
+                <v-chip color="white">
+                        <v-avatar>
+                            <img :src="meetup.creatorAvatar">
+                        </v-avatar>
+                         <span class="grey--text">{{meetup.creatorName}}</span>
+                </v-chip>
+                <v-spacer></v-spacer>
+                <span>Email: </span>
+                <span class="grey--text">{{ meetup.time }} </span><br>
+                <span>Tel: </span>
+                <span class="grey--text">{{ meetup.time }} </span><br>
+            </div>
+            </v-card-text>
+          </v-slide-y-transition>
+<!-- caixa dialogo share -->
+        <v-dialog v-model="dialog" width="500">
+            <v-card>
+                <v-toolbar card color="primary" dark >
+                    <v-toolbar-title>Redes Sociais</v-toolbar-title>
+                </v-toolbar>
+
+            <v-card-actions class="white justify-center">
+                <v-btn class="white--text" fab icon small>
+                    <facebook :url="meetup.imageUrl" scale="3"></facebook>
+                </v-btn>
+                <v-btn class="white--text" fab icon small>
+                    <twitter :url="meetup.imageUrl" title="Check me on Github" scale="3"></twitter>
+                </v-btn>
+                <v-btn class="white--text" fab icon small>
+                    <whats-app :url="meetup.imageUrl" title="Hello" scale="3"></whats-app>
+                </v-btn>
+            </v-card-actions>
+
+            <v-divider></v-divider>
+
+            <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                color="primary"
+                flat
+                @click="dialog = false"
+                >
+                cancel
+                </v-btn>
+            </v-card-actions>
+            </v-card>
+        </v-dialog>
+
         </v-card>
       </v-flex>
   </v-container>
 </template>
 
 <script>
+import { Facebook, Twitter, WhatsApp } from "vue-socialmedia-share";
+
 export default {
   props: ["id"],
+  components: {
+    Facebook,
+    Twitter,
+    WhatsApp
+  },
+  data: () => ({
+    show: false,
+    dialog: false
+  }),
   computed: {
     meetup() {
       return this.$store.getters.loadedMeetup(this.id);

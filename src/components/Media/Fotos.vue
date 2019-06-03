@@ -61,7 +61,7 @@ export default {
     currentCaption: "",
     windowWidth: 0,
     isLoading: true,
-    types: ["Baiona"],
+    types: ["Palma"],
     card: [{ id: "", src: "", thumbnail: "", caption: "" }]
   }),
   components: {

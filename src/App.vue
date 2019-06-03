@@ -9,13 +9,13 @@
 
 <!-- user avatar -->
         <v-toolbar-title>
-            <v-btn fab dark large color="white" v-if="userIsAuthenticated">
-                <v-img
-                :src="image" width="24" >
-                </v-img>
+            <v-btn fab dark color="white" v-if="userIsAuthenticated">
+                <v-avatar size="52" >
+                    <v-img :src="profilePicUrl">
+                    </v-img>
+                </v-avatar>
             </v-btn>
 
-           <!--  <pre>{{"UTI: "+user.displayName}}</pre> -->
             <router-link to="/" tag="span" style="cursor: pointer">
                     PortocaroDos &copy;
             </router-link>
@@ -82,12 +82,12 @@
 </template>
 
 <script>
-import img from "./assets/profile.png";
+//import img from "./assets/profile.png";
 export default {
   data() {
     return {
-      sideNav: false,
-      image: img
+      sideNav: false
+      //    image: img
     };
   },
   computed: {
@@ -122,13 +122,19 @@ export default {
     },
     user() {
       return this.$store.state.user;
+    },
+    userName() {
+      return this.$store.getters.currentUserName;
+    },
+    profilePicUrl() {
+      return this.$store.getters.profilePicUrl;
     }
-    /* imagem() {
+    /* profilePicUrl() {
       return (
-        this.$store.state.user.providerData.profile.photoURL !== null &&
-        this.$store.state.user.providerData.profile.photoURL !== undefined
+        this.$store.getters.currentUser.photoURL !== null &&
+        this.$store.getters.currentUser.photoURL !== undefined
       );
-    }*/
+    } */
   },
   methods: {
     onLogout() {
