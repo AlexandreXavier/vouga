@@ -1,7 +1,6 @@
 <template>
-
     <v-parallax
-      src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg"
+      src="https://xanivouga.s3-eu-west-1.amazonaws.com/source/boats_fog.jpg"
     >
 
       <v-layout
@@ -9,10 +8,12 @@
         column
         justify-center
       >
-        <h1 class="display-2 font-weight-thin mb-3">PortocaroDos</h1>
+        <h1 class="display-3 font-weight-thin mb-3">PortocaroDos</h1>
         <h4 class="subheading">Obrigado</h4>
-      </v-layout>
+
+    </v-layout>
+
     </v-parallax>
 
-</template>
 
+</template>

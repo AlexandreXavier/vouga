@@ -370,7 +370,6 @@ export default {
         horaInicio: this.time,
         creatorDate: this.date
       };
-      alert("model " + this.model);
       this.$store.dispatch("createMeetup", meetupData);
       this.$router.push("/meetups");
     }

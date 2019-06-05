@@ -73,7 +73,6 @@ export default {
     tempoDataCriacao() {
       const delta = "2019-05-24";
       const datahoje = new Date().toISOString().slice(0, 10);
-      alert(delta);
       return timetable.diff(delta, datahoje);
     }
   },
