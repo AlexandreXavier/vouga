@@ -37,7 +37,6 @@ new Vue({
       }
     });
     //carregar os eventos gravados na db do firebase
-
     this.$store.dispatch("loadMeetups");
     this.$store.dispatch("loadImages");
     this.$store.dispatch("loadUsers");
