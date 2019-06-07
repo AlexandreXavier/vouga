@@ -12,7 +12,8 @@
     "child-process-promise": "^2.2.0",
     "firebase-admin": "~7.0.0",
     "firebase-functions": "^2.2.0",
-    "nodemailer": "^6.2.1"
+    "nodemailer": "^6.2.1",
+    "cheerio": "^1.0.0-rc.2"
   },
   "engines": {
     "node": "8"
