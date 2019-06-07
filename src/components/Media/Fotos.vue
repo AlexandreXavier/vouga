@@ -23,7 +23,6 @@
           <v-card>
             <v-img
               :src="card.src"
-              @click="onLoadFoto(card.id,card.src,card.thumbnail,card.caption)"
               height="300px"
             >
                 <span
@@ -75,28 +74,6 @@ export default {
     },
     loading() {
       return this.$store.getters.loading;
-    }
-  },
-  methods: {
-    onLoadFoto(idd, srcc, thumbnaill, captionn) {
-      /*       const card = {
-        id: idd,
-        src: srcc,
-        thumbnail: thumbnaill,
-        caption: captionn
-      }; */
-      alert(
-        "ID " +
-          idd +
-          " URL " +
-          srcc +
-          " THUMB " +
-          thumbnaill +
-          " TITULO " +
-          captionn
-      );
-      //this.$store.dispatch("createImage", card);
-      //this.$router.push("/fotos/" + card.id);
     }
   }
 };

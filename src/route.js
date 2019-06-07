@@ -13,12 +13,7 @@ import Meetup from "@/components/Meetup/Meetup";
 import CreateMeetup from "@/components/Meetup/CreateMeetup";
 import Calendar from "@/components/Meetup/Calendar";
 
-import Treino from "@/components/Treino/Treino";
-import PostView from "@/components/Treino/PostView";
-import CameraView from "@/components/Treino/CameraView";
-
 import Fotos from "@/components/Media/Fotos";
-import Card from "@/components/Media/Card";
 
 import Ajuda from "@/components/Ajuda";
 Vue.use(Router);
@@ -71,30 +66,9 @@ export default new Router({
       beforeEnter: AuthGuard
     },
     {
-      path: "/treino",
-      name: "Treino",
-      component: Treino
-    },
-    {
-      path: "/post",
-      name: "post",
-      component: PostView
-    },
-    {
-      path: "/camera",
-      name: "camera",
-      component: CameraView
-    },
-    {
       path: "/fotos",
       name: "fotos",
       component: Fotos
-    },
-    {
-      path: "/fotos/:id",
-      name: "Card",
-      props: true,
-      component: Card
     },
     {
       path: "/ajuda",

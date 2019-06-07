@@ -81,7 +81,6 @@
 </template>
 
 <script>
-//import img from "./assets/profile.png";
 export default {
   data() {
     return {
@@ -107,7 +106,6 @@ export default {
           },
           { icon: "room", title: "Org. Evento", link: "/meetup/new" },
           { icon: "calendar_today", title: "Calendario", link: "/calendar" },
-          { icon: "fa-dumbbell", title: "Treino", link: "/treino" },
           { icon: "person", title: "Utilizador", link: "/profile" },
           { icon: "image", title: "Fotos", link: "/fotos" },
           { icon: "help", title: "Ajuda", link: "/ajuda" }
@@ -130,12 +128,6 @@ export default {
     profilePicUrl() {
       return this.$store.getters.profilePicUrl;
     }
-    /* profilePicUrl() {
-      return (
-        this.$store.getters.currentUser.photoURL !== null &&
-        this.$store.getters.currentUser.photoURL !== undefined
-      );
-    } */
   },
   methods: {
     onLogout() {
