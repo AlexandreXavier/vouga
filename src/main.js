@@ -13,6 +13,8 @@ import Footer from "./components/Footer";
 import AlertCmp from "./components/Alert.vue";
 import "@fortawesome/fontawesome-free/css/all.css";
 
+import Media from "./components/Media/Media";
+
 Vue.use(Vuefire);
 Vue.use(VueResource);
 
@@ -20,6 +22,7 @@ Vue.config.productionTip = false;
 
 Vue.component("portocaro-footer", Footer);
 Vue.component("app-alert", AlertCmp);
+Vue.component("Media", Media);
 
 new Vue({
   firebase: {
@@ -40,3 +43,5 @@ new Vue({
     this.$store.dispatch("loadUsers");
   }
 }).$mount("#app");
+
+export default Media;

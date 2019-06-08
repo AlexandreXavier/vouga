@@ -9,7 +9,6 @@
       grey
       lighten-4
     >
-      <v-subheader>{{ type }}</v-subheader>
 
       <v-layout row wrap>
         <v-spacer></v-spacer>
@@ -61,7 +60,7 @@ export default {
     windowWidth: 0,
     isLoading: true,
     types: ["Palma"],
-    card: [{ id: "", src: "", thumbnail: "", caption: "" }]
+    card: [{ id: "", src: null, thumbnail: "", caption: "" }]
   }),
   components: {
     Facebook,

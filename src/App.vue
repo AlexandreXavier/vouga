@@ -24,6 +24,28 @@
         <v-spacer></v-spacer>
 
         <v-toolbar-items class="hidden-xs-only">
+
+             <v-menu open-on-hover top offset-y>
+            <template v-slot:activator="{ on }">
+            <v-btn
+                color="primary"
+                dark
+                v-on="on"
+            >
+            <v-icon left dark>image</v-icon>
+                Media
+            </v-btn>
+            </template>
+
+            <v-list>
+            <v-list-tile
+                v-for="(item, index) in items" :key="index" :to="item.link">
+                <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+            </v-list-tile>
+            </v-list>
+            </v-menu>
+
+
             <v-btn
             flat
             v-for="item in menuItems"
@@ -41,12 +63,28 @@
             <v-icon left dark>exit_to_app</v-icon>
             Sair
             </v-btn>
+
         </v-toolbar-items>
     </v-toolbar>
 
 <!-- sandwich-->
     <v-navigation-drawer temporary absolute v-model="sideNav">
       <v-list>
+
+        <v-list-tile
+          v-for="item in items"
+          :key="item.title"
+          :to="item.link">
+
+            <v-list-tile-action>
+                <v-icon>{{ item.icon }}</v-icon>
+            </v-list-tile-action>
+
+            <v-list-tile-content>
+                {{ item.title }}
+            </v-list-tile-content>
+        </v-list-tile>
+
         <v-list-tile
           v-for="item in menuItems"
           :key="item.title"
@@ -56,6 +94,7 @@
           </v-list-tile-action>
           <v-list-tile-content>{{ item.title }}</v-list-tile-content>
         </v-list-tile>
+
         <v-list-tile
           v-if="userIsAuthenticated"
           @click="onLogout">
@@ -84,7 +123,11 @@
 export default {
   data() {
     return {
-      sideNav: false
+      sideNav: false,
+      items: [
+        { icon: "videocam", title: "Video", link: "/video" },
+        { icon: "image", title: "Fotos", link: "/fotos" }
+      ]
       //    image: img
     };
   },
@@ -92,7 +135,7 @@ export default {
     menuItems() {
       let menuItems = [
         { icon: "help", title: "Ajuda", link: "/ajuda" },
-        { icon: "image", title: "Fotos", link: "/fotos" },
+        /* { icon: "image", title: "Media", link: "/fotos" }, */
         { icon: "", title: "", link: "" },
         { icon: "face", title: "Registar", link: "/signup" },
         { icon: "lock_open", title: "Entrar", link: "/signin" }

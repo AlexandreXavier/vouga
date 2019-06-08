@@ -14,6 +14,7 @@ import CreateMeetup from "@/components/Meetup/CreateMeetup";
 import Calendar from "@/components/Meetup/Calendar";
 
 import Fotos from "@/components/Media/Fotos";
+import Video from "@/components/Media/Video";
 
 import Ajuda from "@/components/Ajuda";
 Vue.use(Router);
@@ -69,6 +70,11 @@ export default new Router({
       path: "/fotos",
       name: "fotos",
       component: Fotos
+    },
+    {
+      path: "/video",
+      name: "video",
+      component: Video
     },
     {
       path: "/ajuda",

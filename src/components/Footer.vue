@@ -47,40 +47,12 @@ export default {
         icon: "fab fa-facebook",
         link: "https://www.facebook.com/portocaro.dos"
       },
-      /* {
-        icon: "fab fa-twitter",
-        link: "https://twitter.com/portocarodos/"
-      }, */
       {
         icon: "fab fa-instagram",
         link: "https://www.instagram.com/portocarodos/"
       }
     ]
   })
-  /* computed: {
-    socialItems() {
-      let socialItems = [
-        {
-          icon: "fab fa-facebook",
-          title: "fab fa-facebook",
-          link: (href = "https://www.facebook.com")
-        },
-        { icon: "fab fa-twitter", title: "fab fa-twitter", link: "/signin" },
-        { icon: "fab fa-google-plus", title: "Google+", link: "/signin" },
-        { icon: "fab fa-instagram", title: "instagram", link: "/signin" }
-      ];
-      if (this.userIsAuthenticated) {
-        socialItems = [
-          {
-            icon: "fab fa-linkedin",
-            title: "LinkIn",
-            link: "/meetups"
-          }
-        ];
-      }
-      return socialItems;
-    }
-  }*/
 };
 </script>
 
