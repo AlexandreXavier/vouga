@@ -20,6 +20,14 @@ export default new Vuex.Store({
         caption: ""
       }
     ],
+    loadedVideos: [
+      {
+        id: "00",
+        src: "https://s3-eu-west-1.amazonaws.com/xanivouga/video/0.mp4",
+        thumbnail: "https://s3-eu-west-1.amazonaws.com/xanivouga/video/0.mp4",
+        caption: ""
+      }
+    ],
     loadedMeetups: [
       {
         imageUrl:
@@ -62,6 +70,9 @@ export default new Vuex.Store({
   mutations: {
     setLoadedImages(state, payload) {
       state.loadedImages = payload;
+    },
+    setLoadedVideos(state, payload) {
+      state.loadedVideos = payload;
     },
     setLoadedMeetups(state, payload) {
       state.loadedMeetups = payload;
@@ -109,6 +120,24 @@ export default new Vuex.Store({
       }
       //Carrega a variavel images com as imagens da amazon s3
       commit("setLoadedImages", images);
+      commit("setLoading", false);
+    },
+    loadVideos({ commit }) {
+      commit("setLoading", true);
+      const videos = [];
+      //const base = parseInt(Math.random() * 12, 2) + 2;
+      for (let i = 0; i < 4; i++) {
+        videos.push({
+          id: i,
+          src:
+            "https://s3-eu-west-1.amazonaws.com/xanivouga/video/" + i + ".mp4",
+          thumbnail:
+            "https://s3-eu-west-1.amazonaws.com/xanivouga/video/" + i + ".mp4",
+          caption: "'i'"
+        });
+      }
+      //Carrega a variavel videos com os videos da amazon s3
+      commit("setLoadedVideos", videos);
       commit("setLoading", false);
     },
     loadMeetups({ commit }) {
@@ -356,6 +385,21 @@ export default new Vuex.Store({
       return imageId => {
         return state.loadedImages.find(image => {
           return image.id === imageId;
+        });
+      };
+    },
+    loadedVideos(state) {
+      return state.loadedVideos.sort((videosA, videosB) => {
+        return videosA.date > videosB.date;
+      });
+    },
+    featuredVideos(state, getters) {
+      return getters.loadedVideos.slice(0, 5);
+    },
+    loadedVideo(state) {
+      return videoId => {
+        return state.loadedVideos.find(video => {
+          return video.id === videoId;
         });
       };
     },

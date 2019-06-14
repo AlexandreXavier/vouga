@@ -45,7 +45,6 @@
             </v-list>
             </v-menu>
 
-
             <v-btn
             flat
             v-for="item in menuItems"
@@ -135,6 +134,7 @@ export default {
     menuItems() {
       let menuItems = [
         { icon: "help", title: "Ajuda", link: "/ajuda" },
+        /*  { icon: "directions_boat", title: "Tempo", link: "/tempo" }, */
         /* { icon: "image", title: "Media", link: "/fotos" }, */
         { icon: "", title: "", link: "" },
         { icon: "face", title: "Registar", link: "/signup" },
@@ -149,8 +149,9 @@ export default {
           },
           { icon: "room", title: "Org. Evento", link: "/meetup/new" },
           { icon: "calendar_today", title: "Calendario", link: "/calendar" },
+          { icon: "directions_boat", title: "Tempo", link: "/tempo" },
           { icon: "person", title: "Utilizador", link: "/profile" },
-          { icon: "image", title: "Fotos", link: "/fotos" },
+          /* { icon: "image", title: "Fotos", link: "/fotos" }, */
           { icon: "help", title: "Ajuda", link: "/ajuda" }
         ];
       }

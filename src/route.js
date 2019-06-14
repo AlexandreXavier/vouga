@@ -16,6 +16,8 @@ import Calendar from "@/components/Meetup/Calendar";
 import Fotos from "@/components/Media/Fotos";
 import Video from "@/components/Media/Video";
 
+import Tempo from "@/components/Tempo/Tempo";
+
 import Ajuda from "@/components/Ajuda";
 Vue.use(Router);
 
@@ -75,6 +77,12 @@ export default new Router({
       path: "/video",
       name: "video",
       component: Video
+    },
+    {
+      path: "/tempo",
+      name: "Tempo",
+      component: Tempo,
+      beforeEnter: AuthGuard
     },
     {
       path: "/ajuda",
