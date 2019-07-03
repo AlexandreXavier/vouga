@@ -3,14 +3,6 @@
   <MglMap id='map-container'
   :accessToken="accessToken"
   :mapStyle="mapStyle"
-  :geolocate-control="{
-  show: true,
-  position: 'top-left'
-}"
-:scale-control="{
-  show: true,
-  position: 'top-left'
-}"
   @load="onMapLoad"
   >
         <MglNavigationControl/>
@@ -85,7 +77,7 @@ export default {
       accessToken:
         "pk.eyJ1IjoicG9ydG9jYXJvZG9zIiwiYSI6ImNqd3RxcGpxNjI2MmEzeWxlc3NwaHZxdGMifQ._c7VWyMFDHUH5HMUiBCVhA",
       mapStyle: "mapbox://styles/portocarodos/cjwv4icc90h471cmwmnpfpjbt",
-      coordinates: [-8.85, 40.15]
+      coordinates: [-9.317, 38.6745]
     };
   },
   computed: {},
@@ -104,7 +96,7 @@ export default {
       const asyncActions = event.component.actions;
 
       const newParams = await asyncActions.flyTo({
-        center: [-8.8673, 40.15],
+        center: [-9.417, 38.6945],
         zoom: 12,
         bearing: 1,
         pitch: 17

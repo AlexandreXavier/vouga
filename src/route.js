@@ -19,6 +19,10 @@ import Video from "@/components/Media/Video";
 import Tempo from "@/components/Tempo/Tempo";
 
 import Ajuda from "@/components/Ajuda";
+
+import Barcos from "@/components/Barcos/Barcos";
+import Resultados from "@/components/Barcos/Resultados";
+
 Vue.use(Router);
 
 export default new Router({
@@ -39,6 +43,12 @@ export default new Router({
       name: "Meetup",
       props: true,
       component: Meetup
+    },
+    {
+      path: "/resultados/:id",
+      name: "Resultados",
+      props: true,
+      component: Resultados
     },
     {
       path: "/meetup/new",
@@ -67,6 +77,12 @@ export default new Router({
       name: "Profile",
       component: Profile,
       beforeEnter: AuthGuard
+    },
+    {
+      path: "/barcos",
+      name: "Barcos",
+      props: true,
+      component: Barcos
     },
     {
       path: "/fotos",

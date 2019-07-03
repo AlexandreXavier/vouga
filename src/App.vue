@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+<v-app>
 <!-- tab -->
     <v-toolbar dark dense class="primary">
         <v-toolbar-side-icon
@@ -21,30 +21,62 @@
             </router-link>
         </v-toolbar-title>
 
-        <v-spacer></v-spacer>
 
-        <v-toolbar-items class="hidden-xs-only">
+<!-- Manager -->
+            <v-menu open-on-hover top offset-y
+                    v-if="userIsAuthenticated"
+                    class="hidden-xs-only">
+                <template v-slot:activator="{ on }">
+                    <v-btn dense
+                        color="primary"
+                        dark
+                        v-on="on"
+                    >
+                    <v-icon left dark>folder_shared</v-icon>
+                        Manager
+                    </v-btn>
+                </template>
 
-             <v-menu open-on-hover top offset-y>
-            <template v-slot:activator="{ on }">
-            <v-btn
-                color="primary"
-                dark
-                v-on="on"
-            >
-            <v-icon left dark>image</v-icon>
-                Media
-            </v-btn>
-            </template>
-
-            <v-list>
-            <v-list-tile
-                v-for="(item, index) in items" :key="index" :to="item.link">
-                <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-            </v-list-tile>
-            </v-list>
+                <v-list>
+                <v-list-tile v-for="(item, index) in menuItemsManager"                        :key="index"
+                            :to="item.link">
+                    <v-list-tile-action>
+                        <v-icon v-if="item.icon">{{ item.icon }}</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                </v-list-tile>
+                </v-list>
             </v-menu>
 
+        <v-spacer></v-spacer>
+
+        <v-toolbar-items class="hidden-xs-only" >
+
+<!-- media -->
+            <v-menu open-on-hover top offset-y>
+                <template v-slot:activator="{ on }">
+                    <v-btn dense
+                        color="primary"
+                        dark
+                        v-on="on"
+                    >
+                    <v-icon left dark>image</v-icon>
+                        Media
+                    </v-btn>
+                </template>
+
+                <v-list>
+                <v-list-tile v-for="(item, index) in itemsMedia"                                       :key="index"
+                            :to="item.link">
+                    <v-list-tile-action>
+                        <v-icon v-if="item.icon">{{ item.icon }}</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                </v-list-tile>
+                </v-list>
+            </v-menu>
+
+<!-- main -->
             <v-btn
             flat
             v-for="item in menuItems"
@@ -55,6 +87,7 @@
             {{ item.title }}
             </v-btn>
 
+<!-- sair -->
             <v-btn
             v-if="userIsAuthenticated"
             flat
@@ -68,10 +101,10 @@
 
 <!-- sandwich-->
     <v-navigation-drawer temporary absolute v-model="sideNav">
-      <v-list>
-
+    <v-list>
+<!-- media -->
         <v-list-tile
-          v-for="item in items"
+          v-for="item in itemsMedia"
           :key="item.title"
           :to="item.link">
 
@@ -83,7 +116,7 @@
                 {{ item.title }}
             </v-list-tile-content>
         </v-list-tile>
-
+<!-- main -->
         <v-list-tile
           v-for="item in menuItems"
           :key="item.title"
@@ -94,6 +127,18 @@
           <v-list-tile-content>{{ item.title }}</v-list-tile-content>
         </v-list-tile>
 
+<!-- manager -->
+        <v-list-tile v-for="item in menuItemsManager"
+        :key="item.title"
+        :to="item.link">
+                <v-list-tile-action>
+                    <v-icon>{{ item.icon }}</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>{{ item.title }}</v-list-tile-content>
+        </v-list-tile>
+
+
+<!-- sair -->
         <v-list-tile
           v-if="userIsAuthenticated"
           @click="onLogout">
@@ -111,11 +156,10 @@
     </main>
 
 <!-- footer-->
- <portocaro-footer class="custon-footer"></portocaro-footer>
+    <portocaro-footer class="custon-footer"></portocaro-footer>
 
 <!-- fim -->
-
-  </v-app>
+</v-app>
 </template>
 
 <script>
@@ -123,19 +167,24 @@ export default {
   data() {
     return {
       sideNav: false,
-      items: [
-        { icon: "videocam", title: "Video", link: "/video" },
-        { icon: "image", title: "Fotos", link: "/fotos" }
+      itemsMedia: [
+        {
+          icon: "videocam",
+          title: "Video",
+          link: "/video"
+        },
+        {
+          icon: "image",
+          title: "Fotos",
+          link: "/fotos"
+        }
       ]
-      //    image: img
     };
   },
   computed: {
     menuItems() {
       let menuItems = [
         { icon: "help", title: "Ajuda", link: "/ajuda" },
-        /*  { icon: "directions_boat", title: "Tempo", link: "/tempo" }, */
-        /* { icon: "image", title: "Media", link: "/fotos" }, */
         { icon: "", title: "", link: "" },
         { icon: "face", title: "Registar", link: "/signup" },
         { icon: "lock_open", title: "Entrar", link: "/signin" }
@@ -144,18 +193,27 @@ export default {
         menuItems = [
           {
             icon: "supervisor_account",
-            title: "Ver Regatas",
+            title: "Regatas",
             link: "/meetups"
           },
-          { icon: "room", title: "Org. Evento", link: "/meetup/new" },
           { icon: "calendar_today", title: "Calendario", link: "/calendar" },
-          { icon: "directions_boat", title: "Tempo", link: "/tempo" },
-          { icon: "person", title: "Utilizador", link: "/profile" },
-          /* { icon: "image", title: "Fotos", link: "/fotos" }, */
+          { icon: "waves", title: "Vento", link: "/tempo" },
           { icon: "help", title: "Ajuda", link: "/ajuda" }
         ];
       }
       return menuItems;
+    },
+    menuItemsManager() {
+      let menuItemsManager = [];
+
+      if (this.userIsAuthenticated) {
+        menuItemsManager = [
+          { icon: "room", title: "Org. Evento", link: "/meetup/new" },
+          { icon: "person", title: "Utilizador", link: "/profile" },
+          { icon: "directions_boat", title: "Barcos", link: "/barcos" }
+        ];
+      }
+      return menuItemsManager;
     },
     userIsAuthenticated() {
       return (
@@ -165,9 +223,6 @@ export default {
     },
     user() {
       return this.$store.state.user;
-    },
-    userName() {
-      return this.$store.getters.currentUserName;
     },
     profilePicUrl() {
       return this.$store.getters.profilePicUrl;

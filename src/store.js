@@ -28,28 +28,6 @@ export default new Vuex.Store({
         caption: ""
       }
     ],
-    loadedMeetups: [
-      {
-        imageUrl:
-          "http://www.52superseries.com/wp-content/gallery/2017-52-super-series-miami-royal-cup/170307_nm_52SS_1034.jpg",
-        id: "afajfjadfaadfa323",
-        title: "Baiona Marina",
-        date: new Date().toISOString().slice(0, 10),
-        location: "Baiona Manina",
-        description: "Regata do Principe"
-      },
-      {
-        imageUrl:
-          "http://www.52superseries.com/wp-content/gallery/2017-52-super-series-miami-royal-cup/170311_nm_52SS_7219.jpg",
-        id: "aadsfhbkhlk1241",
-        title: "Miami",
-        date: new Date().toISOString().slice(0, 10),
-        location: "Miami",
-        description: "Miami Florida"
-      }
-    ],
-    user: null,
-    currentUser: null,
     loadedUsers: [
       {
         name: "xani",
@@ -64,10 +42,47 @@ export default new Vuex.Store({
         Id: ""
       }
     ],
+    loadedMeetups: [
+      {
+        imageurl:
+          "http://www.52superseries.com/wp-content/gallery/2017-52-super-series-miami-royal-cup/170307_nm_52SS_1034.jpg",
+        id: "afajfjadfaadfa323",
+        title: "Baiona Marina",
+        date: new Date().toISOString().slice(0, 10),
+        location: "Baiona Manina",
+        description: "Regata do Principe"
+      },
+      {
+        imageurl:
+          "http://www.52superseries.com/wp-content/gallery/2017-52-super-series-miami-royal-cup/170311_nm_52SS_7219.jpg",
+        id: "aadsfhbkhlk1241",
+        title: "Miami",
+        date: new Date().toISOString().slice(0, 10),
+        location: "Miami",
+        description: "Miami Florida"
+      }
+    ],
+    loadedBarcos: [
+      {
+        name: "PortocaroDos",
+        country: "ESP",
+        sailnumber: "ESP5015"
+      },
+      {
+        name: "Metralha",
+        country: "POR",
+        sailnumber: "POR8175"
+      }
+    ],
+    user: null,
+    currentUser: null,
     loading: false,
     error: null
   },
   mutations: {
+    setLoadedUsers(state, payload) {
+      state.loadedUsers = payload;
+    },
     setLoadedImages(state, payload) {
       state.loadedImages = payload;
     },
@@ -77,14 +92,11 @@ export default new Vuex.Store({
     setLoadedMeetups(state, payload) {
       state.loadedMeetups = payload;
     },
-    createMeetup(state, payload) {
-      state.loadedMeetups.push(payload);
+    setLoadedResultados(state, payload) {
+      state.loadedResultados = payload;
     },
-    setLoadedUsers(state, payload) {
-      state.loadedUsers = payload;
-    },
-    createUsers(state, payload) {
-      state.loadedUsers.push(payload);
+    setLoadedBarcos(state, payload) {
+      state.loadedBarcos = payload;
     },
     setUser(state, payload) {
       state.user = payload;
@@ -95,6 +107,18 @@ export default new Vuex.Store({
     setError(state, payload) {
       state.error = payload;
     },
+    createBarco(state, payload) {
+      state.loadedBarcos.push(payload);
+    },
+    createMeetup(state, payload) {
+      state.loadedMeetups.push(payload);
+    },
+    createUsers(state, payload) {
+      state.loadedUsers.push(payload);
+    },
+    createResultado(state, payload) {
+      state.loadedResultados.push(payload);
+    },
     clearError(state) {
       state.error = null;
     }
@@ -103,8 +127,9 @@ export default new Vuex.Store({
     loadImages({ commit }) {
       commit("setLoading", true);
       const images = [];
-      const base = parseInt(Math.random() * 12, 10) + 10;
-      for (let i = 0; i < 20; i++) {
+      const base = parseInt(Math.random() * 12, 10) + 20;
+      //alert(base);
+      for (let i = 0; i < 40; i++) {
         images.push({
           id: i,
           src:
@@ -126,13 +151,13 @@ export default new Vuex.Store({
       commit("setLoading", true);
       const videos = [];
       //const base = parseInt(Math.random() * 12, 2) + 2;
-      for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < 6; i++) {
         videos.push({
           id: i,
           src:
             "https://s3-eu-west-1.amazonaws.com/xanivouga/video/" + i + ".mp4",
           thumbnail:
-            "https://s3-eu-west-1.amazonaws.com/xanivouga/video/" + i + ".mp4",
+            "https://s3-eu-west-1.amazonaws.com/xanivouga/video/" + i + ".jpg",
           caption: "'i'"
         });
       }
@@ -154,12 +179,16 @@ export default new Vuex.Store({
               id: key,
               title: obj[key].title,
               description: obj[key].description,
-              imageUrl: obj[key].imageUrl,
+              classes: obj[key].classes,
+              location: obj[key].location,
+              imageurl: obj[key].imageurl,
               date: obj[key].date,
-              creatorId: obj[key].creatorId,
-              creatorName: obj[key].creatorName,
-              creatorAvatar: obj[key].creatorAvatar,
-              creatorDate: obj[key].creatorDate
+              dates: obj[key].dates,
+              horainicio: obj[key].horainicio,
+              creatorid: obj[key].creatorid,
+              creatorname: obj[key].creatorname,
+              creatoravatar: obj[key].creatoravatar,
+              creatordate: obj[key].creatordate
             });
           }
           //Carrega a variavel meetups com os dados do firebase
@@ -171,20 +200,124 @@ export default new Vuex.Store({
           commit("setLoading", false);
         });
     },
+    loadResultados({ commit }) {
+      commit("setLoading", true);
+      firebase
+        .database()
+        .ref("resultados")
+        .once("value")
+        .then(data => {
+          const resultados = [];
+          const obj = data.val();
+          for (let key in obj) {
+            resultados.push({
+              id: key,
+              meettupsid: obj[key].meettupsid,
+              posicao: obj[key].posicao,
+              nacionalidade: obj[key].nacionalidade,
+              club: obj[key].club,
+              matricula: obj[key].matricula,
+              barco: obj[key].barco,
+              skipper: obj[key].skipper,
+              tempofinal: obj[key].tempofinal,
+              espacotempo: obj[key].espacotempo,
+              corrigido: obj[key].corrigido,
+              total: obj[key].total
+            });
+          }
+          //Carrega a variavel meetups com os dados do firebase
+          commit("setLoadedResultados", resultados);
+          commit("setLoading", false);
+        })
+        .catch(error => {
+          console.log(error);
+          commit("setLoading", false);
+        });
+    },
+    loadBarcos({ commit }) {
+      commit("setLoading", true);
+      firebase
+        .database()
+        .ref("barcos")
+        .once("value")
+        .then(data => {
+          const barcos = [];
+          const obj = data.val();
+          for (let key in obj) {
+            barcos.push({
+              id: key,
+              name: obj[key].name,
+              country: obj[key].country,
+              sailnumber: obj[key].sailnumber,
+              builder: obj[key].builder,
+              type: obj[key].type,
+              year: obj[key].year,
+              gph: obj[key].gph,
+              loa: obj[key].loa,
+              main: obj[key].main,
+              genoa: obj[key].genoa,
+              spinnaker: obj[key].spinnaker,
+              crew: obj[key].crew,
+              creatorid: obj[key].creatorid,
+              creatorname: obj[key].creatorname
+            });
+          }
+          //Carrega a variavel meetups com os dados do firebase
+          commit("setLoadedBarcos", barcos);
+          commit("setLoading", false);
+        })
+        .catch(error => {
+          console.log(error);
+          commit("setLoading", false);
+        });
+    },
+    createBarco({ commit, getters }, payload) {
+      const barco = {
+        name: payload.name,
+        country: payload.country,
+        sailnumber: payload.matricula,
+        builder: payload.builder,
+        type: payload.type,
+        year: payload.year,
+        gph: payload.gph,
+        loa: payload.loa,
+        main: payload.main,
+        genoa: payload.genoa,
+        spinnaker: payload.spinnaker,
+        crew: payload.crew,
+        creatorid: getters.user.id,
+        creatorname: getters.currentUserName
+      };
+      //      alert("DENTRO " + barco.classe);
+      firebase
+        .database()
+        .ref("barcos")
+        .push(barco)
+        .then(data => {
+          const key = data.key;
+          commit("createBarco", {
+            ...barco,
+            id: key
+          });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
     createMeetup({ commit, getters }, payload) {
       const meetup = {
         title: payload.title,
         location: payload.location,
-        imageUrl: payload.imageUrl,
+        imageurl: payload.imageurl,
         description: payload.description,
         date: payload.date,
         dates: payload.dates,
-        horaInicio: payload.horaInicio,
+        horainicio: payload.horainicio,
         classes: payload.classes,
-        creatorId: getters.user.id,
-        creatorName: getters.currentUserName,
-        creatorAvatar: getters.profilePicUrl,
-        creatorDate: payload.creatorDate
+        creatorid: getters.user.id,
+        creatorname: getters.currentUserName,
+        creatoravatar: getters.profilePicUrl,
+        creatordate: payload.creatordate
       };
       firebase
         .database()
@@ -217,7 +350,7 @@ export default new Vuex.Store({
               name: obj[key].name,
               email: obj[key].email,
               password: obj[key].password,
-              creatorId: obj[key].creatorId
+              creatorid: obj[key].creatorid
             });
           }
           //Carrega a variavel users com os dados do firebase
@@ -234,7 +367,7 @@ export default new Vuex.Store({
         name: payload.name,
         email: payload.email,
         password: payload.password,
-        Id: getters.user.id
+        id: getters.user.id
       };
       firebase
         .database()
@@ -379,7 +512,7 @@ export default new Vuex.Store({
       });
     },
     featuredImages(state, getters) {
-      return getters.loadedImages.slice(0, 26);
+      return getters.loadedImages.slice(0, 46);
     },
     loadedImage(state) {
       return imageId => {
@@ -394,7 +527,7 @@ export default new Vuex.Store({
       });
     },
     featuredVideos(state, getters) {
-      return getters.loadedVideos.slice(0, 5);
+      return getters.loadedVideos.slice(0, 6);
     },
     loadedVideo(state) {
       return videoId => {
@@ -408,13 +541,13 @@ export default new Vuex.Store({
         return usersA.date > usersB.date;
       });
     },
-    loadedMeetups(state) {
-      return state.loadedMeetups.sort((meetupA, meetupB) => {
-        return meetupA.date > meetupB.date;
-      });
-    },
     featuredUsers(state, getters) {
       return getters.loadedUsers.slice(0, 5);
+    },
+    loadedMeetups(state) {
+      return state.loadedMeetups.sort((a, b) => {
+        return a.date > b.date;
+      });
     },
     featuredMeetups(state, getters) {
       return getters.loadedMeetups.slice(0, 5);
@@ -422,7 +555,44 @@ export default new Vuex.Store({
     loadedMeetup(state) {
       return meetupId => {
         return state.loadedMeetups.find(meetup => {
+          //alert("id " + meetup.id + " - " + meetupId);
           return meetup.id === meetupId;
+        });
+      };
+    },
+    loadedResultados(state) {
+      return state.loadedResultados.sort((resultadoA, resultadoB) => {
+        return resultadoA.date > resultadoB.date;
+      });
+    },
+    featuredResultados(state, getters) {
+      return getters.loadedResultados.slice(0, 2);
+    },
+    loadedResultado(state) {
+      return resultadoId => {
+        return state.loadedResultados.find(resultado => {
+          /*  alert("id " + resultado.id + " - " + resultadoId);
+          alert(
+            "meetupID " + resultado.meetupid + " barco: " + resultado.barco
+          );*/
+          //alert("resultadoId " + resultadoId);
+          return resultado.id === resultadoId;
+        });
+      };
+    },
+    loadedBarcos(state) {
+      return state.loadedBarcos.sort((barcoA, barcoB) => {
+        return barcoA.date > barcoB.date;
+      });
+    },
+    featuredBarcos(state, getters) {
+      return getters.loadedBarcos.slice(0, 25);
+    },
+    loadedBarco(state) {
+      return barcoId => {
+        return state.loadedBarcos.find(barco => {
+          alert("id " + barco.id + " - " + barcoId);
+          return barco.id === barcoId;
         });
       };
     },

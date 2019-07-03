@@ -7,9 +7,9 @@
                         <v-layout align-center>
                         <v-chip color="white">
                             <v-avatar>
-                                <img :src="meetup.creatorAvatar">
+                                <img :src="meetup.creatoravatar">
                             </v-avatar>
-                            {{meetup.creatorName}}
+                            {{meetup.creatorname}}
                         </v-chip>
                         <v-spacer></v-spacer>
                         <v-flex xs4>
@@ -19,9 +19,7 @@
                         </v-layout>
                     </v-card-text>
 
-                    <v-card-media :src="meetup.imageUrl"
-                        :height="calculateHeight"
-                        v-resize="calculateHeight">
+                    <v-card-media :src="meetup.imageurl">
                     </v-card-media>
 
                         <v-flex xs7 sm8 md9>
@@ -56,11 +54,6 @@ export default {
     meetups() {
       return this.$store.getters.loadedMeetups;
     },
-    /* imgHeight: function() {
-      var offset = 320;
-      console.log("new image height is " + (this.pageHeight - offset));
-      return this.pageHeight - offset;
-    }, */
     user() {
       return this.$store.getters.user;
     },
@@ -75,27 +68,6 @@ export default {
       const datahoje = new Date().toISOString().slice(0, 10);
       return timetable.diff(delta, datahoje);
     }
-  },
-  methods: {
-    calculateHeight: function() {
-      var body = document.body;
-      var html = document.documentElement;
-
-      this.pageHeight = Math.max(
-        body.scrollHeight,
-        body.offsetHeight,
-        html.clientHeight,
-        html.scrollHeight,
-        html.offsetHeight
-      );
-      // alert("resized to " + this.pageHeight);
-    },
-    clickFlip: function() {
-      this.flipperClass = !this.flipperClass;
-    }
-  },
-  mounted: function() {
-    this.calculateHeight();
   }
 };
 </script>

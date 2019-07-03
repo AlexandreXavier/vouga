@@ -1,21 +1,21 @@
 <template>
-  <v-container fluid fill-height>
-        <v-layout align-center justify-center>
-        <v-flex xs12 sm8 md4>
+    <v-container fluid fill-height>
+    <v-layout align-center justify-center>
+    <v-flex xs12 sm8 md4>
 
         <v-toolbar dark color="primary">
                 <v-toolbar-title>Login</v-toolbar-title>
         </v-toolbar>
 
         <v-card color="white" >
-
+            <v-card flat height="30" >
+            </v-card>
             <v-layout row v-if="error">
                 <v-flex xs12 sm6 offset-sm3>
                     <app-alert @dismissed="onDismissed" :text="error.message"></app-alert>
                 </v-flex>
             </v-layout>
 
-            <!-- form -->
             <form @submit.prevent="onSignin">
                  <v-flex xs12 sm8 offset-sm2>
                     <v-flex xs12>
@@ -45,7 +45,6 @@
                     </v-flex>
 
                     <div align-center justify-center>
-
                         <!-- button facebook -->
                         <v-btn color="light-blue darken-4"
                             center
@@ -114,36 +113,37 @@
                             <v-icon light>cached</v-icon>
                             </span>
                         </v-btn>
-
                     </div>
-                 </v-flex>
 
-        <v-layout row>
-                <v-btn color="primary"
-                    type="submit"
-                    :disabled="loading"
-                    :loading="loading">
-                    Entrar
-                    <v-icon right>
-                        lock_open
-                    </v-icon>
-                            <span slot="loader" class="custom-loader">
-                                    <v-icon light>cached</v-icon>
-                            </span>
-                </v-btn>
-                <v-spacer></v-spacer>
-                <v-btn
-                    color="primary"
-                    @click="onSair">
-                    Cancel
-                    <v-icon right>
-                        exit_to_app
-                    </v-icon>
-                </v-btn>
-        </v-layout>
+                 </v-flex>
+            <v-card flat height="30" >
+
+        </v-card>
+            <v-layout row>
+                        <v-btn color="primary"
+                            type="submit"
+                            :disabled="loading"
+                            :loading="loading">
+                            Entrar
+                            <v-icon right>
+                                lock_open
+                            </v-icon>
+                                    <span slot="loader" class="custom-loader">
+                                            <v-icon light>cached</v-icon>
+                                    </span>
+                        </v-btn>
+                        <v-spacer></v-spacer>
+                        <v-btn
+                            color="primary"
+                            @click="onSair">
+                            Cancel
+                            <v-icon right>
+                                exit_to_app
+                            </v-icon>
+                        </v-btn>
+            </v-layout>
 
             </form>
-            <!-- fim form -->
         </v-card>
 
 

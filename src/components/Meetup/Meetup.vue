@@ -3,7 +3,7 @@
     <v-flex xs12 sm12 offset-sm3>
         <v-card>
           <v-img
-            :src="meetup.imageUrl"
+            :src="meetup.imageurl"
             class="white--text"
             height="500px"
           >
@@ -21,31 +21,40 @@
                <span class="grey--text">{{ meetup.dates }} </span><br>
                 <!--  <span>{{ new Date | moment }}</span> -->
                 <span>Hora Inicio: </span>
-                <span class="grey--text">{{ meetup.horaInicio }} </span><br>
+                <span class="grey--text">{{ meetup.horainicio }} </span><br>
                 <span>Local: </span>
                 <span class="grey--text">{{ meetup.location }}</span><br>
                 <span>Descrição: </span>
                 <span class="grey--text">{{ meetup.description }}</span><br>
                 <span>Class: </span><br>
-                <v-layout row wrap>
-                    <v-flex size="20px"
+                <!-- <v-layout row wrap> -->
+                    <!-- <v-flex size="20px"
                         v-for="n in 1"
                         :key="n"
-                        xs2>
+                        xs2> -->
 
-                        <v-card flat tile>
-                        <!-- <span class="grey--text">{{ meetup.classes[0].text }}</span> -->
+                        <v-combobox v-model="meetup.classes"
+                            small-chips
+                            multiple
+                            readonly
+                        ></v-combobox>
+
+                        <!-- <v-card flat tile>
+                        <span class="grey--text">{{ meetup.classes[0].text }}</span>
                         <v-img                      :src="`https://xanivouga.s3-eu-west-1.amazonaws.com/class/cinza/ORC_${n}.png`"
                             height="30px" width="30px"
                         ></v-img>
-                        </v-card>
-                    </v-flex>
-                </v-layout>
+                        </v-card> -->
+                    <!-- </v-flex> -->
+               <!--  </v-layout> -->
             </div>
           </v-card-title>
           <v-card-actions>
-
-            <v-btn flat color="primary" @click="dialog = !dialog">Share</v-btn>
+            <v-btn flat color="primary"
+                :to="'/resultados/' + meetup.id"
+                v-if="resultados">
+                Resultados
+            </v-btn>
 
             <v-spacer></v-spacer>
             <v-btn icon @click="show = !show">
@@ -55,21 +64,21 @@
 <!-- menu detalhe -->
           <v-slide-y-transition>
             <v-card-text v-show="show">
-            <div>
-                <span>Autor da Regata: </span>
-                <v-spacer></v-spacer>
-                <v-chip color="white">
-                        <v-avatar>
-                            <img :src="meetup.creatorAvatar">
-                        </v-avatar>
-                         <span class="grey--text">{{meetup.creatorName}}</span>
-                </v-chip>
-                <v-spacer></v-spacer>
-                <span>Email: </span>
-                <span class="grey--text">{{ meetup.time }} </span><br>
-                <span>Tel: </span>
-                <span class="grey--text">{{ meetup.time }} </span><br>
-            </div>
+                <div>
+                    <span>Autor da Regata: </span>
+                    <v-spacer></v-spacer>
+                    <v-chip color="white">
+                            <v-avatar>
+                                <img :src="meetup.creatoravatar">
+                            </v-avatar>
+                            <span class="grey--text">{{meetup.creatorname}}</span>
+                    </v-chip>
+                    <v-spacer></v-spacer>
+                    <span>Email: </span>
+                    <span class="grey--text">{{ meetup.time }} </span><br>
+                    <span>Tel: </span>
+                    <span class="grey--text">{{ meetup.time }} </span><br>
+                </div>
             </v-card-text>
           </v-slide-y-transition>
 <!-- caixa dialogo share -->
@@ -81,13 +90,13 @@
 
             <v-card-actions class="white justify-center">
                 <v-btn class="white--text" fab icon small>
-                    <facebook :url="meetup.imageUrl" scale="3"></facebook>
+                    <facebook :url="meetup.imageurl" scale="3"></facebook>
                 </v-btn>
                 <v-btn class="white--text" fab icon small>
-                    <twitter :url="meetup.imageUrl" title="Check me on Github" scale="3"></twitter>
+                    <twitter :url="meetup.imageurl" title="Check me on Github" scale="3"></twitter>
                 </v-btn>
                 <v-btn class="white--text" fab icon small>
-                    <whats-app :url="meetup.imageUrl" title="Hello" scale="3"></whats-app>
+                    <whats-app :url="meetup.imageurl" title="Hello" scale="3"></whats-app>
                 </v-btn>
             </v-card-actions>
 
@@ -127,12 +136,14 @@ export default {
   }),
   computed: {
     meetup() {
-      return this.$store.getters.loadedMeetup(this.id);
-    }
-  },
-  filters: {
-    Upper(value) {
-      return value.toUpperCase();
+      return;
+      this.$store.getters.loadedMeetup(this.id);
+    },
+    resultados() {
+      return (
+        this.$store.getters.loadedResultado(this.id) !== null &&
+        this.$store.getters.loadedResultado(this.id) !== undefined
+      );
     }
   }
 };

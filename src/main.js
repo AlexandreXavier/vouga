@@ -14,6 +14,7 @@ import AlertCmp from "./components/Alert.vue";
 import "@fortawesome/fontawesome-free/css/all.css";
 
 import Media from "./components/Media/Media";
+import Barcos from "./components/Barcos/Barcos";
 
 Vue.use(Vuefire);
 Vue.use(VueResource);
@@ -23,6 +24,7 @@ Vue.config.productionTip = false;
 Vue.component("portocaro-footer", Footer);
 Vue.component("app-alert", AlertCmp);
 Vue.component("Media", Media);
+Vue.component("Barcos", Barcos);
 
 new Vue({
   firebase: {
@@ -42,7 +44,9 @@ new Vue({
     this.$store.dispatch("loadVideos");
     this.$store.dispatch("loadImages");
     this.$store.dispatch("loadUsers");
+    this.$store.dispatch("loadBarcos");
+    this.$store.dispatch("loadResultados");
   }
 }).$mount("#app");
 
-export default Media;
+export default { Media, Barcos };

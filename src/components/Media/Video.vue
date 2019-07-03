@@ -15,20 +15,20 @@
                     :loop="false"
                     @pause="handle()"
                     :ref="'fish'"
-                    :style="{width: '500px'}"
+                    :style="{width: '370px'}"
                     >
                     <span class="headline white--text pl-3 pt-3">
                     </span>
                     </Media>
                     <v-card-actions class="white justify-center">
                                 <v-btn class="white--text" fab icon small>
-                                    <facebook :url="video.src" scale="2"></facebook>
+                                    <facebook :url="video.src" scale="2" title="Mais um Video"></facebook>
                                 </v-btn>
                                 <v-btn class="white--text" fab icon small>
-                                    <twitter :url="video.src" title="Check me on Github" scale="2"></twitter>
+                                    <twitter :url="video.src" title="Mais um Video" scale="2"></twitter>
                                 </v-btn>
                                 <v-btn class="white--text" fab icon small>
-                                    <whats-app :url="video.src" title="Hello" scale="2"></whats-app>
+                                    <whats-app :url="video.src" title="Ola" scale="2"></whats-app>
                                 </v-btn>
                     </v-card-actions>
                 </v-card>

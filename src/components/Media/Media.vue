@@ -57,7 +57,7 @@ export default {
     },
     poster: {
       type: String,
-      required: false
+      required: true
     },
     src: {
       type: String | Array,

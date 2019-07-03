@@ -33,16 +33,16 @@
             <v-layout row>
                 <v-flex xs12 sm6 offset-sm3>
                 <v-text-field
-                    name="imageUrl"
+                    name="imageurl"
                     label="Image URL"
                     id="image-url"
-                    v-model="imageUrl"
+                    v-model="imageurl"
                     required></v-text-field>
                 </v-flex>
             </v-layout>
             <v-layout row>
                 <v-flex xs12 sm6 offset-sm3>
-                <img :src="imageUrl" height="150">
+                <img :src="imageurl" height="150">
                 </v-flex>
             </v-layout>
             <v-layout row>
@@ -238,7 +238,7 @@ export default {
     return {
       title: "",
       location: "",
-      imageUrl: "",
+      imageurl: "",
       description: "",
       classes: "ORC",
       activator: null,
@@ -308,7 +308,7 @@ export default {
       return (
         this.title !== "" &&
         this.location !== "" &&
-        this.imageUrl !== "" &&
+        this.imageurl !== "" &&
         this.description !== ""
       );
     },
@@ -362,7 +362,7 @@ export default {
       const meetupData = {
         title: this.title,
         location: this.location,
-        imageUrl: this.imageUrl,
+        imageurl: this.imageurl,
         description: this.description,
         classes: this.model,
         date: this.submittableDateTime,

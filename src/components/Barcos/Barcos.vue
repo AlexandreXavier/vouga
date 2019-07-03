@@ -1,0 +1,550 @@
+<template>
+  <v-container>
+<!-- sandwich -->
+    <v-navigation-drawer
+        v-model="drawer"
+        :clipped="$vuetify.breakpoint.lgAndUp"
+        fixed
+        app
+        temporary
+        >
+        <v-list dense>
+            <template v-for="item in items">
+            <v-layout
+                v-if="item.heading"
+                :key="item.heading"
+                row
+                align-center
+            >
+                <v-flex xs6>
+                <v-subheader v-if="item.heading">
+                    {{ item.heading }}
+                </v-subheader>
+                </v-flex>
+            </v-layout>
+            <v-list-group
+                v-else-if="item.children"
+                :key="item.text"
+                v-model="item.model"
+                :prepend-icon="item.model ? item.icon : item['icon-alt']"
+                append-icon=""
+            >
+                <template v-slot:activator>
+                <v-list-tile>
+                    <v-list-tile-content>
+                    <v-list-tile-title>
+                        {{ item.text }}
+                    </v-list-tile-title>
+                    </v-list-tile-content>
+                </v-list-tile>
+                </template>
+                <v-list-tile
+                v-for="(child, i) in item.children"
+                :key="i"
+                @click="onPrint"
+                >
+                <v-list-tile-action v-if="child.icon">
+                    <v-icon>{{ child.icon }}</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                    <v-list-tile-title>
+                    {{ child.text }}
+                    </v-list-tile-title>
+                </v-list-tile-content>
+                </v-list-tile>
+            </v-list-group>
+            <v-list-tile v-else :key="item.text" @click="onSair">
+                <v-list-tile-action>
+                <v-icon>{{ item.icon }}</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                <v-list-tile-title>
+                    {{ item.text }}
+                </v-list-tile-title>
+                </v-list-tile-content>
+            </v-list-tile>
+            </template>
+        </v-list>
+    </v-navigation-drawer>
+<!-- tab -->
+    <v-toolbar
+      :clipped-left="$vuetify.breakpoint.lgAndUp"
+      color="primary"
+      dark
+      app
+      fixed
+      height="60px"
+    >
+      <v-toolbar-title style="width: 300px " class="ml-0 pl-3">
+        <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+        <span class="hidden-sm-and-down">Barcos ORC(2019)</span>
+      </v-toolbar-title>
+
+      <v-spacer></v-spacer>
+
+      <v-btn icon>
+        <v-icon>notifications</v-icon>
+      </v-btn>
+
+      <v-list-tile
+          @click="onSair">
+          <v-list-tile-action>
+            <v-icon>exit_to_app</v-icon>
+          </v-list-tile-action>
+        </v-list-tile>
+    </v-toolbar>
+
+<!--  btn + -->
+    <v-btn v-if="userIsAuthenticated"
+      fab
+      bottom
+      right
+      color="pink"
+      dark
+      fixed
+      @click="dialog = !dialog"
+    >
+      <v-icon>add</v-icon>
+    </v-btn>
+
+
+<!-- caixa criar barco -->
+    <v-layout align-space-around justify-start column fill-height>
+        <v-toolbar flat color="white"  v-if="userIsAuthenticated">
+            <v-btn fab dark color="white">
+                <v-avatar size="52" >
+                    <v-img :src="profilePicUrl">
+                    </v-img>
+                </v-avatar>
+            </v-btn>
+            <v-toolbar-title>Criar Barco</v-toolbar-title>
+            <v-divider
+            class="mx-2"
+            inset
+            vertical
+            ></v-divider>
+            <v-spacer></v-spacer>
+            <v-dialog v-model="dialog" max-width="500px">
+                <template v-slot:activator="{ on }">
+                    <v-btn color="primary" dark class="mb-2" v-on="on">+</v-btn>
+                </template>
+
+<v-card class="mx-auto" max-width="650">
+      <v-card-title class="title font-weight-regular justify-space-between">
+        <span>{{ currentTitle }}</span>
+      </v-card-title>
+
+      <v-window v-model="step">
+        <v-window-item :value="1">
+          <v-card-text>
+            <v-form>
+            <v-container>
+            <v-layout row wrap justify-center>
+                        <v-flex xs12 sm3>
+                            <v-text-field v-model="editedItem.main" label="Vela Grande" suffix="m2" readonly>
+                            </v-text-field>
+                            <v-text-field v-model="editedItem.genoa" label="Genoa"
+                            suffix="m2" readonly>
+                            </v-text-field>
+                            <v-text-field v-model="editedItem.spinnaker" label="Balao" suffix="m2" readonly>
+                            </v-text-field>
+                        </v-flex>
+                        <v-spacer></v-spacer>
+                        <v-flex xs12 sm3>
+                            <v-text-field v-model="editedItem.loa" label="Comp.Casco" suffix="m" readonly>
+                            </v-text-field>
+
+                            <v-text-field v-model="editedItem.draft" label="Alt.Casco" suffix="m" readonly>
+                            </v-text-field>
+                        </v-flex>
+                        <v-spacer></v-spacer>
+                        <v-flex xs12 sm3>
+                            <v-text-field v-model="editedItem.spinnaker" label="Balao" suffix="m2"                    readonly>
+                            </v-text-field>
+                            <v-text-field v-model="editedItem.spinnaker" label="Balao" suffix="m2" >
+                            </v-text-field>
+                        </v-flex>
+                    </v-layout>
+            </v-container>
+            </v-form>
+          </v-card-text>
+        </v-window-item>
+
+        <v-window-item :value="2">
+          <v-card-text>
+              <v-form>
+            <v-container>
+            <v-layout row wrap justify-center>
+                        <v-flex xs12 sm3>
+                            <v-text-field v-model="editedItem.gph" label="Rating"
+                                suffix="m2" readonly>
+                            </v-text-field>
+                            <v-text-field v-model="editedItem.genoa" label="Genoa"
+                            suffix="m2" readonly>
+                            </v-text-field>
+                            <v-text-field v-model="editedItem.spinnaker" label="Balao" suffix="m2" readonly>
+                            </v-text-field>
+                        </v-flex>
+                        <v-spacer></v-spacer>
+                        <v-flex xs12 sm3>
+                            <v-text-field v-model="editedItem.loa" label="Comp.Casco" suffix="m" readonly>
+                            </v-text-field>
+
+                            <v-text-field v-model="editedItem.draft" label="Alt.Casco" suffix="m" readonly>
+                            </v-text-field>
+                        </v-flex>
+                        <v-spacer></v-spacer>
+                        <v-flex xs12 sm3>
+                            <v-text-field v-model="editedItem.spinnaker" label="Balao" suffix="m2" readonly>
+                            </v-text-field>
+                            <v-text-field v-model="editedItem.spinnaker" label="Balao" suffix="m2" >
+                            </v-text-field>
+                        </v-flex>
+                    </v-layout>
+            </v-container>
+            </v-form>
+
+          </v-card-text>
+        </v-window-item>
+
+        <v-window-item :value="3">
+          <div class="pa-3 text-xs-center">
+            <v-img
+              class="mb-3"
+              contain
+              height="128"
+              src="https://cdn.vuetifyjs.com/images/logos/v.svg"
+            ></v-img>
+            <h3 class="title font-weight-light mb-2">ORC</h3>
+            <span class="caption grey--text">Thanks for the Data!</span>
+          </div>
+        </v-window-item>
+      </v-window>
+
+      <v-divider></v-divider>
+
+      <v-card-actions>
+        <v-btn
+          :disabled="step === 1"
+          flat
+          @click="step--"
+        >
+          Previo
+        </v-btn>
+        <v-spacer></v-spacer>
+        <v-btn
+          :disabled="step === 3"
+          color="primary"
+          depressed
+          @click="step++"
+        >
+          Proximo
+        </v-btn>
+      </v-card-actions>
+
+    </v-card>
+    </v-dialog>
+    </v-toolbar>
+
+        <v-card-title>
+            <v-spacer></v-spacer>
+            <v-text-field
+            v-model="search"
+            append-icon="search"
+            label="Procurar"
+            single-line
+            hide-details
+            ></v-text-field>
+        </v-card-title>
+
+<!-- tabela lista de barcos -->
+        <v-data-table
+            :headers="headers"
+            :items="barcos"
+            :search="search"
+            :expand="expand"
+            class="elevation-1"
+        >
+            <template slot="headerCell" slot-scope="props" class="hidden-sm-and-down">
+                <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                    <span v-on="on">
+                        {{ props.header.text }}
+                    </span>
+                    </template>
+                    <span>
+                    {{ props.header.text }}
+                    </span>
+                </v-tooltip>
+            </template>
+            <template v-slot:items="props">
+                <tr @click="props.expanded = !props.expanded">
+                    <td>{{ props.item.name }}</td>
+                    <td class="text-xs-left hidden-sm-and-down">{{ props.item.sailnumber}}</td>
+                    <td class="text-xs-left">{{ props.item.type}}</td>
+                    <td class="text-xs-left hidden-sm-and-down">{{ props.item.year}}</td>
+                    <td class="text-xs-left">{{ props.item.gph}}</td>
+                    <td class="justify-center layout px-0" v-if="userIsAuthenticated">
+                        <v-icon
+                            small
+                            class="mr-2"
+                            @click="editItem(props.item)"
+                        >
+                            edit
+                        </v-icon>
+                        <v-icon
+                            small
+                            @click="deleteItem(props.item)"
+                        >
+                            delete
+                        </v-icon>
+                    </td>
+                </tr>
+            </template>
+            <template v-slot:no-results>
+                <v-alert :value="true" color="error" icon="warning">
+                Não foi possivel encontrar "{{ search }}".
+                </v-alert>
+        </template>
+        <template v-slot:no-data>
+          <v-btn color="primary" @click="initialize">Reset</v-btn>
+        </template>
+        <template v-slot:expand="props">
+          <v-card flat>
+            <v-card-text>
+                    <v-layout row>
+                        <v-flex xs2>
+                            <div class="flex body-1 red--text">ID:</div>
+                        </v-flex>
+                        <v-flex xs12>
+                            <div class="flex body-1 green--text">{{ props.item.creatorid }}</div>
+                        </v-flex>
+                    </v-layout>
+                    <v-layout row>
+                        <v-flex xs2>
+                            <div class="flex body-1 red--text">Avatar:</div>
+                        </v-flex>
+                        <v-flex xs12>
+                            <div class="flex body-1 green--text">{{ props.item.creatorid }}</div>
+                        </v-flex>
+                    </v-layout>
+                    <v-layout row>
+                        <v-flex xs2>
+                        <div class="flex body-1 red--text">Nome:</div>
+                        </v-flex>
+                        <v-flex xs12>
+                            <div class="flex body-1 green--text">{{ props.item.creatorname }}</div>
+                        </v-flex>
+                    </v-layout>
+                    <v-layout>
+                        <v-flex xs2>
+                            <div class="flex body-1 red--text">Criado Em:</div>
+                        </v-flex>
+                        <v-flex xs12>
+                            <div class="flex body-1 green--text">{{ props.item.creatorname }}</div>
+                        </v-flex>
+                    </v-layout>
+            </v-card-text>
+          </v-card>
+        </template>
+        </v-data-table>
+    </v-layout>
+
+<!-- fim-->
+  </v-container>
+</template>
+
+<script>
+export default {
+  data: () => ({
+    dialog: false,
+    drawer: null,
+    step: 1,
+    expand: false,
+    items: [
+      { icon: "directions_boat", text: "Barcos" },
+      {
+        icon: "keyboard_arrow_up",
+        "icon-alt": "keyboard_arrow_down",
+        text: "Output",
+        model: false,
+        children: [
+          { text: "Exportar", icon: "import_export" },
+          { text: "Imprimir", icon: "local_printshop" }
+        ]
+      },
+      { icon: "exit_to_app", text: "Sair" }
+    ],
+    itemsClasses: ["ORC 0", "ORC 1", "ORC 2", "ORC 3", "ORC 4"],
+    model: ["ORC 1"],
+    search: "",
+    headers: [
+      { text: "Nome", value: "name", type: "text" },
+      { text: "N. Vela", value: "sailnumber", type: "text", sortable: false },
+      { text: "Modelo", value: "type", type: "text", sortable: false },
+      { text: "Ano", value: "year", type: "number" },
+      { text: "Rating", value: "gph", type: "number" },
+      { text: "Accao", value: "accao", sortable: false }
+    ],
+    editedIndex: -1,
+    editedItem: {
+      name: "",
+      country: "",
+      sailnumber: "",
+      builder: "",
+      type: "",
+      year: 2000,
+      gph: 0,
+      loa: 0,
+      main: 0,
+      genoa: 0,
+      spinnaker: 0,
+      crew: 0
+    },
+    defaultItem: {
+      name: "",
+      country: "",
+      sailnumber: "",
+      builder: "",
+      type: "",
+      year: 2000,
+      gph: 0,
+      loa: 0,
+      main: 0,
+      genoa: 0,
+      spinnaker: 0,
+      crew: 0
+    }
+  }),
+  computed: {
+    userIsAuthenticated() {
+      return (
+        this.$store.getters.user !== null &&
+        this.$store.getters.user !== undefined
+      );
+    },
+    formTitle() {
+      return this.editedIndex === -1 ? "Novo Barco" : "Editar Barco";
+    },
+    barcos() {
+      return this.$store.getters.loadedBarcos;
+    },
+    users() {
+      return this.$store.getters.loadedUsers;
+    },
+    user() {
+      return this.$store.state.user;
+    },
+    profilePicUrl() {
+      return this.$store.getters.profilePicUrl;
+    },
+    error() {
+      return this.$store.getters.error;
+    },
+    loading() {
+      return this.$store.getters.loading;
+    },
+    currentTitle() {
+      switch (this.step) {
+        case 1:
+          return "Medidas";
+        case 2:
+          return "Rating";
+        default:
+          return "Polares";
+      }
+    }
+  },
+  watch: {
+    dialog(val) {
+      val || this.close();
+    },
+    model(val) {
+      if (val.length > 5) {
+        this.$nextTick(() => this.model.pop());
+      }
+    }
+  },
+  created() {
+    this.initialize();
+  },
+  methods: {
+    initialize() {
+      this.barcos = [
+        {
+          name: "",
+          country: "",
+          sailnumber: "",
+          builder: "",
+          type: "",
+          year: 2000,
+          gph: 0,
+          loa: 0,
+          main: 0,
+          genoa: 0,
+          spinnaker: 0,
+          crew: 0
+        }
+      ];
+    },
+    editItem(item) {
+      this.editedIndex = this.barcos.indexOf(item);
+      this.editedItem = Object.assign({}, item);
+      this.dialog = true;
+    },
+    deleteItem(item) {
+      const index = this.barcos.indexOf(item);
+      confirm("Tem a certeza que quer apagar este barco?") &&
+        this.barcos.splice(index, 1);
+    },
+    close() {
+      this.dialog = false;
+      setTimeout(() => {
+        this.editedItem = Object.assign({}, this.defaultItem);
+        this.editedIndex = -1;
+      }, 300);
+    },
+    save() {
+      if (this.editedIndex > -1) {
+        Object.assign(this.barcos[this.editedIndex], this.editedItem);
+      } else {
+        this.barcos.push(this.editedItem);
+
+        this.onCreateBarco();
+      }
+      this.close();
+    },
+    onSair() {
+      this.$router.push("/");
+    },
+    onCreateBarco() {
+      const barcoData = {
+        name: this.editedItem.name,
+        country: this.editedItem.country,
+        sailnumber: this.editedItem.sailnumber,
+        builder: this.editedItem.builder,
+        type: this.editedItem.type,
+        year: this.editedItem.year,
+        gph: this.editedItem.gph,
+        loa: this.editedItem.loa,
+        main: this.editedItem.main,
+        genoa: this.editedItem.genoa,
+        spinnaker: this.editedItem.spinnaker,
+        crew: this.editedItem.crew
+      };
+      this.$store.dispatch("createBarco", barcoData);
+      this.dialog = false;
+      this.$router.push("/barcos");
+    },
+    onPrint() {
+      alert("Print");
+      return "One";
+    }
+  },
+  props: {
+    source: String
+  }
+};
+</script>
+
+

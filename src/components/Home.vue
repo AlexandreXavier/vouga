@@ -20,7 +20,7 @@
         <v-carousel style="cursor: pointer;">
           <v-carousel-item
             v-for="meetup in meetups"
-            :src="meetup.imageUrl"
+            :src="meetup.imageurl"
             :key="meetup.id"
             @click="onLoadMeetup(meetup.id)">
             <div class="title">
@@ -30,6 +30,8 @@
         </v-carousel>
       </v-flex>
     </v-layout>
+
+
 
   </v-container>
 </template>

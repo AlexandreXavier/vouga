@@ -14,6 +14,8 @@ const path = require("path");
 const os = require("os");
 const fs = require("fs");
 
+const sayHi = require("./tempo.js");
+
 admin.initializeApp();
 
 const mailTransport = nodemailer.createTransport({
@@ -73,8 +75,8 @@ async function sendWelcomeEmail(email, displayName) {
     to: email
   };
 
-  // The user subscribed to the newsletter.
-  mailOptions.subject = `Welcome to ${APP_NAME}!`;
+  // Email de agradecimento da assinatura do site.
+  mailOptions.subject = `Bem Vindo ao site ${APP_NAME}!`;
   mailOptions.text = `Olá ${displayName ||
     ""}! Bem vindo ao clube ${APP_NAME}. Espero que goste dos serviços que vamos dispor para si.`;
   await mailTransport.sendMail(mailOptions);
