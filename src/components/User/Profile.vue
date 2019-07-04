@@ -1,287 +1,504 @@
 <template>
-    <v-app id="inspire">
-<!-- sandwich -->
-    <v-navigation-drawer
-      v-model="drawer"
-      :clipped="$vuetify.breakpoint.lgAndUp"
-      fixed
-      app
-      temporary
-    >
-    <v-list dense>
-    <template v-for="item in items">
-          <v-layout
-            v-if="item.heading"
-            :key="item.heading"
-            row
-            align-center
-          >
-            <v-flex xs6>
-              <v-subheader v-if="item.heading">
-                {{ item.heading }}
-              </v-subheader>
+<v-container>
+
+<!-- criar ou editar users -->
+<v-dialog v-model="dialog" max-width="500px">
+    <v-card class="mx-auto" max-width="650px">
+
+                        <v-card-title class="title font-weight-regular justify-space-between">
+                            <span>{{ currentTitle }}</span>
+                        </v-card-title>
+
+                        <v-window v-model="step">
+
+                            <v-window-item :value="1">
+                            <v-card-text>
+                                <v-form>
+                                <v-container>
+                                <v-layout row wrap justify-center>
+                                            <v-flex xs12 sm10>
+                                                <v-text-field v-model="editedItem.name" label="NOME" >
+                                                </v-text-field>
+                                                <v-text-field v-model="editedItem.email" label="EMAIL">
+                                                </v-text-field>
+                                                <v-text-field v-model="editedItem.password" label="PASSWORD" >
+                                                </v-text-field>
+                                                <v-text-field v-model="editedItem.country" label="COUNTRY" >
+                                                </v-text-field>
+                                                <v-text-field v-model="editedItem.nivel" label="NIVEL" >
+                                                </v-text-field>
+                                            </v-flex>
+                                </v-layout>
+                                </v-container>
+                                </v-form>
+                            </v-card-text>
+                            </v-window-item>
+
+                            <v-window-item :value="2">
+                            <v-card-text>
+                                <v-form>
+                                    <v-container>
+                                    <v-layout row wrap justify-center>
+                                        <div class="pa-3 text-xs-center">
+                                            <v-img
+                                            class="mb-3"
+                                            contain
+                                            height="128"
+                                            src="https://cdn.vuetifyjs.com/images/logos/v.svg"
+                                            ></v-img>
+                                            <h3 class="title font-weight-light mb-2">USER</h3>
+                                            <span class="caption grey--text">Obrigada!</span>
+                                        </div>
+                                    </v-layout>
+                                    </v-container>
+                                </v-form>
+
+                            </v-card-text>
+                            </v-window-item>
+
+                            <v-window-item :value="3">
+                            <v-layout row wrap justify-center>
+                                    <v-flex xs12 sm10>
+                                        <v-text-field v-model="editedItem.id" label="ID" disabled>
+                                        </v-text-field>
+                                    </v-flex>
+                                </v-layout>
+                            </v-window-item>
+
+                        </v-window>
+
+                        <v-divider></v-divider>
+
+                        <v-card-actions>
+                            <v-btn
+                                :disabled="step === 1"
+                                flat
+                                @click="step--"
+                                >
+                                Previo
+                            </v-btn>
+                            <v-spacer></v-spacer>
+                            <v-btn
+                                :disabled="step === 3"
+                                color="primary"
+                                depressed
+                                @click="step++"
+                                >
+                                Proximo
+                            </v-btn>
+                        </v-card-actions>
+
+    </v-card>
+</v-dialog>
+
+<!-- filtros -->
+<v-layout row wrap justify-center>
+            <v-flex xs2>
+                <v-select
+                    :items="filterFields"
+                    v-model="filterField"
+                    label="Filtrar por">
+                </v-select>
             </v-flex>
-          </v-layout>
-
-          <v-list-group
-            v-else-if="item.children"
-            :key="item.text"
-            v-model="item.model"
-            :prepend-icon="item.model ? item.icon : item['icon-alt']"
-            append-icon=""
-          >
-                <template v-slot:activator>
-                    <v-list-tile>
-                        <v-list-tile-content>
-                        <v-list-tile-title>
-                            {{ item.text }}
-                        </v-list-tile-title>
-                        </v-list-tile-content>
-                    </v-list-tile>
-                </template>
-
-                <v-list-tile
-                v-for="(child, i) in item.children"
-                :key="i"
-                @click="onPrint"
-                >
-                    <v-list-tile-action v-if="child.icon">
-                        <v-icon>{{ child.icon }}</v-icon>
-                    </v-list-tile-action>
-                    <v-list-tile-content>
-                        <v-list-tile-title>
-                        {{ child.text }}
-                        </v-list-tile-title>
-                    </v-list-tile-content>
-                </v-list-tile>
-          </v-list-group>
-
-          <v-list-tile v-else :key="item.text" @click="onSair">
-            <v-list-tile-action>
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title>
-                {{ item.text }}
-              </v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-
-    </template>
-    </v-list>
-    </v-navigation-drawer>
-
-
-<!-- tab -->
-    <v-toolbar
-      :clipped-left="$vuetify.breakpoint.lgAndUp"
-      color="primary"
-      dark
-      app
-      fixed
-      height="50px"
-    >
-      <v-toolbar-title style="width: 300px " class="ml-0 pl-3">
-        <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-        <span class="hidden-sm-and-down">Utilizadores</span>
-      </v-toolbar-title>
-
-      <v-text-field v-if="fotoUser"
-        flat
-        solo-inverted
-        hide-details
-        prepend-inner-icon="search"
-        label="Search"
-        class="hidden-sm-and-down"
-      ></v-text-field>
-
-      <v-spacer></v-spacer>
-
-      <v-btn icon>
-        <v-icon>notifications</v-icon>
-      </v-btn>
-<!--  img perfil  -->
-        <div v-if="fotoUser">
-            <span class="hidden-sm-and-down">{{"U: "+user.displayName}}</span>
-            <v-avatar size="32px" color="grey lighten-4">
-                <v-img :src="displayUser.photoUR" :alt="displayUser.displayName">
-                </v-img>
-            </v-avatar>
-        </div>
-      <v-list-tile
-          @click="onSair">
-          <v-list-tile-action>
-            <v-icon>exit_to_app</v-icon>
-          </v-list-tile-action>
-        </v-list-tile>
-    </v-toolbar>
-
-<!--  btn + -->
-    <v-btn
-      fab
-      bottom
-      right
-      color="pink"
-      dark
-      fixed
-      @click="dialog = !dialog"
-    >
-      <v-icon>add</v-icon>
-    </v-btn>
-
-
-<!-- caixa criar utilizador -->
-    <v-dialog v-model="dialog" width="800px">
-      <v-card>
-        <v-card-title
-          class="grey lighten-4 py-4 title"
-        >
-          Criar Utilizador
-        </v-card-title>
-        <v-container grid-list-sm class="pa-4">
-          <v-layout row wrap>
-            <v-flex xs12 align-center justify-space-between>
-              <v-layout align-center>
-                <v-avatar size="40px" class="mr-3">
-                  <img
-                    src="//ssl.gstatic.com/s2/oz/images/sge/grey_silhouette.png"
-                    alt=""
-                  >
-                </v-avatar>
+             <v-spacer></v-spacer>
+            <v-flex xs2 sm1>
+                <v-select
+                    :items="filterOperators"
+                    v-model="filterOperator"
+                    label="Operador">
+                </v-select>
+            </v-flex>
+             <v-spacer></v-spacer>
+            <v-flex xs2 v-show="filterOperator && filterType !== 'lookup'">
                 <v-text-field
-                  placeholder="Name"
-                  value="FALTA REFERENCIAR"
+                    name="filterTerm"
+                    :label="filterTermLabel"
+                    :mask="filterTermMask"
+                    :rules='filterTermRules'
+                    return-masked-value
+                    v-model="filterTerm"
                 ></v-text-field>
-              </v-layout>
             </v-flex>
-            <v-flex xs12>
-              <v-text-field
-                prepend-icon="mail"
-                placeholder="Email"
-                value="FALTA REFERENCIAR"
-              ></v-text-field>
+            <v-flex xs2 v-show="filterOperator === 'between'">
+                <v-text-field
+                    name="filterTerm2"
+                    :label="filterTermLabel"
+                    :mask="filterTermMask"
+                    :rules='filterTermRules'
+                    return-masked-value
+                    v-model="filterTerm2"
+                ></v-text-field>
             </v-flex>
-            <v-flex xs12>
-              <v-text-field
-                type="tel"
-                prepend-icon="phone"
-                placeholder="(000) 00 0000000"
-                mask="phone"
-              ></v-text-field>
+            <v-flex xs2 v-show="filterType === 'lookup'">
+                <v-autocomplete
+                  :items="filterLookupItems"
+                  :label="filterLookupLabel"
+                  v-model="filterLookupValue"
+                ></v-autocomplete>
             </v-flex>
-            <v-flex xs12>
-              <v-text-field
-                prepend-icon="notes"
-                placeholder="Notes"
-                value="FALTA REFERENCIAR"
-              ></v-text-field>
+             <v-spacer></v-spacer>
+            <v-flex xs2>
+                <v-btn color="warning" @click="onClearAllFilters">Limpar Filtro</v-btn>
             </v-flex>
-          </v-layout>
-        </v-container>
-        <v-card-actions>
-          <v-btn flat color="success" @click="dialog = false">Cancelar</v-btn>
-          <v-btn flat @click="dialog = false">Gravar</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
 
-
-<!-- tabela lista de utilizadores -->
-    <v-layout align-space-around justify-start column fill-height>
-        <v-data-table
-            :headers="headers"
-            :items="users"
-            class="elevation-1"
-        >
-            <template slot="headerCell" slot-scope="props">
-            <v-tooltip bottom>
-                <template v-slot:activator="{ on }">
-                <span v-on="on">
-                    {{ props.header.text }}
-                </span>
+<!-- tabela -->
+    <v-data-table
+    :headers="headers"
+    :items="filteredUsers"
+    class="elevation-1">
+                <template slot="items" slot-scope="props">
+                    <td>{{ props.item.name }}</td>
+                    <td class="text-xs-left">{{ props.item.email }}</td>
+                    <td class="text-xs-left">{{ props.item.password }}</td>
+                    <td class="text-xs-left">{{ props.item.country }}</td>
+                    <td class="text-xs-left">{{ props.item.nivel }}</td>
+                    <td class="justify-center" v-if="userIsAuthenticated">
+                                <v-icon
+                                    small
+                                    class="mr-2"
+                                    @click="editItem(props.item)"
+                                >
+                                    edit
+                                </v-icon>
+                                <v-icon
+                                    small
+                                    @click="deleteItem(props.item)"
+                                >
+                                    delete
+                                </v-icon>
+                    </td>
                 </template>
-                <span>
-                {{ props.header.text }}
-                </span>
-            </v-tooltip>
-            </template>
-            <template v-slot:items="props">
-            <td>{{ props.item.name }}</td>
-            <td class="text-xs-left">{{ props.item.email }}</td>
-            <td class="text-xs-left">{{ props.item.password }}</td>
-            <td class="justify-center layout px-0">
-                <v-icon
-                    small
-                    class="mr-2"
-                    @click="editItem(props.item)"
-                >
-                    edit
-                </v-icon>
-                <v-icon
-                    small
-                    @click="deleteItem(props.item)"
-                >
-                    delete
-                </v-icon>
-                </td>
-            </template>
-        </v-data-table>
-    </v-layout>
-
+    </v-data-table>
+</v-layout>
 <!-- fim-->
-    </v-app>
+</v-container>
 </template>
 
 <script>
+import moment from "moment";
 export default {
-  data: () => ({
-    profileData: {
-      displayName: "Time to Hack",
-      photoURL: "https://vuetifyjs.com/apple-touch-icon-180x180.png"
-    },
-    dialog: false,
-    drawer: null,
-    items: [
-      { icon: "contacts", text: "Contactos" },
-      {
-        icon: "keyboard_arrow_up",
-        "icon-alt": "keyboard_arrow_down",
-        text: "Mais",
-        model: false,
-        children: [
-          { text: "Exportar", icon: "import_export" },
-          { text: "Imprimir", icon: "local_printshop" }
-        ]
+  name: "home",
+  data() {
+    return {
+      dialog: false,
+      step: 1,
+      paises: [
+        "Afghanistan",
+        "Albania",
+        "Algeria",
+        "Andorra",
+        "Angola",
+        "Anguilla",
+        "Antigua &amp; Barbuda",
+        "Argentina",
+        "Armenia",
+        "Aruba",
+        "Australia",
+        "Austria",
+        "Azerbaijan",
+        "Bahamas",
+        "Bahrain",
+        "Bangladesh",
+        "Barbados",
+        "Belarus",
+        "Belgium",
+        "Belize",
+        "Benin",
+        "Bermuda",
+        "Bhutan",
+        "Bolivia",
+        "Bosnia &amp; Herzegovina",
+        "Botswana",
+        "Brazil",
+        "British Virgin Islands",
+        "Brunei",
+        "Bulgaria",
+        "Burkina Faso",
+        "Burundi",
+        "Cambodia",
+        "Cameroon",
+        "Cape Verde",
+        "Cayman Islands",
+        "Chad",
+        "Chile",
+        "China",
+        "Colombia",
+        "Congo",
+        "Cook Islands",
+        "Costa Rica",
+        "Cote D Ivoire",
+        "Croatia",
+        "Cruise Ship",
+        "Cuba",
+        "Cyprus",
+        "Czech Republic",
+        "Denmark",
+        "Djibouti",
+        "Dominica",
+        "Dominican Republic",
+        "Ecuador",
+        "Egypt",
+        "El Salvador",
+        "Equatorial Guinea",
+        "Estonia",
+        "Ethiopia",
+        "Falkland Islands",
+        "Faroe Islands",
+        "Fiji",
+        "Finland",
+        "France",
+        "French Polynesia",
+        "French West Indies",
+        "Gabon",
+        "Gambia",
+        "Georgia",
+        "Germany",
+        "Ghana",
+        "Gibraltar",
+        "Greece",
+        "Greenland",
+        "Grenada",
+        "Guam",
+        "Guatemala",
+        "Guernsey",
+        "Guinea",
+        "Guinea Bissau",
+        "Guyana",
+        "Haiti",
+        "Honduras",
+        "Hong Kong",
+        "Hungary",
+        "Iceland",
+        "India",
+        "Indonesia",
+        "Iran",
+        "Iraq",
+        "Ireland",
+        "Isle of Man",
+        "Israel",
+        "Italy",
+        "Jamaica",
+        "Japan",
+        "Jersey",
+        "Jordan",
+        "Kazakhstan",
+        "Kenya",
+        "Kuwait",
+        "Kyrgyz Republic",
+        "Laos",
+        "Latvia",
+        "Lebanon",
+        "Lesotho",
+        "Liberia",
+        "Libya",
+        "Liechtenstein",
+        "Lithuania",
+        "Luxembourg",
+        "Macau",
+        "Macedonia",
+        "Madagascar",
+        "Malawi",
+        "Malaysia",
+        "Maldives",
+        "Mali",
+        "Malta",
+        "Mauritania",
+        "Mauritius",
+        "Mexico",
+        "Moldova",
+        "Monaco",
+        "Mongolia",
+        "Montenegro",
+        "Montserrat",
+        "Morocco",
+        "Mozambique",
+        "Namibia",
+        "Nepal",
+        "Netherlands",
+        "Netherlands Antilles",
+        "New Caledonia",
+        "New Zealand",
+        "Nicaragua",
+        "Niger",
+        "Nigeria",
+        "Norway",
+        "Oman",
+        "Pakistan",
+        "Palestine",
+        "Panama",
+        "Papua New Guinea",
+        "Paraguay",
+        "Peru",
+        "Philippines",
+        "Poland",
+        "Portugal",
+        "Puerto Rico",
+        "Qatar",
+        "Reunion",
+        "Romania",
+        "Russia",
+        "Rwanda",
+        "Saint Pierre &amp; Miquelon",
+        "Samoa",
+        "San Marino",
+        "Satellite",
+        "Saudi Arabia",
+        "Senegal",
+        "Serbia",
+        "Seychelles",
+        "Sierra Leone",
+        "Singapore",
+        "Slovakia",
+        "Slovenia",
+        "South Africa",
+        "South Korea",
+        "Spain",
+        "Sri Lanka",
+        "St Kitts &amp; Nevis",
+        "St Lucia",
+        "St Vincent",
+        "St. Lucia",
+        "Sudan",
+        "Suriname",
+        "Swaziland",
+        "Sweden",
+        "Switzerland",
+        "Syria",
+        "Taiwan",
+        "Tajikistan",
+        "Tanzania",
+        "Thailand",
+        "Timor L'Este",
+        "Togo",
+        "Tonga",
+        "Trinidad &amp; Tobago",
+        "Tunisia",
+        "Turkey",
+        "Turkmenistan",
+        "Turks &amp; Caicos",
+        "Uganda",
+        "Ukraine",
+        "United Arab Emirates",
+        "United Kingdom",
+        "United States",
+        "Uruguay",
+        "Uzbekistan",
+        "Venezuela",
+        "Vietnam",
+        "Virgin Islands (US)",
+        "Yemen",
+        "Zambia",
+        "Zimbabwe"
+      ],
+      headers: [
+        { text: "Nome", value: "name" },
+        { text: "Email", value: "email" },
+        { text: "Password", value: "password" },
+        { text: "Pais", value: "country" },
+        { text: "Nivel", value: "nivel" }
+      ],
+      editedIndex: -1,
+      editedItem: {
+        id: "",
+        name: "",
+        email: "",
+        password: "",
+        country: "",
+        nivel: 3
       },
-      { icon: "exit_to_app", text: "Sair" }
-    ],
-    headers: [
-      { text: "Nome", value: "name" },
-      { text: "Email", value: "email" },
-      { text: "password", value: "password" },
-      { text: "Alterar", value: "name", sortable: false }
-    ],
-    editedIndex: -1,
-    editedItem: {
-      id: "",
-      name: "",
-      icon: "",
-      position: "",
-      ideventos: 0
-    },
-    defaultItem: {
-      id: "",
-      name: "",
-      email: "",
-      password: ""
-    }
-  }),
+      defaultItem: {
+        id: "",
+        name: "",
+        email: "",
+        password: "",
+        country: "",
+        nivel: 3
+      },
+      filterFields: [
+        { text: "Nome", value: "name", type: "text" },
+        { text: "Email", value: "email", type: "text" },
+        { text: "Password", value: "password", type: "text" },
+        { text: "Pais", value: "country", type: "lookup" },
+        { text: "Nivel", value: "nivel", type: "number" }
+      ],
+      filterDefs: {
+        text: {
+          contains: {
+            display: "Contém",
+            function: this.filterByTextContains
+          },
+          startsWith: {
+            display: "Começa por",
+            function: this.filterByTextStartsWith
+          }
+        },
+        number: {
+          equal: {
+            display: "=",
+            function: this.filterByNumberEqual,
+            decimalPoint: 1
+          },
+          greater: {
+            display: ">",
+            function: this.filterByNumberGreater,
+            decimalPoint: 1
+          },
+          less: {
+            display: "<",
+            function: this.filterByNumberLess,
+            decimalPoint: 1
+          },
+          between: {
+            display: "> <",
+            function: this.filterByNumberBetween,
+            decimalPoint: 1
+          }
+        },
+        date: {
+          equal: {
+            display: "Igual",
+            function: this.filterByDateEqual,
+            format: "MM/DD/YYYY"
+          },
+          greater: {
+            display: "Maior que",
+            function: this.filterByDateGreater,
+            format: "MM/DD/YYYY"
+          },
+          less: {
+            display: "Menor que",
+            function: this.filterByDateLess,
+            format: "MM/DD/YYYY"
+          },
+          between: {
+            display: "Entre",
+            function: this.filterByDateBetween,
+            format: "MM/DD/YYYY"
+          }
+        },
+        lookup: {
+          is: { display: "É", function: this.filterByLookupIs },
+          isNot: { display: "Não é", function: this.filterByLookupIsNot }
+        }
+      },
+      filterField: "",
+      filterType: "",
+      filterOperators: [],
+      filterOperator: "",
+      filterTerm: "",
+      filterTerm2: "",
+      filterTermMask: "",
+      filterTermLabel: "",
+      filterTermRules: [],
+      dateFilterFormat: "MM/DD/YYYY",
+      filterLookupItems: [],
+      filterLookupValue: "",
+      filterLookupLabel: ""
+    };
+  },
   computed: {
     users() {
       return this.$store.getters.loadedUsers;
-    },
-    formTitle() {
-      return this.editedIndex === -1 ? "Novo User" : "Editar User";
     },
     user() {
       return this.$store.state.user;
@@ -292,27 +509,149 @@ export default {
     loading() {
       return this.$store.getters.loading;
     },
-    fotoUser() {
+    userIsAuthenticated() {
       return (
-        this.$store.getters.getProfilePicUrl !== null &&
-        this.$store.getters.getProfilePicUrl !== undefined
+        this.$store.getters.user !== null &&
+        this.$store.getters.user !== undefined
       );
+    },
+    currentTitle() {
+      switch (this.step) {
+        case 1:
+          return "Dados ";
+        case 2:
+          return "Foto Avatar";
+        default:
+          return "ID cloud";
+      }
+    },
+    filteredUsers() {
+      if (
+        this.filterField &&
+        this.filterOperator &&
+        (this.filterTerm || this.filterLookupValue)
+      ) {
+        const filterFunction = this.filterDefs[this.filterType][
+          this.filterOperator
+        ]["function"];
+        if (this.filterType === "number") {
+          const decimalPoint =
+            this.filterDefs[this.filterType][this.filterOperator][
+              "decimalPoint"
+            ] || 0;
+          if (this.filterOperator === "between") {
+            if (this.filterTerm && this.filterTerm2) {
+              return filterFunction(
+                this.users,
+                this.filterField,
+                this.filterTerm,
+                this.filterTerm2,
+                decimalPoint
+              );
+            } else {
+              return this.users;
+            }
+          } else {
+            return filterFunction(
+              this.users,
+              this.filterField,
+              this.filterTerm,
+              decimalPoint
+            );
+          }
+        } else if (this.filterType === "date") {
+          const format =
+            this.filterDefs[this.filterType][this.filterOperator]["format"] ||
+            this.dateFilterFormat;
+          if (
+            this.filterOperator === "between" &&
+            this.rulesIsValidDate(this.filterTerm) &&
+            this.rulesIsValidDate(this.filterTerm2)
+          ) {
+            return filterFunction(
+              this.users,
+              this.filterField,
+              this.filterTerm,
+              this.filterTerm2,
+              format
+            );
+          } else if (
+            this.filterOperator !== "between" &&
+            this.rulesIsValidDate(this.filterTerm)
+          ) {
+            return filterFunction(
+              this.users,
+              this.filterField,
+              this.filterTerm,
+              format
+            );
+          } else {
+            return this.users;
+          }
+        } else if (this.filterType === "lookup") {
+          return filterFunction(
+            this.users,
+            this.filterField,
+            this.filterLookupValue
+          );
+        } else {
+          return filterFunction(this.users, this.filterField, this.filterTerm);
+        }
+      } else {
+        return this.users;
+      }
     }
   },
   watch: {
-    dialog(val) {
-      val || this.close();
+    filterField(newValue) {
+      const filterType = this.filterFields.find(item => item.value === newValue)
+        .type;
+      if (filterType) {
+        this.filterType = filterType;
+        this.filterOperators = this.getFilterOperators(
+          this.filterDefs[filterType]
+        );
+        this.filterOperator = this.filterOperators[0]["value"];
+        this.clearFilterTerms();
+      } else {
+        this.filterType = "";
+        this.filterOperators = [];
+        this.filterOperator = "";
+        this.clearFilterTerms();
+      }
+    },
+    filterOperator() {
+      this.clearFilterTerms();
+      if (this.filterType === "text") {
+        this.filterTermMask = "";
+        this.filterTermLabel = "Filter";
+      } else if (this.filterType === "number") {
+        if (this.filterField === "nivel") {
+          this.filterTermMask = "#";
+          this.filterTermLabel = "#";
+        } else if (this.filterField === "zip") {
+          this.filterTermMask = "#####";
+          this.filterTermLabel = "#####";
+        } else {
+          this.filterTermMask = "######";
+          this.filterTermLabel = "######";
+        }
+      } else if (this.filterType === "date") {
+        this.filterTermMask = "##/##/####";
+        this.filterTermLabel = "MM/DD/YYYY";
+        this.filterTermRules = [this.rulesIsValidDate];
+      } else if (this.filterType === "lookup") {
+        let lookupItems = [];
+        if (this.filterField === "country") {
+          lookupItems = this.paises;
+          this.filterLookupLabel = "Pais";
+        }
+        this.filterLookupItems = lookupItems;
+        this.filterLookupValue = "";
+      }
     }
   },
   methods: {
-    displayUser() {
-      (this.displayName =
-        this.profileData.displayName || this.user.displayName),
-        (this.photoURL = this.profileData.photoURL || this.user.photoURL);
-    },
-    onSair() {
-      this.$router.push("/");
-    },
     editItem(item) {
       this.editedIndex = this.users.indexOf(item);
       this.editedItem = Object.assign({}, item);
@@ -320,7 +659,7 @@ export default {
     },
     deleteItem(item) {
       const index = this.users.indexOf(item);
-      confirm("Tem a certeza que quer apagar este utilizador?") &&
+      confirm("Tem a certeza que quer apagar este user?") &&
         this.users.splice(index, 1);
     },
     close() {
@@ -335,16 +674,211 @@ export default {
         Object.assign(this.users[this.editedIndex], this.editedItem);
       } else {
         this.users.push(this.editedItem);
+
+        this.onSaveUser();
       }
       this.close();
     },
-    onPrint() {
-      alert("PRINT");
-      return "One";
+    onSair() {
+      this.$router.push("/");
+    },
+    getFilterOperators(filterDef) {
+      let oprs = [];
+      if (filterDef) {
+        for (let key in filterDef) {
+          oprs.push({ text: filterDef[key]["display"], value: key });
+        }
+      }
+      return oprs;
+    },
+    clearFilterTerms() {
+      this.filterTerm = "";
+      this.filterTerm2 = "";
+      this.filterTermMask = "";
+      this.filterTermLabel = "Filter";
+      this.filterTermRules = [];
+      this.filterLookupValue = "";
+      this.filterLookupItems = [];
+      this.filterLookupLabel = "";
+    },
+    rulesIsValidDate(value) {
+      return moment(value, this.dateFilterFormat, true).isValid();
+    },
+    // ---------- Events ------------------------
+    onClearAllFilters() {
+      this.filterField = "name";
+    },
+    // ---------- field filter methods ----------
+    filterByTextContains(list, fieldName, fieldValue) {
+      const re = new RegExp(fieldValue, "i");
+      return this.filterByRegExp(list, fieldName, fieldValue, re);
+    },
+    filterByTextStartsWith(list, fieldName, fieldValue) {
+      const re = new RegExp("^" + fieldValue, "i");
+      return this.filterByRegExp(list, fieldName, fieldValue, re);
+    },
+    filterByRegExp(list, fieldName, fieldValue, regExp) {
+      return list.filter(item => {
+        if (item[fieldName] !== undefined) {
+          return regExp.test(item[fieldName]);
+        } else {
+          return true;
+        }
+      });
+    },
+    filterByNumberEqual(list, fieldName, fieldValue, decimalPoint) {
+      decimalPoint = decimalPoint || 0;
+      return list.filter(item => {
+        if (item[fieldName] !== undefined) {
+          return (
+            Number(item[fieldName]).toFixed(decimalPoint) ===
+            Number(fieldValue).toFixed(decimalPoint)
+          );
+        } else {
+          return true;
+        }
+      });
+    },
+    filterByNumberGreater(
+      list,
+      fieldName,
+      fieldValue,
+      floatPoint,
+      decimalPoint
+    ) {
+      decimalPoint = decimalPoint || 0;
+      return list.filter(item => {
+        if (item[fieldName] !== undefined) {
+          return (
+            Number(item[fieldName]).toFixed(decimalPoint) >
+            Number(fieldValue).toFixed(decimalPoint)
+          );
+        } else {
+          return true;
+        }
+      });
+    },
+    filterByNumberLess(list, fieldName, fieldValue, decimalPoint) {
+      decimalPoint = decimalPoint || 0;
+      return list.filter(item => {
+        if (item[fieldName] !== undefined) {
+          return (
+            Number(item[fieldName]).toFixed(decimalPoint) <
+            Number(fieldValue).toFixed(decimalPoint)
+          );
+        } else {
+          return true;
+        }
+      });
+    },
+    filterByNumberBetween(
+      list,
+      fieldName,
+      fieldValue1,
+      fieldValue2,
+      decimalPoint
+    ) {
+      decimalPoint = decimalPoint || 0;
+      return list.filter(item => {
+        if (item[fieldName] !== undefined) {
+          return (
+            Number(item[fieldName]).toFixed(decimalPoint) >=
+              Number(fieldValue1).toFixed(decimalPoint) &&
+            Number(item[fieldName]).toFixed(decimalPoint) <=
+              Number(fieldValue2).toFixed(decimalPoint)
+          );
+        } else {
+          return true;
+        }
+      });
+    },
+    filterByDateEqual(list, fieldName, fieldValue, format) {
+      format = format || this.dateFilterFormat;
+      return list.filter(item => {
+        if (item[fieldName] !== undefined) {
+          return moment(item[fieldName]).isSame(
+            moment(fieldValue, format),
+            "day"
+          );
+        } else {
+          return true;
+        }
+      });
+    },
+    filterByDateGreater(list, fieldName, fieldValue, format) {
+      format = format || this.dateFilterFormat;
+      return list.filter(item => {
+        if (item[fieldName] !== undefined) {
+          return moment(item[fieldName]).isAfter(
+            moment(fieldValue, format),
+            "day"
+          );
+        } else {
+          return true;
+        }
+      });
+    },
+    filterByDateLess(list, fieldName, fieldValue, format) {
+      format = format || this.dateFilterFormat;
+      return list.filter(item => {
+        if (item[fieldName] !== undefined) {
+          return moment(item[fieldName]).isBefore(
+            moment(fieldValue, format),
+            "day"
+          );
+        } else {
+          return true;
+        }
+      });
+    },
+    filterByDateBetween(list, fieldName, fieldValue1, fieldValue2, format) {
+      format = format || this.dateFilterFormat;
+      return list.filter(item => {
+        if (item[fieldName] !== undefined) {
+          return moment(item[fieldName]).isBetween(
+            moment(fieldValue1, format),
+            moment(fieldValue2, format),
+            "day",
+            "[]"
+          );
+        } else {
+          return true;
+        }
+      });
+    },
+    filterByLookupIs(list, fieldName, fieldValue) {
+      return list.filter(item => {
+        if (item[fieldName] !== undefined) {
+          return item[fieldName] === fieldValue;
+        } else {
+          return true;
+        }
+      });
+    },
+    filterByLookupIsNot(list, fieldName, fieldValue) {
+      return list.filter(item => {
+        if (item[fieldName] !== undefined) {
+          return item[fieldName] !== fieldValue;
+        } else {
+          return true;
+        }
+      });
+    },
+    created() {
+      this.filterField = "name";
+    },
+    onSaveUser() {
+      const userData = {
+        name: this.editedItem.name,
+        email: this.editedItem.email,
+        password: this.editedItem.password,
+        country: this.editedItem.country,
+        nivel: this.editedItem.nivel
+      };
+      this.$store.dispatch("updateUser", userData);
+      this.dialog = false;
+      this.$router.push("/profile");
     }
-  },
-  props: {
-    source: String
   }
 };
 </script>

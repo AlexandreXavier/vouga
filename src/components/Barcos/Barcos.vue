@@ -22,6 +22,7 @@
                 </v-subheader>
                 </v-flex>
             </v-layout>
+
             <v-list-group
                 v-else-if="item.children"
                 :key="item.text"
@@ -30,28 +31,30 @@
                 append-icon=""
             >
                 <template v-slot:activator>
-                <v-list-tile>
-                    <v-list-tile-content>
-                    <v-list-tile-title>
-                        {{ item.text }}
-                    </v-list-tile-title>
-                    </v-list-tile-content>
-                </v-list-tile>
+                    <v-list-tile>
+                        <v-list-tile-content>
+                        <v-list-tile-title>
+                            {{ item.text }}
+                        </v-list-tile-title>
+                        </v-list-tile-content>
+                    </v-list-tile>
                 </template>
+
                 <v-list-tile
                 v-for="(child, i) in item.children"
                 :key="i"
                 @click="onPrint"
                 >
-                <v-list-tile-action v-if="child.icon">
-                    <v-icon>{{ child.icon }}</v-icon>
-                </v-list-tile-action>
-                <v-list-tile-content>
-                    <v-list-tile-title>
-                    {{ child.text }}
-                    </v-list-tile-title>
-                </v-list-tile-content>
+                    <v-list-tile-action v-if="child.icon">
+                        <v-icon>{{ child.icon }}</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-content>
+                        <v-list-tile-title>
+                        {{ child.text }}
+                        </v-list-tile-title>
+                    </v-list-tile-content>
                 </v-list-tile>
+
             </v-list-group>
             <v-list-tile v-else :key="item.text" @click="onSair">
                 <v-list-tile-action>
@@ -125,124 +128,128 @@
             ></v-divider>
             <v-spacer></v-spacer>
             <v-dialog v-model="dialog" max-width="500px">
+
                 <template v-slot:activator="{ on }">
                     <v-btn color="primary" dark class="mb-2" v-on="on">+</v-btn>
                 </template>
 
-<v-card class="mx-auto" max-width="650">
-      <v-card-title class="title font-weight-regular justify-space-between">
-        <span>{{ currentTitle }}</span>
-      </v-card-title>
+                <v-card class="mx-auto" max-width="650">
 
-      <v-window v-model="step">
-        <v-window-item :value="1">
-          <v-card-text>
-            <v-form>
-            <v-container>
-            <v-layout row wrap justify-center>
-                        <v-flex xs12 sm3>
-                            <v-text-field v-model="editedItem.main" label="Vela Grande" suffix="m2" readonly>
-                            </v-text-field>
-                            <v-text-field v-model="editedItem.genoa" label="Genoa"
-                            suffix="m2" readonly>
-                            </v-text-field>
-                            <v-text-field v-model="editedItem.spinnaker" label="Balao" suffix="m2" readonly>
-                            </v-text-field>
-                        </v-flex>
+                    <v-card-title class="title font-weight-regular justify-space-between">
+                        <span>{{ currentTitle }}</span>
+                    </v-card-title>
+
+                    <v-window v-model="step">
+
+                        <v-window-item :value="1">
+                        <v-card-text>
+                            <v-form>
+                            <v-container>
+                            <v-layout row wrap justify-center>
+                                        <v-flex xs12 sm3>
+                                            <v-text-field v-model="editedItem.main" label="Vela Grande" suffix="m2" readonly>
+                                            </v-text-field>
+                                            <v-text-field v-model="editedItem.genoa" label="Genoa"
+                                            suffix="m2" readonly>
+                                            </v-text-field>
+                                            <v-text-field v-model="editedItem.spinnaker" label="Balao" suffix="m2" readonly>
+                                            </v-text-field>
+                                        </v-flex>
+                                        <v-spacer></v-spacer>
+                                        <v-flex xs12 sm3>
+                                            <v-text-field v-model="editedItem.loa" label="Comp.Casco" suffix="m" readonly>
+                                            </v-text-field>
+
+                                            <v-text-field v-model="editedItem.draft" label="Alt.Casco" suffix="m" readonly>
+                                            </v-text-field>
+                                        </v-flex>
+                                        <v-spacer></v-spacer>
+                                        <v-flex xs12 sm3>
+                                            <v-text-field v-model="editedItem.spinnaker" label="Balao" suffix="m2"                    readonly>
+                                            </v-text-field>
+                                            <v-text-field v-model="editedItem.spinnaker" label="Balao" suffix="m2" >
+                                            </v-text-field>
+                                        </v-flex>
+                                    </v-layout>
+                            </v-container>
+                            </v-form>
+                        </v-card-text>
+                        </v-window-item>
+
+                        <v-window-item :value="2">
+                        <v-card-text>
+                            <v-form>
+                                <v-container>
+                                <v-layout row wrap justify-center>
+                                            <v-flex xs12 sm3>
+                                                <v-text-field v-model="editedItem.gph" label="Rating"
+                                                    suffix="m2" readonly>
+                                                </v-text-field>
+                                                <v-text-field v-model="editedItem.genoa" label="Genoa"
+                                                suffix="m2" readonly>
+                                                </v-text-field>
+                                                <v-text-field v-model="editedItem.spinnaker" label="Balao" suffix="m2" readonly>
+                                                </v-text-field>
+                                            </v-flex>
+                                            <v-spacer></v-spacer>
+                                            <v-flex xs12 sm3>
+                                                <v-text-field v-model="editedItem.loa" label="Comp.Casco" suffix="m" readonly>
+                                                </v-text-field>
+
+                                                <v-text-field v-model="editedItem.draft" label="Alt.Casco" suffix="m" readonly>
+                                                </v-text-field>
+                                            </v-flex>
+                                            <v-spacer></v-spacer>
+                                            <v-flex xs12 sm3>
+                                                <v-text-field v-model="editedItem.spinnaker" label="Balao" suffix="m2" readonly>
+                                                </v-text-field>
+                                                <v-text-field v-model="editedItem.spinnaker" label="Balao" suffix="m2" >
+                                                </v-text-field>
+                                            </v-flex>
+                                        </v-layout>
+                                </v-container>
+                            </v-form>
+
+                        </v-card-text>
+                        </v-window-item>
+
+                        <v-window-item :value="3">
+                        <div class="pa-3 text-xs-center">
+                            <v-img
+                            class="mb-3"
+                            contain
+                            height="128"
+                            src="https://cdn.vuetifyjs.com/images/logos/v.svg"
+                            ></v-img>
+                            <h3 class="title font-weight-light mb-2">ORC</h3>
+                            <span class="caption grey--text">Thanks for the Data!</span>
+                        </div>
+                        </v-window-item>
+
+                    </v-window>
+
+                    <v-divider></v-divider>
+
+                    <v-card-actions>
+                        <v-btn
+                            :disabled="step === 1"
+                            flat
+                            @click="step--"
+                            >
+                            Previo
+                        </v-btn>
                         <v-spacer></v-spacer>
-                        <v-flex xs12 sm3>
-                            <v-text-field v-model="editedItem.loa" label="Comp.Casco" suffix="m" readonly>
-                            </v-text-field>
+                        <v-btn
+                            :disabled="step === 3"
+                            color="primary"
+                            depressed
+                            @click="step++"
+                            >
+                            Proximo
+                        </v-btn>
+                    </v-card-actions>
 
-                            <v-text-field v-model="editedItem.draft" label="Alt.Casco" suffix="m" readonly>
-                            </v-text-field>
-                        </v-flex>
-                        <v-spacer></v-spacer>
-                        <v-flex xs12 sm3>
-                            <v-text-field v-model="editedItem.spinnaker" label="Balao" suffix="m2"                    readonly>
-                            </v-text-field>
-                            <v-text-field v-model="editedItem.spinnaker" label="Balao" suffix="m2" >
-                            </v-text-field>
-                        </v-flex>
-                    </v-layout>
-            </v-container>
-            </v-form>
-          </v-card-text>
-        </v-window-item>
-
-        <v-window-item :value="2">
-          <v-card-text>
-              <v-form>
-            <v-container>
-            <v-layout row wrap justify-center>
-                        <v-flex xs12 sm3>
-                            <v-text-field v-model="editedItem.gph" label="Rating"
-                                suffix="m2" readonly>
-                            </v-text-field>
-                            <v-text-field v-model="editedItem.genoa" label="Genoa"
-                            suffix="m2" readonly>
-                            </v-text-field>
-                            <v-text-field v-model="editedItem.spinnaker" label="Balao" suffix="m2" readonly>
-                            </v-text-field>
-                        </v-flex>
-                        <v-spacer></v-spacer>
-                        <v-flex xs12 sm3>
-                            <v-text-field v-model="editedItem.loa" label="Comp.Casco" suffix="m" readonly>
-                            </v-text-field>
-
-                            <v-text-field v-model="editedItem.draft" label="Alt.Casco" suffix="m" readonly>
-                            </v-text-field>
-                        </v-flex>
-                        <v-spacer></v-spacer>
-                        <v-flex xs12 sm3>
-                            <v-text-field v-model="editedItem.spinnaker" label="Balao" suffix="m2" readonly>
-                            </v-text-field>
-                            <v-text-field v-model="editedItem.spinnaker" label="Balao" suffix="m2" >
-                            </v-text-field>
-                        </v-flex>
-                    </v-layout>
-            </v-container>
-            </v-form>
-
-          </v-card-text>
-        </v-window-item>
-
-        <v-window-item :value="3">
-          <div class="pa-3 text-xs-center">
-            <v-img
-              class="mb-3"
-              contain
-              height="128"
-              src="https://cdn.vuetifyjs.com/images/logos/v.svg"
-            ></v-img>
-            <h3 class="title font-weight-light mb-2">ORC</h3>
-            <span class="caption grey--text">Thanks for the Data!</span>
-          </div>
-        </v-window-item>
-      </v-window>
-
-      <v-divider></v-divider>
-
-      <v-card-actions>
-        <v-btn
-          :disabled="step === 1"
-          flat
-          @click="step--"
-        >
-          Previo
-        </v-btn>
-        <v-spacer></v-spacer>
-        <v-btn
-          :disabled="step === 3"
-          color="primary"
-          depressed
-          @click="step++"
-        >
-          Proximo
-        </v-btn>
-      </v-card-actions>
-
-    </v-card>
+                    </v-card>
     </v-dialog>
     </v-toolbar>
 
@@ -303,50 +310,50 @@
             </template>
             <template v-slot:no-results>
                 <v-alert :value="true" color="error" icon="warning">
-                Não foi possivel encontrar "{{ search }}".
+                    Não foi possivel encontrar "{{ search }}".
                 </v-alert>
-        </template>
-        <template v-slot:no-data>
-          <v-btn color="primary" @click="initialize">Reset</v-btn>
-        </template>
-        <template v-slot:expand="props">
-          <v-card flat>
-            <v-card-text>
-                    <v-layout row>
-                        <v-flex xs2>
-                            <div class="flex body-1 red--text">ID:</div>
-                        </v-flex>
-                        <v-flex xs12>
-                            <div class="flex body-1 green--text">{{ props.item.creatorid }}</div>
-                        </v-flex>
-                    </v-layout>
-                    <v-layout row>
-                        <v-flex xs2>
-                            <div class="flex body-1 red--text">Avatar:</div>
-                        </v-flex>
-                        <v-flex xs12>
-                            <div class="flex body-1 green--text">{{ props.item.creatorid }}</div>
-                        </v-flex>
-                    </v-layout>
-                    <v-layout row>
-                        <v-flex xs2>
-                        <div class="flex body-1 red--text">Nome:</div>
-                        </v-flex>
-                        <v-flex xs12>
-                            <div class="flex body-1 green--text">{{ props.item.creatorname }}</div>
-                        </v-flex>
-                    </v-layout>
-                    <v-layout>
-                        <v-flex xs2>
-                            <div class="flex body-1 red--text">Criado Em:</div>
-                        </v-flex>
-                        <v-flex xs12>
-                            <div class="flex body-1 green--text">{{ props.item.creatorname }}</div>
-                        </v-flex>
-                    </v-layout>
-            </v-card-text>
-          </v-card>
-        </template>
+            </template>
+            <template v-slot:no-data>
+                <v-btn color="primary" @click="initialize">Reset</v-btn>
+            </template>
+            <template v-slot:expand="props">
+                <v-card flat>
+                    <v-card-text>
+                            <v-layout row>
+                                <v-flex xs2>
+                                    <div class="flex body-1 red--text">ID:</div>
+                                </v-flex>
+                                <v-flex xs12>
+                                    <div class="flex body-1 green--text">{{ props.item.creatorid }}</div>
+                                </v-flex>
+                            </v-layout>
+                            <v-layout row>
+                                <v-flex xs2>
+                                    <div class="flex body-1 red--text">Avatar:</div>
+                                </v-flex>
+                                <v-flex xs12>
+                                    <div class="flex body-1 green--text">{{ props.item.creatorid }}</div>
+                                </v-flex>
+                            </v-layout>
+                            <v-layout row>
+                                <v-flex xs2>
+                                <div class="flex body-1 red--text">Nome:</div>
+                                </v-flex>
+                                <v-flex xs12>
+                                    <div class="flex body-1 green--text">{{ props.item.creatorname }}</div>
+                                </v-flex>
+                            </v-layout>
+                            <v-layout>
+                                <v-flex xs2>
+                                    <div class="flex body-1 red--text">Criado Em:</div>
+                                </v-flex>
+                                <v-flex xs12>
+                                    <div class="flex body-1 green--text">{{ props.item.creatorname }}</div>
+                                </v-flex>
+                            </v-layout>
+                    </v-card-text>
+                </v-card>
+            </template>
         </v-data-table>
     </v-layout>
 

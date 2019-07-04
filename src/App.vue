@@ -1,6 +1,6 @@
 <template>
 <v-app>
-<!-- tab -->
+<!-- tab sandwich -->
     <v-toolbar dark dense class="primary">
         <v-toolbar-side-icon
             @click.stop="sideNav = !sideNav"
@@ -16,8 +16,9 @@
                 </v-avatar>
             </v-btn>
 
-            <router-link to="/" tag="span" style="cursor: pointer">
-                    PortocaroDos &copy;
+            <router-link to="/" tag="span" style="cursor: pointer"
+            class="font-weight-regular title hidden-sm-and-down">
+                    PORTOCARODOS &copy;
             </router-link>
         </v-toolbar-title>
 

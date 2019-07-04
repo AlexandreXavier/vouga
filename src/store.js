@@ -33,12 +33,16 @@ export default new Vuex.Store({
         name: "xani",
         email: "xani@getnada.com",
         password: "123456",
+        country: "Portugal",
+        nivel: 0,
         Id: ""
       },
       {
         name: "xico",
         email: "xico@getnada.com",
         password: "123456",
+        country: "Portugal",
+        nivel: 3,
         Id: ""
       }
     ],
@@ -128,7 +132,6 @@ export default new Vuex.Store({
       commit("setLoading", true);
       const images = [];
       const base = parseInt(Math.random() * 12, 10) + 20;
-      //alert(base);
       for (let i = 0; i < 40; i++) {
         images.push({
           id: i,
@@ -350,6 +353,8 @@ export default new Vuex.Store({
               name: obj[key].name,
               email: obj[key].email,
               password: obj[key].password,
+              country: obj[key].country,
+              nivel: obj[key].nivel,
               creatorid: obj[key].creatorid
             });
           }
@@ -367,6 +372,8 @@ export default new Vuex.Store({
         name: payload.name,
         email: payload.email,
         password: payload.password,
+        country: payload.country,
+        nivel: payload.nivel,
         id: getters.user.id
       };
       firebase
